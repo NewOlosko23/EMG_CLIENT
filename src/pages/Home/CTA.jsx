@@ -7,7 +7,7 @@ const CTA = ({ theme }) => {
       className={`py-12 px-6 text-center transition-all ${
         theme === "dark"
           ? "bg-gray-900 text-gray-300"
-          : "bg-gray-100 text-gray-800"
+          : "bg-purple-100 text-gray-800"
       }`}
     >
       <div className="max-w-3xl mx-auto">
@@ -19,7 +19,7 @@ const CTA = ({ theme }) => {
           worldwide.
         </p>
         <Link to="/signup">
-          <button className="mt-6 px-6 py-3 text-lg font-semibold text-white rounded-full bg-gradient-to-r from-purple-600 to-purple-800 shadow-lg hover:scale-105 transition-transform">
+          <button className="mt-6 px-6 py-3 cursor-pointer text-lg font-semibold text-white rounded-full bg-gradient-to-r from-purple-600 to-purple-800 shadow-lg hover:scale-105 transition-transform">
             Get Started
           </button>
         </Link>

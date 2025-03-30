@@ -3,6 +3,7 @@ import React from "react";
 const About = ({ theme }) => {
   return (
     <section
+      id="about"
       className={`py-12 px-6 md:px-16 text-center transition-all duration-300 ${
         theme === "dark"
           ? "bg-gray-900 text-gray-300"

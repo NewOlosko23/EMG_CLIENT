@@ -53,7 +53,7 @@ const Pricing = ({ theme }) => {
         </ul>
 
         <button
-          className="mt-6 px-6 py-3 bg-black text-white rounded-full text-lg font-semibold hover:bg-gray-800 transition duration-300"
+          className="mt-6 cursor-pointer px-6 py-3 bg-black text-white rounded-full text-lg font-semibold hover:bg-gray-800 transition duration-300"
           onClick={() => navigate("/signup")}
         >
           Get Started for $7

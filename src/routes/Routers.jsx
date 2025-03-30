@@ -4,9 +4,11 @@ import Login from "../pages/Login";
 import Signup from "../pages/Signup";
 import Artist from "../pages/Artist";
 import Admin from "../pages/Admin";
-import Feed from "../pages/Feed";
+import Discover from "../pages/Discover";
 import Layout from "../components/Layout";
 import Home from "../pages/Home";
+import Merch from "../pages/Merch";
+import Team from "../pages/Team";
 
 const Routers = () => {
   return (
@@ -27,7 +29,7 @@ const Routers = () => {
           </Layout>
         }
       />
-            <Route
+      <Route
         path="/Home"
         element={
           <Layout>
@@ -36,10 +38,26 @@ const Routers = () => {
         }
       />
       <Route
-        path="/Feed"
+        path="/Discover"
         element={
           <Layout>
-            <Feed />
+            <Discover />
+          </Layout>
+        }
+      />
+      <Route
+        path="/Team"
+        element={
+          <Layout>
+            <Team />
+          </Layout>
+        }
+      />
+      <Route
+        path="/Merch"
+        element={
+          <Layout>
+            <Merch />
           </Layout>
         }
       />

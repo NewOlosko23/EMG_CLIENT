@@ -89,7 +89,7 @@ const Services = ({ theme }) => {
                 {service.icon}
               </div>
               <h3 className="text-xl font-semibold">{service.title}</h3>
-              <p className="mt-3 text-sm">{service.description}</p>
+              <p className="mt-3 text-sm leading-6">{service.description}</p>
             </div>
           ))}
         </div>

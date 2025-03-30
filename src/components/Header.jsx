@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Menu, X } from "lucide-react"; 
+import { Menu, X } from "lucide-react";
+import Logo from "../assets/logo.png";
 
 const Header = ({ theme }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -14,24 +15,26 @@ const Header = ({ theme }) => {
       }`}
     >
       {/* Logo */}
-      <h1
-        className={`text-xl sm:text-2xl font-bold drop-shadow-md ${
-          theme === "dark" ? "text-purple-400" : "text-blue-600"
-        }`}
-      >
-        <Link to="/">EMG Music</Link>
-      </h1>
+      <div className="flex items-center">
+        <Link to="/">
+          <img
+            src={Logo}
+            alt="EMG Music"
+            className="h-10 sm:h-12 w-auto object-contain"
+          />
+        </Link>
+      </div>
 
       {/* Desktop Navigation */}
       <ul className="hidden md:flex space-x-6 font-medium">
-        {["Home", "Feed", "Artists", "Sign Up"].map((item, index) => (
+        {["Home", "Discover", "Artists", "Team", "Merch"].map((item, index) => (
           <li key={index}>
             <Link
               to={`/${item.toLowerCase().replace(" ", "")}`}
               className={`transition-colors duration-300 hover:opacity-75 ${
                 theme === "dark"
                   ? "hover:text-purple-400"
-                  : "hover:text-blue-500"
+                  : "hover:text-purple-700"
               }`}
             >
               {item}
@@ -45,7 +48,7 @@ const Header = ({ theme }) => {
         className={`hidden md:block px-4 py-2 rounded-full font-semibold shadow-md transition-all duration-300 ${
           theme === "dark"
             ? "bg-purple-700 hover:bg-purple-600 text-white"
-            : "bg-blue-600 hover:bg-blue-500 text-white"
+            : "bg-purple-600 hover:bg-purple-500 text-white"
         }`}
       >
         <Link to="/login">Login</Link>
@@ -60,31 +63,24 @@ const Header = ({ theme }) => {
       </button>
 
       {/* Mobile Dropdown Menu */}
+      {/* Mobile Dropdown Menu */}
       {isOpen && (
-        <div
-          className={`absolute top-16 left-0 w-full flex flex-col items-center gap-4 py-6 shadow-md ${
-            theme === "dark"
-              ? "bg-gray-900 text-white"
-              : "bg-blue-100 text-gray-900"
-          } md:hidden`}
-        >
-          {["Home", "Feed", "Artist", "Sign Up"].map((item, index) => (
-            <Link
-              key={index}
-              to={`/${item.toLowerCase().replace(" ", "")}`}
-              className="text-lg transition-colors duration-300 hover:opacity-75"
-              onClick={() => setIsOpen(false)}
-            >
-              {item}
-            </Link>
-          ))}
+        <div className="absolute top-16 left-0 w-full flex flex-col items-start gap-4 py-6 px-6 shadow-md bg-purple-100 text-gray-900 md:hidden">
+          {["Home", "Discover", "Artists", "Team", "Merch"].map(
+            (item, index) => (
+              <Link
+                key={index}
+                to={`/${item.toLowerCase().replace(" ", "")}`}
+                className="text-lg w-full py-2 transition-colors duration-300 hover:bg-purple-200 rounded-md pl-4"
+                onClick={() => setIsOpen(false)}
+              >
+                {item}
+              </Link>
+            )
+          )}
           <Link
             to="/login"
-            className={`px-6 py-2 rounded-full font-semibold shadow-md transition-all duration-300 ${
-              theme === "dark"
-                ? "bg-purple-700 hover:bg-purple-600 text-white"
-                : "bg-blue-600 hover:bg-blue-500 text-white"
-            }`}
+            className="px-6 py-3 w-full text-center bg-purple-700 hover:bg-purple-600 text-white font-semibold shadow-md rounded-md transition-all duration-300"
             onClick={() => setIsOpen(false)}
           >
             Login

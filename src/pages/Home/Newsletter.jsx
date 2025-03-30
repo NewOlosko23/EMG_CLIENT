@@ -14,7 +14,7 @@ const Newsletter = ({ theme }) => {
   const handleSubscribe = (e) => {
     e.preventDefault();
     alert(`Subscribed successfully with: ${email}`);
-    setEmail(""); // Reset input field after submission
+    setEmail(""); 
   };
 
   return (

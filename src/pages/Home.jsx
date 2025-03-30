@@ -4,7 +4,6 @@ import About from "./Home/About";
 import Services from "./Home/Services";
 import Platform from "./Home/Platform";
 import Pricing from "./Home/Pricing";
-import Teams from "./Home/Teams";
 import Presence from "./Home/Presence";
 import Testimonials from "./Home/Testimonials";
 import CTA from "./Home/CTA";
@@ -18,7 +17,6 @@ const Home = () => {
       <Platform />
       <Services />
       <Pricing />
-      <Teams />
       <Presence />
       <Testimonials />
       <CTA />

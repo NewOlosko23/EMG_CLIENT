@@ -1,4 +1,6 @@
 import React from "react";
+import Bg from "../../assets/emg2.jpg";
+import { Link } from "react-router-dom";
 
 const Hero = ({ theme }) => {
   return (
@@ -9,9 +11,12 @@ const Hero = ({ theme }) => {
           : "bg-purple-50 text-gray-900"
       }`}
       style={{
-        minHeight: "50vh", // Default for small screens
-        minHeight: "65vh", // Medium screens
-        minHeight: "75vh", // Large screens
+        backgroundImage: `url(${Bg})`,
+        backgroundSize: "cover", // Ensures the image covers the entire section
+        backgroundPosition: "center", // Centers the image
+        backgroundRepeat: "no-repeat", // Prevents repetition
+        width: "100%",
+        minHeight: "75vh", // Ensures the section takes up most of the viewport
       }}
     >
       <h1
@@ -23,21 +28,17 @@ const Hero = ({ theme }) => {
       </h1>
       <p
         className={`mt-4 max-w-2xl ${
-          theme === "dark" ? "text-gray-300" : "text-gray-700"
+          theme === "dark" ? "text-gray-300" : "text-gray-200"
         } text-sm sm:text-base md:text-lg lg:text-xl`}
       >
         EMG is your gateway to worldwide music distribution. Join us to reach
         millions of listeners, monetize your tracks, and grow your brand.
       </p>
-      <button
-        className={`mt-6 rounded-lg font-semibold transition-all duration-300 focus:outline-none shadow-lg ${
-          theme === "dark"
-            ? "bg-purple-700 hover:bg-purple-600 text-white"
-            : "bg-blue-600 hover:bg-blue-500 text-white"
-        } text-sm sm:text-base md:text-lg px-4 sm:px-6 md:px-8 py-2 sm:py-3 md:py-4`}
-      >
-        Get Started Now
-      </button>
+      <Link to="/signup">
+        <button className="mt-6 cursor-pointer px-6 py-3 text-lg font-semibold text-white rounded-full bg-gradient-to-r from-purple-600 to-purple-800 shadow-lg hover:scale-105 transition-transform">
+          Get Started
+        </button>
+      </Link>
     </section>
   );
 };
