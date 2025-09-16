@@ -54,7 +54,7 @@ const Routers = () => {
         }
       />
       <Route
-        path="/Merch"
+        path="/shop"
         element={
           <Layout>
             <Merch />
