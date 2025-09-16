@@ -285,7 +285,7 @@ const Newsletter = ({ theme }) => {
         </div>
 
         {/* Footer Links Section */}
-        <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12 transition-all duration-1000 delay-800 ${
+        <div className={`grid grid-cols-1 items-center md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12 transition-all duration-1000 delay-800 ${
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
         }`}>
           {/* Company Links */}

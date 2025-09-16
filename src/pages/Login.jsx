@@ -1,75 +1,209 @@
-import React from "react";
+import React, { useState } from "react";
 import Bg from "../assets/emg1.jpg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
+import { Eye, EyeOff, Mail, Lock, ArrowRight, Music, Users, Star } from "lucide-react";
 
 const Login = ({ theme }) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
+  const { signIn } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const from = location.state?.from?.pathname || "/Dashboard";
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    if (!email || !password) {
+      setError("Please fill in all fields");
+      return;
+    }
+
+    try {
+      setError("");
+      setLoading(true);
+      const { error } = await signIn(email, password);
+      
+      if (error) {
+        setError(error.message);
+      } else {
+        navigate(from, { replace: true });
+      }
+    } catch (error) {
+      setError("Failed to sign in");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <section
-      className={`flex min-h-screen px-5 md:px-0 transition-all ${
-        theme === "dark"
-          ? "bg-gray-900 text-gray-300"
-          : "bg-gray-100 text-gray-800"
-      }`}
-    >
-      {/* Image section - Hidden on small screens */}
-      <div className="hidden lg:flex w-1/2 h-screen">
-        <img src={Bg} alt="login" className="w-full h-full object-cover" />
-      </div>
+    <section className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 flex items-center justify-center p-4">
+      <div className="w-full max-w-6xl grid lg:grid-cols-2 gap-8 items-center">
+        
+        {/* Left Side - Branding & Features */}
+        <div className="hidden lg:block text-white space-y-8">
+          <div className="space-y-4">
+            <h1 className="hero-title text-5xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+              EMG Music
+            </h1>
+            <p className="text-sm md:text-base text-gray-300">
+              Your Gateway to Musical Excellence
+            </p>
+          </div>
+          
+          <div className="space-y-6">
+            <div className="flex items-center space-x-4">
+              <div className="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center">
+                <Music className="w-6 h-6" />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold">Discover Music</h3>
+                <p className="text-gray-400">Find amazing tracks from talented artists</p>
+              </div>
+            </div>
+            
+            <div className="flex items-center space-x-4">
+              <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center">
+                <Users className="w-6 h-6" />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold">Connect</h3>
+                <p className="text-gray-400">Join a community of music lovers</p>
+              </div>
+            </div>
+            
+            <div className="flex items-center space-x-4">
+              <div className="w-12 h-12 bg-pink-500 rounded-full flex items-center justify-center">
+                <Star className="w-6 h-6" />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold">Exclusive Content</h3>
+                <p className="text-gray-400">Access premium features and early releases</p>
+              </div>
+            </div>
+          </div>
+        </div>
 
-      {/* Login form section - Full width on small screens, half on large screens */}
-      <div className="flex justify-center items-center w-full lg:w-1/2">
-        <div className="max-w-md px-5 w-full bg-purple-500 p-8 rounded-lg shadow-lg text-white">
-          <h2 className="text-3xl font-bold text-center mb-6">
-            Login to EMG Music
-          </h2>
-
-          <form>
-            <div className="mb-4">
-              <label className="block text-lg mb-2">Email</label>
-              <input
-                type="email"
-                className="w-full px-4 py-2 rounded-md bg-gray-100 text-gray-800 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-400"
-                placeholder="Enter your email"
-                required
-              />
+        {/* Right Side - Login Form */}
+        <div className="w-full max-w-md mx-auto">
+          <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/20 shadow-2xl">
+            <div className="text-center mb-8">
+              <h2 className="text-3xl font-bold text-white mb-2">Welcome Back</h2>
+              <p className="text-gray-300">Sign in to your EMG Music account</p>
             </div>
 
-            <div className="mb-4">
-              <label className="block text-lg mb-2">Password</label>
-              <input
-                type="password"
-                className="w-full px-4 py-2 rounded-md bg-gray-100 text-gray-800 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-400"
-                placeholder="Enter your password"
-                required
-              />
+            {error && (
+              <div className="mb-6 p-4 bg-red-500/20 border border-red-500/50 text-red-200 rounded-lg text-sm">
+                {error}
+              </div>
+            )}
+
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-2">
+                  Email Address
+                </label>
+                <div className="relative">
+                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="w-full pl-10 pr-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                    placeholder="Enter your email"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-2">
+                  Password
+                </label>
+                <div className="relative">
+                  <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="w-full pl-10 pr-12 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                    placeholder="Enter your password"
+                    required
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white transition-colors"
+                  >
+                    {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                  </button>
+                </div>
+              </div>
+
+              <div className="flex items-center justify-between">
+                <label className="flex items-center text-sm text-gray-300">
+                  <input
+                    type="checkbox"
+                    checked={rememberMe}
+                    onChange={(e) => setRememberMe(e.target.checked)}
+                    className="w-4 h-4 text-purple-600 bg-white/10 border-white/20 rounded focus:ring-purple-500 focus:ring-2"
+                  />
+                  <span className="ml-2">Remember me</span>
+                </label>
+                <Link
+                  to="/forgot-password"
+                  className="text-sm text-purple-400 hover:text-purple-300 transition-colors"
+                >
+                  Forgot password?
+                </Link>
+              </div>
+
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white py-3 px-4 rounded-lg font-semibold hover:from-purple-700 hover:to-pink-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-transparent transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+              >
+                {loading ? (
+                  <>
+                    <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                    <span>Signing in...</span>
+                  </>
+                ) : (
+                  <>
+                    <span>Sign In</span>
+                    <ArrowRight className="w-5 h-5" />
+                  </>
+                )}
+              </button>
+            </form>
+
+            <div className="mt-8 text-center">
+              <p className="text-gray-300">
+                Don't have an account?{" "}
+                <Link
+                  to="/Signup"
+                  className="text-purple-400 hover:text-purple-300 font-semibold transition-colors"
+                >
+                  Sign up
+                </Link>
+              </p>
             </div>
 
-            <div className="flex items-center justify-between mb-6">
-              <label className="flex items-center text-sm">
-                <input type="checkbox" className="mr-2" /> Remember me
-              </label>
-              <a href="#" className="text-sm text-gray-200 hover:underline">
-                Forgot password?
-              </a>
+            <div className="mt-6 pt-6 border-t border-white/20">
+              <p className="text-center text-xs text-gray-400">
+                By signing in, you agree to our{" "}
+                <a href="#" className="text-purple-400 hover:underline">Terms of Service</a>{" "}
+                and{" "}
+                <a href="#" className="text-purple-400 hover:underline">Privacy Policy</a>
+              </p>
             </div>
-
-            <button
-              type="submit"
-              className="w-full py-3 bg-black text-white rounded-full text-lg font-semibold hover:bg-gray-800 transition duration-300"
-            >
-              Login
-            </button>
-          </form>
-
-          <p className="mt-6 text-center">
-            Don't have an account?{" "}
-            <Link
-              to="/Signup"
-              className="text-gray-200 cursor-pointer hover:underline"
-            >
-              Sign up
-            </Link>
-          </p>
+          </div>
         </div>
       </div>
     </section>

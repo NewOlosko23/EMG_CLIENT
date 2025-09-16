@@ -44,7 +44,7 @@ const Hero = ({ theme }) => {
           </div>
 
           {/* Main Heading */}
-          <h1 className={`font-bold leading-tight mb-6 ${
+          <h1 className={`hero-title font-bold leading-tight mb-6 ${
             theme === "dark" ? "text-white" : "text-white"
           } text-4xl sm:text-5xl md:text-6xl lg:text-7xl`}>
             Your Music,{" "}
@@ -89,10 +89,10 @@ const Hero = ({ theme }) => {
                   <Globe size={36} className="text-purple-500" />
                 </div>
               </div>
-              <div className={`text-4xl font-bold mb-2 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent`}>
+              <div className={`text-2xl md:text-3xl font-bold mb-2 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent`}>
                 150+
               </div>
-              <div className={`text-lg font-semibold mb-1 ${theme === "dark" ? "text-white" : "text-gray-900"}`}>
+              <div className={`text-sm md:text-base font-semibold mb-1 ${theme === "dark" ? "text-white" : "text-gray-900"}`}>
                 Global Reach
               </div>
               <div className={`text-sm ${theme === "dark" ? "text-gray-400" : "text-gray-600"}`}>
@@ -114,10 +114,10 @@ const Hero = ({ theme }) => {
                   <Users size={36} className="text-blue-500" />
                 </div>
               </div>
-              <div className={`text-4xl font-bold mb-2 bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent`}>
-                10M+
+              <div className={`text-2xl md:text-3xl font-bold mb-2 bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent`}>
+                100+
               </div>
-              <div className={`text-lg font-semibold mb-1 ${theme === "dark" ? "text-white" : "text-gray-900"}`}>
+              <div className={`text-sm md:text-base font-semibold mb-1 ${theme === "dark" ? "text-white" : "text-gray-900"}`}>
                 Active Artists
               </div>
               <div className={`text-sm ${theme === "dark" ? "text-gray-400" : "text-gray-600"}`}>
@@ -139,10 +139,10 @@ const Hero = ({ theme }) => {
                   <Music size={36} className="text-green-500" />
                 </div>
               </div>
-              <div className={`text-4xl font-bold mb-2 bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent`}>
-                500M+
+              <div className={`text-2xl md:text-3xl font-bold mb-2 bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent`}>
+                2M+
               </div>
-              <div className={`text-lg font-semibold mb-1 ${theme === "dark" ? "text-white" : "text-gray-900"}`}>
+              <div className={`text-sm md:text-base font-semibold mb-1 ${theme === "dark" ? "text-white" : "text-gray-900"}`}>
                 Total Streams
               </div>
               <div className={`text-sm ${theme === "dark" ? "text-gray-400" : "text-gray-600"}`}>

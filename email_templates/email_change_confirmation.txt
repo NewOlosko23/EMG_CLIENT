@@ -1,0 +1,36 @@
+===============================================
+                EMG MUSIC
+        Email Change Confirmation
+===============================================
+
+Confirm Your Email Change 📧
+
+We received a request to change the email address associated with your EMG Music account. 
+Please review the change below and confirm if this is correct.
+
+📋 EMAIL CHANGE REQUEST:
+From: {{ .Email }}
+To:   {{ .NewEmail }}
+
+CONFIRM YOUR EMAIL CHANGE:
+{{ .ConfirmationURL }}
+
+🔒 SECURITY NOTICE:
+⚠️ This confirmation link will expire in 24 hours for your security.
+If you didn't request this email change, please ignore this email and contact our support team immediately.
+Your current email will remain active until you confirm this change.
+
+HAVING TROUBLE WITH THE LINK?
+Copy and paste this URL into your browser:
+{{ .ConfirmationURL }}
+
+If you have any questions about this email change or need assistance, 
+please contact our support team.
+
+===============================================
+SUPPORT:
+If you have any questions, please contact us at support@emgmusic.com
+
+© 2024 EMG Music. All rights reserved.
+You're receiving this email because an email change was requested for your account.
+===============================================

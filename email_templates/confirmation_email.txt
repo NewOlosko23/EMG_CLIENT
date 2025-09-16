@@ -1,0 +1,40 @@
+===============================================
+                EMG MUSIC
+        Your Gateway to Musical Excellence
+===============================================
+
+Welcome to EMG Music! 🎵
+
+Thank you for joining the EMG Music community! We're excited to have you on board. 
+To complete your registration and start exploring our platform, please confirm your email address.
+
+CONFIRM YOUR ACCOUNT:
+{{ .ConfirmationURL }}
+
+🔒 SECURITY NOTICE:
+This confirmation link will expire in 24 hours for your security. 
+If you didn't create an account with EMG Music, please ignore this email.
+
+WHAT'S WAITING FOR YOU:
+🎧 Discover amazing music from talented artists
+🎤 Connect with artists and music professionals  
+🎵 Access exclusive content and early releases
+🎪 Get notified about events and concerts
+
+HAVING TROUBLE WITH THE LINK?
+Copy and paste this URL into your browser:
+{{ .ConfirmationURL }}
+
+===============================================
+FOLLOW US:
+Facebook: https://facebook.com/emgmusic
+Twitter: https://twitter.com/emgmusic
+Instagram: https://instagram.com/emgmusic
+YouTube: https://youtube.com/emgmusic
+
+SUPPORT:
+If you have any questions, please contact us at support@emgmusic.com
+
+© 2024 EMG Music. All rights reserved.
+You're receiving this email because you signed up for our service.
+===============================================

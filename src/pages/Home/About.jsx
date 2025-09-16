@@ -77,14 +77,14 @@ const About = ({ theme }) => {
           
           <h2 className={`font-bold mb-6 ${
             theme === "dark" ? "text-white" : "text-gray-900"
-          } text-4xl md:text-5xl lg:text-6xl`}>
+          } text-2xl md:text-3xl lg:text-4xl`}>
             Your Music Distribution{" "}
             <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
               Empire
             </span>
           </h2>
           
-          <p className={`max-w-4xl mx-auto text-lg md:text-xl leading-relaxed ${
+          <p className={`max-w-4xl mx-auto text-sm md:text-base leading-relaxed ${
             theme === "dark" ? "text-gray-300" : "text-gray-600"
           }`}>
             EMG Music is a leading music distribution empire built to help artists
@@ -117,7 +117,7 @@ const About = ({ theme }) => {
                   <feature.icon size={24} />
                 </div>
               </div>
-              <h3 className={`font-semibold text-lg mb-2 text-center ${
+              <h3 className={`font-semibold text-sm md:text-base mb-2 text-center ${
                 theme === "dark" ? "text-white" : "text-gray-900"
               }`}>
                 {feature.title}
@@ -149,12 +149,12 @@ const About = ({ theme }) => {
                 <Zap size={32} className="text-white" />
               </div>
             </div>
-            <h3 className={`font-bold text-2xl md:text-3xl mb-4 ${
+            <h3 className={`font-bold text-lg md:text-xl mb-4 ${
               theme === "dark" ? "text-white" : "text-gray-900"
             }`}>
               Our Mission
             </h3>
-            <p className={`text-lg md:text-xl leading-relaxed ${
+            <p className={`text-sm md:text-base leading-relaxed ${
               theme === "dark" ? "text-gray-300" : "text-gray-600"
             }`}>
               Whether you're an upcoming artist or an established name, EMG Music

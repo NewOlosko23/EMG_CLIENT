@@ -1,0 +1,35 @@
+===============================================
+                EMG MUSIC
+        Security Verification Required
+===============================================
+
+🔐 REAUTHENTICATION
+
+Security Verification Required 🛡️
+
+For your security, we need to verify your identity before proceeding with this sensitive operation. 
+Please use the verification code below to complete the reauthentication process.
+
+🔑 YOUR VERIFICATION CODE:
+{{ .Token }}
+
+📋 HOW TO USE THIS CODE:
+1. Return to the EMG Music application or website
+2. Enter the verification code above in the security prompt
+3. Complete your requested action securely
+
+⚠️ IMPORTANT SECURITY INFORMATION:
+🔒 This verification code will expire in 10 minutes for your security.
+If you didn't request this verification, please ignore this email and contact our support team immediately.
+Never share this code with anyone - EMG Music will never ask for it via phone or email.
+
+This additional security step helps protect your account from unauthorized access. 
+If you have any questions or need assistance, please contact our support team.
+
+===============================================
+SUPPORT:
+If you have any questions, please contact us at support@emgmusic.com
+
+© 2024 EMG Music. All rights reserved.
+You're receiving this email because a security verification was requested for your account.
+===============================================

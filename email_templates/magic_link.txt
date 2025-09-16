@@ -1,0 +1,44 @@
+===============================================
+                EMG MUSIC
+        Your Gateway to Musical Excellence
+===============================================
+
+🔮 MAGIC LINK
+
+Your Login Link is Ready! 🎵
+
+You requested a magic link to access your EMG Music account. 
+Click the link below to securely log in without needing to remember your password.
+
+🎪 ONE-CLICK ACCESS
+This secure link will instantly log you into your EMG Music account. 
+No password required - just click and you're in!
+
+LOGIN TO EMG MUSIC:
+{{ .ConfirmationURL }}
+
+WHAT YOU CAN DO AFTER LOGGING IN:
+🎧 Browse and discover new music
+🎤 Connect with artists and fans
+🎵 Access your personalized dashboard
+⚙️ Manage your account settings
+
+🔒 SECURITY INFORMATION:
+This magic link will expire in 1 hour for your security.
+If you didn't request this login link, please ignore this email.
+For your protection, never share this link with anyone.
+
+HAVING TROUBLE WITH THE LINK?
+Copy and paste this URL into your browser:
+{{ .ConfirmationURL }}
+
+This magic link provides secure, passwordless access to your account. 
+Enjoy your musical journey with EMG Music!
+
+===============================================
+SUPPORT:
+If you have any questions, please contact us at support@emgmusic.com
+
+© 2024 EMG Music. All rights reserved.
+You're receiving this email because a magic link was requested for your account.
+===============================================

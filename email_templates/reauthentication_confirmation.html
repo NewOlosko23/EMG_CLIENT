@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reauthentication Required - EMG Music</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+            padding: 40px 30px;
+            text-align: center;
+            color: white;
+        }
+        .logo {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+        .tagline {
+            font-size: 16px;
+            opacity: 0.9;
+            margin: 0;
+        }
+        .content {
+            padding: 40px 30px;
+            text-align: center;
+        }
+        .title {
+            font-size: 28px;
+            color: #1f2937;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        .text {
+            font-size: 16px;
+            color: #6b7280;
+            margin-bottom: 30px;
+            line-height: 1.7;
+        }
+        .verification-card {
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+            border: 2px solid #dc2626;
+            border-radius: 16px;
+            padding: 30px;
+            margin: 30px 0;
+            text-align: center;
+            position: relative;
+        }
+        .verification-card::before {
+            content: '🔐';
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 24px;
+        }
+        .verification-card h3 {
+            color: #991b1b;
+            margin: 0 0 20px 0;
+            font-size: 20px;
+        }
+        .code-container {
+            background-color: white;
+            border: 2px solid #dc2626;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+            position: relative;
+        }
+        .code-label {
+            color: #374151;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .verification-code {
+            font-family: 'Courier New', monospace;
+            font-size: 32px;
+            font-weight: bold;
+            color: #dc2626;
+            letter-spacing: 8px;
+            margin: 10px 0;
+            padding: 15px;
+            background-color: #fef2f2;
+            border-radius: 8px;
+            border: 1px solid #fecaca;
+            display: inline-block;
+            min-width: 200px;
+        }
+        .security-note {
+            background-color: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 8px;
+            text-align: left;
+        }
+        .security-note h3 {
+            color: #1f2937;
+            margin: 0 0 10px 0;
+            font-size: 16px;
+        }
+        .security-note p {
+            color: #6b7280;
+            margin: 0;
+            font-size: 14px;
+        }
+        .instructions {
+            background-color: #f8fafc;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 30px 0;
+            text-align: left;
+        }
+        .instructions h3 {
+            color: #1f2937;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+        .instruction-item {
+            display: flex;
+            align-items: flex-start;
+            margin: 15px 0;
+            padding: 12px;
+            background-color: white;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+        }
+        .instruction-number {
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+            border-radius: 50%;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+        .instruction-text {
+            color: #374151;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        .footer {
+            background-color: #1f2937;
+            color: #9ca3af;
+            padding: 30px;
+            text-align: center;
+            font-size: 14px;
+        }
+        .footer a {
+            color: #dc2626;
+            text-decoration: none;
+        }
+        .divider {
+            height: 1px;
+            background-color: #e5e7eb;
+            margin: 30px 0;
+        }
+        .security-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .warning-icon {
+            color: #dc2626;
+            font-size: 24px;
+            margin-right: 10px;
+        }
+        .copy-button {
+            display: inline-block;
+            background-color: #6b7280;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 12px;
+            text-decoration: none;
+            margin-top: 10px;
+            transition: background-color 0.3s ease;
+        }
+        .copy-button:hover {
+            background-color: #4b5563;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">EMG MUSIC</div>
+            <p class="tagline">Security Verification Required</p>
+        </div>
+
+        <!-- Main Content -->
+        <div class="content">
+            <div class="security-badge">🔐 Reauthentication</div>
+            
+            <h1 class="title">Security Verification Required 🛡️</h1>
+            
+            <p class="text">
+                For your security, we need to verify your identity before proceeding with this sensitive operation. 
+                Please use the verification code below to complete the reauthentication process.
+            </p>
+
+            <!-- Verification Code Card -->
+            <div class="verification-card">
+                <h3>🔑 Your Verification Code</h3>
+                <div class="code-container">
+                    <div class="code-label">Enter this code</div>
+                    <div class="verification-code">{{ .Token }}</div>
+                    <a href="#" class="copy-button" onclick="navigator.clipboard.writeText('{{ .Token }}'); return false;">
+                        📋 Copy Code
+                    </a>
+                </div>
+            </div>
+
+            <!-- Instructions -->
+            <div class="instructions">
+                <h3>📋 How to use this code:</h3>
+                <div class="instruction-item">
+                    <div class="instruction-number">1</div>
+                    <div class="instruction-text">Return to the EMG Music application or website</div>
+                </div>
+                <div class="instruction-item">
+                    <div class="instruction-number">2</div>
+                    <div class="instruction-text">Enter the verification code above in the security prompt</div>
+                </div>
+                <div class="instruction-item">
+                    <div class="instruction-number">3</div>
+                    <div class="instruction-text">Complete your requested action securely</div>
+                </div>
+            </div>
+
+            <!-- Security Note -->
+            <div class="security-note">
+                <h3>⚠️ Important Security Information</h3>
+                <p>
+                    <span class="warning-icon">🔒</span>
+                    This verification code will expire in 10 minutes for your security.<br>
+                    If you didn't request this verification, please ignore this email and contact our support team immediately.<br>
+                    Never share this code with anyone - EMG Music will never ask for it via phone or email.
+                </p>
+            </div>
+
+            <div class="divider"></div>
+
+            <p class="text" style="margin-top: 30px;">
+                This additional security step helps protect your account from unauthorized access. 
+                If you have any questions or need assistance, please contact our support team.
+            </p>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>
+                This verification code was requested for a sensitive operation on your EMG Music account.<br>
+                If you have any questions, please contact us at 
+                <a href="mailto:support@emgmusic.com">support@emgmusic.com</a>
+            </p>
+            
+            <p style="margin-top: 20px; font-size: 12px; color: #6b7280;">
+                © 2024 EMG Music. All rights reserved.<br>
+                You're receiving this email because a security verification was requested for your account.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Simple copy to clipboard functionality
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(function() {
+                alert('Code copied to clipboard!');
+            }, function(err) {
+                console.error('Could not copy text: ', err);
+            });
+        }
+    </script>
+</body>
+</html>

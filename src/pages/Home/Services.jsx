@@ -203,14 +203,14 @@ const Services = ({ theme }) => {
           
           <h2 className={`font-bold mb-6 ${
             theme === "dark" ? "text-white" : "text-gray-900"
-          } text-4xl md:text-5xl lg:text-6xl`}>
+          } text-2xl md:text-3xl lg:text-4xl`}>
             Everything You Need to{" "}
             <span className="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
               Succeed
             </span>
           </h2>
           
-          <p className={`max-w-4xl mx-auto text-lg md:text-xl leading-relaxed ${
+          <p className={`max-w-4xl mx-auto text-sm md:text-base leading-relaxed ${
             theme === "dark" ? "text-gray-300" : "text-gray-600"
           }`}>
             EMG Music empowers artists with seamless music distribution, royalty
@@ -242,7 +242,7 @@ const Services = ({ theme }) => {
                   <stat.icon size={24} />
                 </div>
               </div>
-              <div className={`text-2xl font-bold mb-1 ${
+              <div className={`text-lg md:text-xl font-bold mb-1 ${
                 theme === "dark" ? "text-white" : "text-gray-900"
               }`}>
                 {stat.value}
@@ -317,7 +317,7 @@ const Services = ({ theme }) => {
                     <service.icon size={24} />
                   </div>
                   <div className="flex-1">
-                    <h3 className={`font-semibold text-lg mb-2 ${
+                    <h3 className={`font-semibold text-sm md:text-base mb-2 ${
                       theme === "dark" ? "text-white" : "text-gray-900"
                     }`}>
                       {service.title}
@@ -352,7 +352,7 @@ const Services = ({ theme }) => {
         <div className={`mb-16 transition-all duration-1000 delay-600 ${
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
         }`}>
-          <h3 className={`text-center text-2xl md:text-3xl font-bold mb-12 ${
+          <h3 className={`text-center text-lg md:text-xl font-bold mb-12 ${
             theme === "dark" ? "text-white" : "text-gray-900"
           }`}>
             What Artists Say About Us

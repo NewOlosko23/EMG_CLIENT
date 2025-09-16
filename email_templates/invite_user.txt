@@ -1,0 +1,47 @@
+===============================================
+                EMG MUSIC
+        You're Invited to Join Our Community
+===============================================
+
+🎵 EXCLUSIVE INVITATION
+
+Welcome to EMG Music! 🎉
+
+You've been personally invited to join the EMG Music community! 
+We're excited to have you become part of our growing family of music lovers, 
+artists, and industry professionals.
+
+🎪 YOU'RE INVITED!
+Join {{ .SiteURL }} and start your musical journey today. 
+Click the link below to accept your invitation and create your account.
+
+ACCEPT YOUR INVITATION:
+{{ .ConfirmationURL }}
+
+WHAT'S WAITING FOR YOU:
+🎧 Discover amazing music from talented artists worldwide
+🎤 Connect with artists, producers, and music professionals
+🎵 Access exclusive content and early releases
+🎪 Get notified about events, concerts, and meetups
+🏆 Participate in contests and showcase your talent
+
+HAVING TROUBLE WITH THE LINK?
+Copy and paste this URL into your browser:
+{{ .ConfirmationURL }}
+
+This invitation is exclusive and will help you get started on the right foot. 
+We can't wait to see what you'll create and discover with us!
+
+===============================================
+FOLLOW US:
+Facebook: https://facebook.com/emgmusic
+Twitter: https://twitter.com/emgmusic
+Instagram: https://instagram.com/emgmusic
+YouTube: https://youtube.com/emgmusic
+
+SUPPORT:
+If you have any questions, please contact us at support@emgmusic.com
+
+© 2024 EMG Music. All rights reserved.
+You're receiving this email because you were invited to join our platform.
+===============================================

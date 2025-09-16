@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your EMG Music Login Link</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+            padding: 40px 30px;
+            text-align: center;
+            color: white;
+        }
+        .logo {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+        .tagline {
+            font-size: 16px;
+            opacity: 0.9;
+            margin: 0;
+        }
+        .content {
+            padding: 40px 30px;
+            text-align: center;
+        }
+        .title {
+            font-size: 28px;
+            color: #1f2937;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        .text {
+            font-size: 16px;
+            color: #6b7280;
+            margin-bottom: 30px;
+            line-height: 1.7;
+        }
+        .magic-card {
+            background: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 100%);
+            border: 2px solid #8b5cf6;
+            border-radius: 16px;
+            padding: 30px;
+            margin: 30px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .magic-card::before {
+            content: '✨';
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 24px;
+            animation: sparkle 2s ease-in-out infinite;
+        }
+        @keyframes sparkle {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.1); }
+        }
+        .magic-card h3 {
+            color: #6b21a8;
+            margin: 0 0 15px 0;
+            font-size: 20px;
+        }
+        .magic-card p {
+            color: #7c3aed;
+            margin: 0;
+            font-size: 16px;
+            font-weight: 500;
+        }
+        .login-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+            color: white;
+            text-decoration: none;
+            padding: 18px 36px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 18px;
+            margin: 25px 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        .login-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        .login-button:hover::before {
+            left: 100%;
+        }
+        .login-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
+        }
+        .security-note {
+            background-color: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 8px;
+            text-align: left;
+        }
+        .security-note h3 {
+            color: #1f2937;
+            margin: 0 0 10px 0;
+            font-size: 16px;
+        }
+        .security-note p {
+            color: #6b7280;
+            margin: 0;
+            font-size: 14px;
+        }
+        .quick-access {
+            background-color: #f8fafc;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 30px 0;
+            text-align: left;
+        }
+        .quick-access h3 {
+            color: #1f2937;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+        .access-item {
+            display: flex;
+            align-items: center;
+            margin: 12px 0;
+            padding: 10px;
+            background-color: white;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+        }
+        .access-icon {
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+            border-radius: 50%;
+            margin-right: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .access-text {
+            color: #374151;
+            font-size: 14px;
+        }
+        .footer {
+            background-color: #1f2937;
+            color: #9ca3af;
+            padding: 30px;
+            text-align: center;
+            font-size: 14px;
+        }
+        .footer a {
+            color: #8b5cf6;
+            text-decoration: none;
+        }
+        .alternative-link {
+            background-color: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            font-size: 12px;
+            color: #6b7280;
+            word-break: break-all;
+        }
+        .alternative-link strong {
+            color: #374151;
+        }
+        .divider {
+            height: 1px;
+            background-color: #e5e7eb;
+            margin: 30px 0;
+        }
+        .magic-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">EMG MUSIC</div>
+            <p class="tagline">Your Gateway to Musical Excellence</p>
+        </div>
+
+        <!-- Main Content -->
+        <div class="content">
+            <div class="magic-badge">🔮 Magic Link</div>
+            
+            <h1 class="title">Your Login Link is Ready! 🎵</h1>
+            
+            <p class="text">
+                You requested a magic link to access your EMG Music account. 
+                Click the button below to securely log in without needing to remember your password.
+            </p>
+
+            <!-- Magic Link Card -->
+            <div class="magic-card">
+                <h3>🎪 One-Click Access</h3>
+                <p>
+                    This secure link will instantly log you into your EMG Music account. 
+                    No password required - just click and you're in!
+                </p>
+            </div>
+
+            <!-- Login Button -->
+            <a href="{{ .ConfirmationURL }}" class="login-button">
+                🚀 Login to EMG Music
+            </a>
+
+            <!-- Quick Access Features -->
+            <div class="quick-access">
+                <h3>What you can do after logging in:</h3>
+                <div class="access-item">
+                    <div class="access-icon">🎧</div>
+                    <div class="access-text">Browse and discover new music</div>
+                </div>
+                <div class="access-item">
+                    <div class="access-icon">🎤</div>
+                    <div class="access-text">Connect with artists and fans</div>
+                </div>
+                <div class="access-item">
+                    <div class="access-icon">🎵</div>
+                    <div class="access-text">Access your personalized dashboard</div>
+                </div>
+                <div class="access-item">
+                    <div class="access-icon">⚙️</div>
+                    <div class="access-text">Manage your account settings</div>
+                </div>
+            </div>
+
+            <!-- Security Note -->
+            <div class="security-note">
+                <h3>🔒 Security Information</h3>
+                <p>
+                    This magic link will expire in 1 hour for your security.<br>
+                    If you didn't request this login link, please ignore this email.<br>
+                    For your protection, never share this link with anyone.
+                </p>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- Alternative Link -->
+            <div class="alternative-link">
+                <strong>Having trouble with the button?</strong><br>
+                Copy and paste this link into your browser:<br>
+                <a href="{{ .ConfirmationURL }}">{{ .ConfirmationURL }}</a>
+            </div>
+
+            <p class="text" style="margin-top: 30px;">
+                This magic link provides secure, passwordless access to your account. 
+                Enjoy your musical journey with EMG Music!
+            </p>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>
+                This magic link was requested for your EMG Music account.<br>
+                If you have any questions, please contact us at 
+                <a href="mailto:support@emgmusic.com">support@emgmusic.com</a>
+            </p>
+            
+            <p style="margin-top: 20px; font-size: 12px; color: #6b7280;">
+                © 2024 EMG Music. All rights reserved.<br>
+                You're receiving this email because a magic link was requested for your account.
+            </p>
+        </div>
+    </div>
+</body>
+</html>
