@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { supabase } from '../supabaseClient';
+import { APP_CONFIG } from '../config/constants';
 
 const AuthContext = createContext({});
 
@@ -260,8 +261,11 @@ export const AuthProvider = ({ children }) => {
   // Reset password function
   const resetPassword = async (email) => {
     try {
+      // Use production domain for email redirects
+      const redirectUrl = APP_CONFIG.getEmailRedirectUrl(APP_CONFIG.REDIRECT_PATHS.RESET_PASSWORD);
+      
       const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${window.location.origin}/reset-password`,
+        redirectTo: redirectUrl,
       });
       
       if (error) throw error;
