@@ -1,18 +1,26 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import Login from "../pages/Login";
-import Signup from "../pages/Signup";
-import ForgotPassword from "../pages/ForgotPassword";
-import ResetPassword from "../pages/ResetPassword";
 import Artist from "../pages/Artist";
-import Admin from "../pages/Admin";
-import Dashboard from "../pages/Dashboard";
 import Discover from "../pages/Discover";
 import Layout from "../components/Layout";
 import Home from "../pages/Home";
 import Merch from "../pages/Merch";
 import Team from "../pages/Team";
-import ProtectedRoute from "../components/ProtectedRoute";
+import Dashboard from "../pages/Dashboard";
+import DashboardHome from "../pages/DashboardHome";
+import MyMusic from "../pages/MyMusic";
+import UploadMusic from "../pages/UploadMusic";
+import Analytics from "../pages/Analytics";
+import Earnings from "../pages/Earnings";
+import Playlists from "../pages/Playlists";
+import Promotion from "../pages/Promotion";
+import Calendar from "../pages/Calendar";
+import Settings from "../pages/Settings";
+import Help from "../pages/Help";
+import Login from "../pages/Login";
+import Signup from "../pages/Signup";
+import ForgotPassword from "../pages/ForgotPassword";
+import ResetPassword from "../pages/ResetPassword";
 
 const Routers = () => {
   return (
@@ -22,14 +30,6 @@ const Routers = () => {
         element={
           <Layout>
             <Home />
-          </Layout>
-        }
-      />
-      <Route
-        path="/Login"
-        element={
-          <Layout>
-            <Login />
           </Layout>
         }
       />
@@ -66,30 +66,6 @@ const Routers = () => {
         }
       />
       <Route
-        path="/Signup"
-        element={
-          <Layout>
-            <Signup />
-          </Layout>
-        }
-      />
-      <Route
-        path="/forgot-password"
-        element={
-          <Layout>
-            <ForgotPassword />
-          </Layout>
-        }
-      />
-      <Route
-        path="/reset-password"
-        element={
-          <Layout>
-            <ResetPassword />
-          </Layout>
-        }
-      />
-      <Route
         path="/Artists"
         element={
           <Layout>
@@ -99,23 +75,35 @@ const Routers = () => {
       />
       <Route
         path="/Dashboard"
-        element={
-          <ProtectedRoute>
-            <Layout>
-              <Dashboard />
-            </Layout>
-          </ProtectedRoute>
-        }
+        element={<Dashboard />}
+      >
+        <Route index element={<DashboardHome />} />
+        <Route path="music" element={<MyMusic />} />
+        <Route path="upload" element={<UploadMusic />} />
+        <Route path="analytics" element={<Analytics />} />
+        <Route path="earnings" element={<Earnings />} />
+        <Route path="playlists" element={<Playlists />} />
+        <Route path="collaborations" element={<DashboardHome />} />
+        <Route path="promotion" element={<Promotion />} />
+        <Route path="calendar" element={<Calendar />} />
+        <Route path="settings" element={<Settings />} />
+        <Route path="help" element={<Help />} />
+      </Route>
+      <Route
+        path="/login"
+        element={<Login />}
       />
       <Route
-        path="/Admin"
-        element={
-          <ProtectedRoute>
-            <Layout>
-              <Admin />
-            </Layout>
-          </ProtectedRoute>
-        }
+        path="/signup"
+        element={<Signup />}
+      />
+      <Route
+        path="/forgot-password"
+        element={<ForgotPassword />}
+      />
+      <Route
+        path="/reset-password"
+        element={<ResetPassword />}
       />
     </Routes>
   );

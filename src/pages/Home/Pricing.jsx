@@ -306,7 +306,7 @@ const Pricing = ({ theme }) => {
             {/* CTA Button */}
             <div className="text-center">
               <button
-                onClick={() => navigate("/signup")}
+                onClick={() => navigate("/Discover")}
                 className="group relative px-12 py-4 bg-gradient-to-r from-green-600 to-blue-600 text-white font-bold text-xl rounded-full shadow-2xl hover:shadow-green-500/25 transition-all duration-300 hover:-translate-y-1 hover:scale-105"
               >
                 <span className="flex items-center justify-center">
@@ -356,7 +356,7 @@ const Pricing = ({ theme }) => {
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
               <button
-                onClick={() => navigate("/signup")}
+                onClick={() => navigate("/Discover")}
                 className="group relative px-12 py-6 bg-gradient-to-r from-green-600 to-blue-600 text-white font-bold text-xl rounded-full shadow-2xl hover:shadow-green-500/25 transition-all duration-300 hover:-translate-y-2 hover:scale-105"
               >
                 <span className="flex items-center justify-center">

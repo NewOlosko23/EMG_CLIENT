@@ -30,8 +30,7 @@ const platforms = [
     color: "text-green-500",
     bgColor: "bg-green-500/10",
     borderColor: "border-green-500/20",
-    users: "456M+",
-    description: "World's largest music streaming platform"
+    users: "456M+"
   },
   {
     name: "Apple Music",
@@ -39,8 +38,7 @@ const platforms = [
     color: "text-red-500",
     bgColor: "bg-red-500/10",
     borderColor: "border-red-500/20",
-    users: "88M+",
-    description: "Premium music streaming service"
+    users: "88M+"
   },
   {
     name: "YouTube Music",
@@ -48,8 +46,7 @@ const platforms = [
     color: "text-red-500",
     bgColor: "bg-red-500/10",
     borderColor: "border-red-500/20",
-    users: "2B+",
-    description: "Music videos and audio streaming"
+    users: "2B+"
   },
   { 
     name: "Tidal", 
@@ -57,8 +54,7 @@ const platforms = [
     color: "text-blue-500",
     bgColor: "bg-blue-500/10",
     borderColor: "border-blue-500/20",
-    users: "3M+",
-    description: "High-fidelity music streaming"
+    users: "3M+"
   },
   { 
     name: "Deezer", 
@@ -66,8 +62,7 @@ const platforms = [
     color: "text-purple-500",
     bgColor: "bg-purple-500/10",
     borderColor: "border-purple-500/20",
-    users: "16M+",
-    description: "Global music streaming platform"
+    users: "16M+"
   },
   {
     name: "SoundCloud",
@@ -75,8 +70,7 @@ const platforms = [
     color: "text-orange-600",
     bgColor: "bg-orange-500/10",
     borderColor: "border-orange-500/20",
-    users: "76M+",
-    description: "Community-driven music platform"
+    users: "76M+"
   },
   {
     name: "Amazon Music",
@@ -84,8 +78,7 @@ const platforms = [
     color: "text-yellow-600",
     bgColor: "bg-yellow-500/10",
     borderColor: "border-yellow-500/20",
-    users: "55M+",
-    description: "Music streaming with Prime benefits"
+    users: "55M+"
   },
   {
     name: "Google Play Music",
@@ -93,8 +86,7 @@ const platforms = [
     color: "text-orange-500",
     bgColor: "bg-orange-500/10",
     borderColor: "border-orange-500/20",
-    users: "15M+",
-    description: "Google's music streaming service"
+    users: "15M+"
   },
 ];
 
@@ -252,16 +244,11 @@ const Platform = ({ theme }) => {
                     }`}>
                       {platform.name}
                     </h3>
-                    <div className={`text-2xl font-bold mb-1 ${
+                    <div className={`text-2xl font-bold ${
                       theme === "dark" ? "text-blue-400" : "text-blue-600"
                     }`}>
                       {platform.users}
                     </div>
-                    <p className={`text-xs leading-relaxed ${
-                      theme === "dark" ? "text-gray-400" : "text-gray-600"
-                    }`}>
-                      {platform.description}
-                    </p>
                   </div>
                 </div>
               </SwiperSlide>

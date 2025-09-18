@@ -18,9 +18,9 @@ const CTA = ({ theme }) => {
           Join EMG Music today and get your tracks on major streaming platforms
           worldwide.
         </p>
-        <Link to="/signup">
+        <Link to="/Discover">
           <button className="mt-6 px-6 py-3 cursor-pointer text-lg font-semibold text-white rounded-full bg-gradient-to-r from-purple-600 to-purple-800 shadow-lg hover:scale-105 transition-transform">
-            Get Started
+            Explore Music
           </button>
         </Link>
       </div>

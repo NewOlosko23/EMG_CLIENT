@@ -75,10 +75,10 @@ const Hero = ({ theme }) => {
 
           {/* CTA Button */}
           <div className="flex justify-center items-center mb-12 sm:mb-16 px-4">
-            <Link to="/signup">
+            <Link to="/Discover">
               <button className="group relative px-6 sm:px-8 md:px-10 py-3 sm:py-4 md:py-5 bg-gradient-to-r from-purple-600 via-purple-700 to-pink-600 text-white font-bold rounded-xl sm:rounded-2xl shadow-2xl hover:shadow-purple-500/30 transition-all duration-300 hover:-translate-y-1 sm:hover:-translate-y-2 hover:scale-105 border border-purple-400/30 w-full sm:w-auto" style={{fontSize: 'clamp(0.9rem, 2vw, 1.1rem)'}}>
                 <span className="flex items-center justify-center">
-                  Start Your Journey
+                  Explore Music
                   <ArrowRight size={20} className="ml-2 sm:ml-3 group-hover:translate-x-2 transition-transform" />
                 </span>
                 <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 rounded-xl sm:rounded-2xl blur opacity-0 group-hover:opacity-30 transition-opacity duration-300 -z-10"></div>

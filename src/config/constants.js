@@ -9,14 +9,6 @@ export const APP_CONFIG = {
       : window.location.origin;
     
     return `${baseUrl}${path}`;
-  },
-  
-  // Common redirect paths
-  REDIRECT_PATHS: {
-    RESET_PASSWORD: '/reset-password',
-    EMAIL_CONFIRMATION: '/email-confirmation',
-    DASHBOARD: '/Dashboard',
-    LOGIN: '/Login'
   }
 };
 
