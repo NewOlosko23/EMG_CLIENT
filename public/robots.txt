@@ -1,0 +1,38 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://emg-build.onrender.com/sitemap.xml
+
+# Disallow admin and private areas
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /api/
+Disallow: /_next/
+Disallow: /static/
+
+# Allow important public pages
+Allow: /
+Allow: /Home
+Allow: /Discover
+Allow: /Artists
+Allow: /Team
+Allow: /shop
+Allow: /login
+Allow: /signup
+Allow: /help
+
+# Crawl delay (optional - be respectful to server)
+Crawl-delay: 1
+
+# Specific bot instructions
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+User-agent: facebookexternalhit
+Allow: /

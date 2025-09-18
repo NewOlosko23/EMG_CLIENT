@@ -3,6 +3,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Eye, EyeOff, Mail, Lock, ArrowLeft, Music } from "lucide-react";
 import { useAuth } from "../contexts/AuthContext";
 import { useToast } from "../contexts/ToastContext";
+import SEO from "../components/SEO";
 import Bg from "../assets/emg2.jpg";
 
 const Login = () => {
@@ -76,6 +77,12 @@ const Login = () => {
         backgroundRepeat: "no-repeat",
       }}
     >
+      <SEO 
+        title="Login - EMG Music Platform | Artist Dashboard Access"
+        description="Sign in to your EMG Music Platform account to access your artist dashboard, upload music, track analytics, and manage your music distribution."
+        keywords="login, artist login, music platform login, EMG login, artist dashboard, music distribution login"
+        url="https://emg-build.onrender.com/login"
+      />
       {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-20 left-10 w-32 h-32 bg-purple-500/10 rounded-full animate-pulse"></div>
