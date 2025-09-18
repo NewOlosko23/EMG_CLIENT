@@ -44,7 +44,7 @@ const Header = ({ theme }) => {
                 <img
                   src={Logo}
                   alt="EMG Music"
-                  className="h-8 w-auto object-contain transition-all duration-300 group-hover:scale-105"
+                  className="h-12 w-auto object-contain transition-all duration-300 group-hover:scale-105 drop-shadow-sm"
                 />
               </Link>
             </div>

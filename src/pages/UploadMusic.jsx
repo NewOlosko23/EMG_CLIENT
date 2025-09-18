@@ -262,7 +262,7 @@ const UploadMusic = () => {
       </div>
 
       {/* Progress Steps */}
-      <div className="flex items-center justify-center space-x-8">
+      <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4 lg:space-x-8">
         {[1, 2, 3].map((step) => (
           <div key={step} className="flex items-center">
             <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
@@ -272,13 +272,13 @@ const UploadMusic = () => {
             }`}>
               {step}
             </div>
-            <span className={`ml-2 text-sm ${
+            <span className={`ml-2 text-sm hidden sm:block ${
               uploadStep >= step ? 'text-purple-600 font-medium' : 'text-gray-500'
             }`}>
               {step === 1 ? 'Track Info' : step === 2 ? 'Upload Files' : 'Review & Submit'}
             </span>
             {step < 3 && (
-              <div className={`w-16 h-0.5 ml-4 ${
+              <div className={`w-8 sm:w-16 h-0.5 ml-2 sm:ml-4 ${
                 uploadStep > step ? 'bg-purple-600' : 'bg-gray-200'
               }`} />
             )}
@@ -292,7 +292,7 @@ const UploadMusic = () => {
           <form onSubmit={handleNextStep} className="space-y-6">
             <h2 className="text-lg font-semibold text-gray-900">Track Information</h2>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Track Title *
@@ -435,13 +435,13 @@ const UploadMusic = () => {
           <form onSubmit={handleSubmit} className="space-y-6">
             <h2 className="text-lg font-semibold text-gray-900">Upload Files</h2>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Audio File *
                 </label>
                 <div 
-                  className={`border-2 border-dashed rounded-lg p-6 text-center transition-colors ${
+                  className={`border-2 border-dashed rounded-lg p-4 sm:p-6 text-center transition-colors ${
                     dragActive ? 'border-purple-400 bg-purple-50' : 'border-gray-300'
                   } ${errors.audioFile ? 'border-red-300' : ''}`}
                   onDragEnter={handleDrag}
@@ -449,9 +449,9 @@ const UploadMusic = () => {
                   onDragOver={handleDrag}
                   onDrop={(e) => handleDrop(e, 'audioFile')}
                 >
-                  <FileAudio className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                  <FileAudio className="h-10 w-10 sm:h-12 sm:w-12 text-gray-400 mx-auto mb-3 sm:mb-4" />
                   <p className="text-sm text-gray-600 mb-2">Drop your audio file here or click to browse</p>
-                  <p className="text-xs text-gray-500 mb-4">Supports MP3, WAV, FLAC (max 100MB)</p>
+                  <p className="text-xs text-gray-500 mb-3 sm:mb-4">Supports MP3, WAV, FLAC (max 100MB)</p>
                   <input
                     ref={audioRef}
                     type="file"
@@ -464,21 +464,21 @@ const UploadMusic = () => {
                   />
                   <label
                     htmlFor="audio-upload"
-                    className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors cursor-pointer"
+                    className="bg-purple-600 text-white px-3 sm:px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors cursor-pointer text-sm sm:text-base"
                   >
                     Choose Audio File
                   </label>
                   {formData.audioFile && (
                     <div className="mt-3 p-3 bg-green-50 border border-green-200 rounded-lg">
                       <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                          <CheckCircle className="h-4 w-4 text-green-600" />
-                          <span className="text-sm text-green-800">{formData.audioFile.name}</span>
+                        <div className="flex items-center gap-2 min-w-0 flex-1">
+                          <CheckCircle className="h-4 w-4 text-green-600 flex-shrink-0" />
+                          <span className="text-sm text-green-800 truncate">{formData.audioFile.name}</span>
                         </div>
                         <button
                           type="button"
                           onClick={() => removeFile('audioFile')}
-                          className="text-red-600 hover:text-red-700"
+                          className="text-red-600 hover:text-red-700 flex-shrink-0 ml-2"
                         >
                           <X className="h-4 w-4" />
                         </button>
@@ -502,7 +502,7 @@ const UploadMusic = () => {
                   Cover Art
                 </label>
                 <div 
-                  className={`border-2 border-dashed rounded-lg p-6 text-center transition-colors ${
+                  className={`border-2 border-dashed rounded-lg p-4 sm:p-6 text-center transition-colors ${
                     dragActive ? 'border-purple-400 bg-purple-50' : 'border-gray-300'
                   } ${errors.coverArt ? 'border-red-300' : ''}`}
                   onDragEnter={handleDrag}
@@ -510,9 +510,9 @@ const UploadMusic = () => {
                   onDragOver={handleDrag}
                   onDrop={(e) => handleDrop(e, 'coverArt')}
                 >
-                  <Image className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                  <Image className="h-10 w-10 sm:h-12 sm:w-12 text-gray-400 mx-auto mb-3 sm:mb-4" />
                   <p className="text-sm text-gray-600 mb-2">Drop your cover art here or click to browse</p>
-                  <p className="text-xs text-gray-500 mb-4">Supports JPEG, PNG (max 10MB)</p>
+                  <p className="text-xs text-gray-500 mb-3 sm:mb-4">Supports JPEG, PNG (max 10MB)</p>
                   <input
                     ref={coverArtRef}
                     type="file"
@@ -524,21 +524,21 @@ const UploadMusic = () => {
                   />
                   <label
                     htmlFor="cover-upload"
-                    className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors cursor-pointer"
+                    className="bg-purple-600 text-white px-3 sm:px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors cursor-pointer text-sm sm:text-base"
                   >
                     Choose Cover Art
                   </label>
                   {formData.coverArt && (
                     <div className="mt-3 p-3 bg-green-50 border border-green-200 rounded-lg">
                       <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                          <CheckCircle className="h-4 w-4 text-green-600" />
-                          <span className="text-sm text-green-800">{formData.coverArt.name}</span>
+                        <div className="flex items-center gap-2 min-w-0 flex-1">
+                          <CheckCircle className="h-4 w-4 text-green-600 flex-shrink-0" />
+                          <span className="text-sm text-green-800 truncate">{formData.coverArt.name}</span>
                         </div>
                         <button
                           type="button"
                           onClick={() => removeFile('coverArt')}
-                          className="text-red-600 hover:text-red-700"
+                          className="text-red-600 hover:text-red-700 flex-shrink-0 ml-2"
                         >
                           <X className="h-4 w-4" />
                         </button>
@@ -558,7 +558,7 @@ const UploadMusic = () => {
               </div>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   ISRC Code
@@ -631,18 +631,18 @@ const UploadMusic = () => {
               </div>
             )}
 
-            <div className="flex justify-between">
+            <div className="flex flex-col sm:flex-row justify-between gap-3 sm:gap-0">
               <button
                 type="button"
                 onClick={() => setUploadStep(1)}
-                className="bg-gray-300 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-400 transition-colors"
+                className="bg-gray-300 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-400 transition-colors order-2 sm:order-1"
               >
                 Back
               </button>
               <button
                 type="submit"
                 disabled={!formData.audioFile}
-                className="bg-purple-600 text-white px-6 py-2 rounded-lg hover:bg-purple-700 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
+                className="bg-purple-600 text-white px-6 py-2 rounded-lg hover:bg-purple-700 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed order-1 sm:order-2"
               >
                 Upload Track
               </button>
@@ -688,7 +688,7 @@ const UploadMusic = () => {
                 </div>
                 <h3 className="text-lg font-semibold text-gray-900">Upload Successful!</h3>
                 <p className="text-gray-600">Your track has been uploaded and is being processed.</p>
-                <div className="flex justify-center gap-4">
+                <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
                   <button
                     onClick={() => {
                       setUploadStep(1);
@@ -712,7 +712,7 @@ const UploadMusic = () => {
                   </button>
                   <Link 
                     to="/dashboard/music"
-                    className="bg-gray-300 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-400 transition-colors inline-block"
+                    className="bg-gray-300 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-400 transition-colors inline-block text-center"
                   >
                     View My Music
                   </Link>

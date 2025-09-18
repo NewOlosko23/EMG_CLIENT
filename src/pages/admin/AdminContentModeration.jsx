@@ -107,17 +107,17 @@ const AdminContentModeration = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Content Moderation</h1>
           <p className="text-gray-600 mt-1">Review and approve tracks, manage content quality</p>
         </div>
-        <div className="flex items-center gap-3">
-          <button className="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200 transition-colors flex items-center gap-2">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+          <button className="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200 transition-colors flex items-center justify-center gap-2">
             <Download className="h-4 w-4" />
             Export Report
           </button>
-          <button className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors flex items-center gap-2">
+          <button className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors flex items-center justify-center gap-2">
             <Shield className="h-4 w-4" />
             Moderation Rules
           </button>
@@ -188,8 +188,8 @@ const AdminContentModeration = () => {
       </div>
 
       {/* Search and Filters */}
-      <div className="bg-white rounded-lg border border-gray-200 p-6">
-        <div className="flex flex-col md:flex-row gap-4">
+      <div className="bg-white rounded-lg border border-gray-200 p-4 sm:p-6">
+        <div className="flex flex-col gap-4">
           <div className="flex-1">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
@@ -202,7 +202,7 @@ const AdminContentModeration = () => {
               />
             </div>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
             <select
               value={selectedStatus}
               onChange={(e) => setSelectedStatus(e.target.value)}
@@ -231,7 +231,7 @@ const AdminContentModeration = () => {
             </select>
             <button 
               onClick={() => setShowFilters(!showFilters)}
-              className="p-2 border border-gray-300 rounded-lg hover:bg-gray-50"
+              className="p-2 border border-gray-300 rounded-lg hover:bg-gray-50 flex items-center justify-center"
             >
               <Filter className="h-5 w-5 text-gray-600" />
             </button>
@@ -241,8 +241,8 @@ const AdminContentModeration = () => {
 
       {/* Tracks Table */}
       <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-        <div className="px-6 py-4 border-b border-gray-200">
-          <div className="flex items-center justify-between">
+        <div className="px-4 sm:px-6 py-4 border-b border-gray-200">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
             <h3 className="text-lg font-medium text-gray-900">
               Tracks ({filteredTracks.length})
             </h3>
@@ -274,25 +274,25 @@ const AdminContentModeration = () => {
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Track
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="hidden sm:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Artist
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="hidden md:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Genre
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="hidden lg:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Duration
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Status
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="hidden lg:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Submitted
                   </th>
-                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-3 sm:px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Actions
                   </th>
                 </tr>
@@ -300,7 +300,7 @@ const AdminContentModeration = () => {
               <tbody className="bg-white divide-y divide-gray-200">
                 {filteredTracks.map((track) => (
                   <tr key={track.id} className="hover:bg-gray-50">
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="px-3 sm:px-6 py-4">
                       <div className="flex items-center">
                         <input
                           type="checkbox"
@@ -314,61 +314,65 @@ const AdminContentModeration = () => {
                           }}
                           className="rounded border-gray-300 mr-3"
                         />
-                        <div className="flex-shrink-0 h-12 w-12">
+                        <div className="flex-shrink-0 h-10 w-10 sm:h-12 sm:w-12">
                           {track.cover_art_url ? (
                             <img
                               src={track.cover_art_url}
                               alt={track.title}
-                              className="h-12 w-12 rounded-lg object-cover"
+                              className="h-10 w-10 sm:h-12 sm:w-12 rounded-lg object-cover"
                             />
                           ) : (
-                            <div className="h-12 w-12 rounded-lg bg-purple-100 flex items-center justify-center">
-                              <Music className="h-6 w-6 text-purple-600" />
+                            <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-lg bg-purple-100 flex items-center justify-center">
+                              <Music className="h-5 w-5 sm:h-6 sm:w-6 text-purple-600" />
                             </div>
                           )}
                         </div>
-                        <div className="ml-4">
-                          <div className="text-sm font-medium text-gray-900 truncate max-w-xs">
+                        <div className="ml-3 sm:ml-4 min-w-0 flex-1">
+                          <div className="text-sm font-medium text-gray-900 truncate">
                             {track.title}
                           </div>
-                          <div className="text-sm text-gray-500">
-                            {track.description ? track.description.substring(0, 50) + '...' : 'No description'}
+                          <div className="text-xs sm:text-sm text-gray-500 truncate">
+                            {track.profiles_emg?.full_name || track.artist_name || 'Unknown Artist'}
+                          </div>
+                          <div className="text-xs text-gray-400 truncate sm:hidden">
+                            {track.genre || 'Unknown'} • {formatDuration(track.duration || 0)}
                           </div>
                         </div>
                       </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="hidden sm:table-cell px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">
                         <User className="h-4 w-4 text-gray-400 mr-2" />
-                        <span className="text-sm text-gray-900">
+                        <span className="text-sm text-gray-900 truncate">
                           {track.profiles_emg?.full_name || track.artist_name || 'Unknown Artist'}
                         </span>
                       </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="hidden md:table-cell px-6 py-4 whitespace-nowrap">
                       <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getGenreColor(track.genre)}`}>
                         {track.genre || 'Unknown'}
                       </span>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td className="hidden lg:table-cell px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                       {formatDuration(track.duration || 0)}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="px-3 sm:px-6 py-4 whitespace-nowrap">
                       <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getStatusColor(track.approval_status)}`}>
                         {track.approval_status || 'pending'}
                       </span>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td className="hidden lg:table-cell px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                       {new Date(track.created_at).toLocaleDateString()}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                      <div className="flex items-center justify-end gap-2">
+                    <td className="px-3 sm:px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                      <div className="flex items-center justify-end gap-1 sm:gap-2">
                         <button
                           onClick={() => {
                             setSelectedTrack(track);
                             setShowTrackModal(true);
                           }}
-                          className="text-gray-400 hover:text-gray-600"
+                          className="text-gray-400 hover:text-gray-600 p-1"
+                          title="View Details"
                         >
                           <Eye className="h-4 w-4" />
                         </button>
@@ -377,7 +381,8 @@ const AdminContentModeration = () => {
                             setSelectedTrack(track);
                             setShowTrackModal(true);
                           }}
-                          className="text-gray-400 hover:text-gray-600"
+                          className="text-gray-400 hover:text-gray-600 p-1"
+                          title="Play"
                         >
                           <Play className="h-4 w-4" />
                         </button>
@@ -385,13 +390,15 @@ const AdminContentModeration = () => {
                           <>
                             <button
                               onClick={() => handleTrackAction(track.id, 'approve')}
-                              className="text-green-400 hover:text-green-600"
+                              className="text-green-400 hover:text-green-600 p-1"
+                              title="Approve"
                             >
                               <CheckCircle className="h-4 w-4" />
                             </button>
                             <button
                               onClick={() => handleTrackAction(track.id, 'reject')}
-                              className="text-red-400 hover:text-red-600"
+                              className="text-red-400 hover:text-red-600 p-1"
+                              title="Reject"
                             >
                               <X className="h-4 w-4" />
                             </button>
@@ -418,11 +425,11 @@ const AdminContentModeration = () => {
       {/* Bulk Actions */}
       {selectedTracks.length > 0 && (
         <div className="bg-purple-50 border border-purple-200 rounded-lg p-4">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
             <span className="text-sm text-purple-700">
               {selectedTracks.length} track(s) selected
             </span>
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               <button className="bg-green-600 text-white px-3 py-1 rounded text-sm hover:bg-green-700">
                 Approve All
               </button>
@@ -439,29 +446,29 @@ const AdminContentModeration = () => {
 
       {/* Track Detail Modal */}
       {showTrackModal && selectedTrack && (
-        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 w-full max-w-4xl max-h-[90vh] overflow-y-auto">
-            <div className="flex items-center justify-between mb-6">
+        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg p-4 sm:p-6 w-full max-w-4xl max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between mb-4 sm:mb-6">
               <h3 className="text-lg font-semibold text-gray-900">Track Review</h3>
               <button
                 onClick={() => setShowTrackModal(false)}
-                className="text-gray-400 hover:text-gray-600"
+                className="text-gray-400 hover:text-gray-600 p-1"
               >
                 <X className="h-6 w-6" />
               </button>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
               {/* Track Info */}
               <div className="space-y-4">
                 <div>
                   <h4 className="text-sm font-medium text-gray-700 mb-2">Track Information</h4>
-                  <div className="bg-gray-50 rounded-lg p-4 space-y-2">
-                    <div><strong>Title:</strong> {selectedTrack.title}</div>
-                    <div><strong>Artist:</strong> {selectedTrack.profiles_emg?.full_name || selectedTrack.artist_name}</div>
-                    <div><strong>Genre:</strong> {selectedTrack.genre}</div>
-                    <div><strong>Duration:</strong> {formatDuration(selectedTrack.duration)}</div>
-                    <div><strong>Status:</strong> 
+                  <div className="bg-gray-50 rounded-lg p-3 sm:p-4 space-y-2">
+                    <div className="text-sm"><strong>Title:</strong> {selectedTrack.title}</div>
+                    <div className="text-sm"><strong>Artist:</strong> {selectedTrack.profiles_emg?.full_name || selectedTrack.artist_name}</div>
+                    <div className="text-sm"><strong>Genre:</strong> {selectedTrack.genre}</div>
+                    <div className="text-sm"><strong>Duration:</strong> {formatDuration(selectedTrack.duration)}</div>
+                    <div className="text-sm"><strong>Status:</strong> 
                       <span className={`ml-2 inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getStatusColor(selectedTrack.approval_status)}`}>
                         {selectedTrack.approval_status}
                       </span>
@@ -471,7 +478,7 @@ const AdminContentModeration = () => {
 
                 <div>
                   <h4 className="text-sm font-medium text-gray-700 mb-2">Description</h4>
-                  <div className="bg-gray-50 rounded-lg p-4">
+                  <div className="bg-gray-50 rounded-lg p-3 sm:p-4">
                     <p className="text-sm text-gray-600">
                       {selectedTrack.description || 'No description provided'}
                     </p>
@@ -483,16 +490,16 @@ const AdminContentModeration = () => {
               <div className="space-y-4">
                 <div>
                   <h4 className="text-sm font-medium text-gray-700 mb-2">Cover Art</h4>
-                  <div className="bg-gray-50 rounded-lg p-4 flex items-center justify-center">
+                  <div className="bg-gray-50 rounded-lg p-3 sm:p-4 flex items-center justify-center">
                     {selectedTrack.cover_art_url ? (
                       <img
                         src={selectedTrack.cover_art_url}
                         alt={selectedTrack.title}
-                        className="h-32 w-32 rounded-lg object-cover"
+                        className="h-24 w-24 sm:h-32 sm:w-32 rounded-lg object-cover"
                       />
                     ) : (
-                      <div className="h-32 w-32 rounded-lg bg-purple-100 flex items-center justify-center">
-                        <Image className="h-8 w-8 text-purple-600" />
+                      <div className="h-24 w-24 sm:h-32 sm:w-32 rounded-lg bg-purple-100 flex items-center justify-center">
+                        <Image className="h-6 w-6 sm:h-8 sm:w-8 text-purple-600" />
                       </div>
                     )}
                   </div>
@@ -500,10 +507,10 @@ const AdminContentModeration = () => {
 
                 <div>
                   <h4 className="text-sm font-medium text-gray-700 mb-2">Audio Preview</h4>
-                  <div className="bg-gray-50 rounded-lg p-4">
+                  <div className="bg-gray-50 rounded-lg p-3 sm:p-4">
                     <div className="flex items-center justify-center">
-                      <button className="bg-purple-600 text-white p-3 rounded-full hover:bg-purple-700">
-                        <Play className="h-6 w-6" />
+                      <button className="bg-purple-600 text-white p-2 sm:p-3 rounded-full hover:bg-purple-700">
+                        <Play className="h-5 w-5 sm:h-6 sm:w-6" />
                       </button>
                     </div>
                     <div className="mt-2 text-center text-sm text-gray-600">
@@ -516,13 +523,13 @@ const AdminContentModeration = () => {
 
             {/* Actions */}
             {selectedTrack.approval_status === 'pending' && (
-              <div className="mt-6 flex justify-end gap-3">
+              <div className="mt-4 sm:mt-6 flex flex-col sm:flex-row justify-end gap-3">
                 <button
                   onClick={() => {
                     handleTrackAction(selectedTrack.id, 'reject');
                     setShowTrackModal(false);
                   }}
-                  className="px-4 py-2 text-red-700 bg-red-100 rounded-lg hover:bg-red-200 transition-colors"
+                  className="px-4 py-2 text-red-700 bg-red-100 rounded-lg hover:bg-red-200 transition-colors order-2 sm:order-1"
                 >
                   Reject Track
                 </button>
@@ -531,7 +538,7 @@ const AdminContentModeration = () => {
                     handleTrackAction(selectedTrack.id, 'approve');
                     setShowTrackModal(false);
                   }}
-                  className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+                  className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors order-1 sm:order-2"
                 >
                   Approve Track
                 </button>

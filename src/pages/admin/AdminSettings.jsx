@@ -783,16 +783,16 @@ const AdminSettings = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">System Settings</h1>
           <p className="text-gray-600 mt-1">Configure platform settings and system preferences</p>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
           {hasChanges && (
             <button
               onClick={resetSettings}
-              className="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200 transition-colors flex items-center gap-2"
+              className="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200 transition-colors flex items-center justify-center gap-2"
             >
               <RefreshCw className="h-4 w-4" />
               Reset
@@ -801,7 +801,7 @@ const AdminSettings = () => {
           <button
             onClick={saveSettings}
             disabled={!hasChanges || loading}
-            className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors flex items-center gap-2 disabled:opacity-50"
+            className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
           >
             <Save className="h-4 w-4" />
             {loading ? 'Saving...' : 'Save Changes'}
@@ -811,26 +811,26 @@ const AdminSettings = () => {
 
       {/* Tabs */}
       <div className="border-b border-gray-200">
-        <nav className="-mb-px flex space-x-8">
+        <nav className="-mb-px flex flex-wrap gap-2 sm:gap-0 sm:space-x-8">
           {tabs.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`py-2 px-1 border-b-2 font-medium text-sm flex items-center gap-2 ${
+              className={`py-2 px-1 border-b-2 font-medium text-sm flex items-center gap-2 whitespace-nowrap ${
                 activeTab === tab.id
                   ? "border-purple-500 text-purple-600"
                   : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
               }`}
             >
               <tab.icon className="h-4 w-4" />
-              {tab.name}
+              <span className="hidden sm:inline">{tab.name}</span>
             </button>
           ))}
         </nav>
       </div>
 
       {/* Tab Content */}
-      <div className="bg-white rounded-lg border border-gray-200 p-6">
+      <div className="bg-white rounded-lg border border-gray-200 p-4 sm:p-6">
         {loading ? (
           <div className="flex items-center justify-center py-12">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600"></div>
@@ -845,7 +845,7 @@ const AdminSettings = () => {
       {hasChanges && (
         <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
           <div className="flex items-center">
-            <AlertTriangle className="h-5 w-5 text-yellow-600 mr-2" />
+            <AlertTriangle className="h-5 w-5 text-yellow-600 mr-2 flex-shrink-0" />
             <span className="text-sm text-yellow-800">You have unsaved changes. Don't forget to save your settings.</span>
           </div>
         </div>

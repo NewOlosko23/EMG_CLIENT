@@ -181,7 +181,7 @@ const MyMusic = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">My Music</h1>
           <p className="text-gray-600 mt-1">Manage your tracks and releases</p>
@@ -203,17 +203,18 @@ const MyMusic = () => {
           </div>
           <Link 
             to="/dashboard/upload"
-            className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors flex items-center gap-2"
+            className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors flex items-center gap-2 text-sm sm:text-base"
           >
             <Music className="h-4 w-4" />
-            Upload New Track
+            <span className="hidden sm:inline">Upload New Track</span>
+            <span className="sm:hidden">Upload</span>
           </Link>
         </div>
       </div>
 
       {/* Search and Filters */}
       <div className="bg-white rounded-lg border border-gray-200 p-4">
-        <div className="flex flex-col md:flex-row gap-4">
+        <div className="flex flex-col lg:flex-row gap-4">
           <div className="flex-1">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
@@ -226,7 +227,7 @@ const MyMusic = () => {
               />
             </div>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
             <select
               value={selectedGenre}
               onChange={(e) => setSelectedGenre(e.target.value)}
@@ -250,7 +251,7 @@ const MyMusic = () => {
             </select>
             <button
               onClick={() => setSortOrder(sortOrder === "asc" ? "desc" : "asc")}
-              className="p-2 border border-gray-300 rounded-lg hover:bg-gray-50"
+              className="p-2 border border-gray-300 rounded-lg hover:bg-gray-50 flex items-center justify-center"
             >
               {sortOrder === "asc" ? <SortAsc className="h-4 w-4" /> : <SortDesc className="h-4 w-4" />}
             </button>
@@ -261,7 +262,7 @@ const MyMusic = () => {
       {/* Bulk Actions */}
       {selectedTracks.length > 0 && (
         <div className="bg-purple-50 border border-purple-200 rounded-lg p-4">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div className="flex items-center gap-3">
               <span className="text-sm font-medium text-purple-900">
                 {selectedTracks.length} track{selectedTracks.length > 1 ? 's' : ''} selected
@@ -273,7 +274,7 @@ const MyMusic = () => {
                 {selectedTracks.length === filteredTracks.length ? 'Deselect All' : 'Select All'}
               </button>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               <button
                 onClick={() => handleBulkAction('download')}
                 className="px-3 py-1 text-sm bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
@@ -298,7 +299,7 @@ const MyMusic = () => {
       )}
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="bg-white p-4 rounded-lg border border-gray-200">
           <div className="flex items-center gap-3">
             <div className="p-2 bg-blue-100 rounded-lg">
@@ -364,109 +365,183 @@ const MyMusic = () => {
               <span className="ml-2 text-gray-600">Loading tracks...</span>
             </div>
           ) : (
-            <table className="w-full">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    <button
-                      onClick={handleSelectAll}
-                      className="flex items-center gap-2 hover:text-gray-700"
-                    >
-                      {selectedTracks.length === filteredTracks.length ? (
-                        <CheckSquare className="h-4 w-4 text-purple-600" />
-                      ) : (
-                        <Square className="h-4 w-4" />
-                      )}
-                      Track
-                    </button>
-                  </th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Genre
-                  </th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Duration
-                  </th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Plays
-                  </th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Release Date
-                  </th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Status
-                  </th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Actions
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-200">
-                {filteredTracks.map((track) => (
-                <tr key={track.id} className={`hover:bg-gray-50 ${selectedTracks.includes(track.id) ? 'bg-purple-50' : ''}`}>
-                  <td className="px-4 py-4">
-                    <div className="flex items-center gap-3">
-                      <button
-                        onClick={() => handleSelectTrack(track.id)}
-                        className="flex-shrink-0"
-                      >
-                        {selectedTracks.includes(track.id) ? (
-                          <CheckSquare className="h-4 w-4 text-purple-600" />
-                        ) : (
-                          <Square className="h-4 w-4 text-gray-400" />
-                        )}
-                      </button>
-                      <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
-                        <Music className="h-5 w-5 text-purple-600" />
+            <>
+              {/* Desktop Table View */}
+              <div className="hidden lg:block">
+                <table className="w-full">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <button
+                          onClick={handleSelectAll}
+                          className="flex items-center gap-2 hover:text-gray-700"
+                        >
+                          {selectedTracks.length === filteredTracks.length ? (
+                            <CheckSquare className="h-4 w-4 text-purple-600" />
+                          ) : (
+                            <Square className="h-4 w-4" />
+                          )}
+                          Track
+                        </button>
+                      </th>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Genre
+                      </th>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Duration
+                      </th>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Plays
+                      </th>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Release Date
+                      </th>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Status
+                      </th>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Actions
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-200">
+                    {filteredTracks.map((track) => (
+                    <tr key={track.id} className={`hover:bg-gray-50 ${selectedTracks.includes(track.id) ? 'bg-purple-50' : ''}`}>
+                      <td className="px-4 py-4">
+                        <div className="flex items-center gap-3">
+                          <button
+                            onClick={() => handleSelectTrack(track.id)}
+                            className="flex-shrink-0"
+                          >
+                            {selectedTracks.includes(track.id) ? (
+                              <CheckSquare className="h-4 w-4 text-purple-600" />
+                            ) : (
+                              <Square className="h-4 w-4 text-gray-400" />
+                            )}
+                          </button>
+                          <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
+                            <Music className="h-5 w-5 text-purple-600" />
+                          </div>
+                          <div>
+                            <p className="text-sm font-medium text-gray-900">{track.title}</p>
+                            <p className="text-sm text-gray-500">{track.artist}</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-4 py-4">
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                          {track.genre}
+                        </span>
+                      </td>
+                      <td className="px-4 py-4 text-sm text-gray-900">{track.duration}</td>
+                      <td className="px-4 py-4">
+                        <div className="flex items-center gap-1">
+                          <TrendingUp className="h-3 w-3 text-green-500" />
+                          <span className="text-sm text-gray-900">{track.plays.toLocaleString()}</span>
+                        </div>
+                      </td>
+                      <td className="px-4 py-4 text-sm text-gray-900">
+                        {new Date(track.releaseDate).toLocaleDateString()}
+                      </td>
+                      <td className="px-4 py-4">
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                          {track.status}
+                        </span>
+                      </td>
+                      <td className="px-4 py-4">
+                        <div className="flex items-center gap-2">
+                          <button className="text-gray-400 hover:text-gray-600" title="Play">
+                            <Play className="h-4 w-4" />
+                          </button>
+                          <button className="text-gray-400 hover:text-gray-600" title="Download">
+                            <Download className="h-4 w-4" />
+                          </button>
+                          <button className="text-gray-400 hover:text-gray-600" title="Share">
+                            <Share2 className="h-4 w-4" />
+                          </button>
+                          <button className="text-gray-400 hover:text-gray-600" title="Edit">
+                            <Edit3 className="h-4 w-4" />
+                          </button>
+                          <button className="text-gray-400 hover:text-red-600" title="Delete">
+                            <Trash2 className="h-4 w-4" />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              {/* Mobile Card View */}
+              <div className="lg:hidden">
+                <div className="p-4 space-y-4">
+                  {filteredTracks.map((track) => (
+                    <div key={track.id} className={`bg-gray-50 rounded-lg p-4 border ${selectedTracks.includes(track.id) ? 'border-purple-200 bg-purple-50' : 'border-gray-200'}`}>
+                      <div className="flex items-start gap-3">
+                        <button
+                          onClick={() => handleSelectTrack(track.id)}
+                          className="flex-shrink-0 mt-1"
+                        >
+                          {selectedTracks.includes(track.id) ? (
+                            <CheckSquare className="h-5 w-5 text-purple-600" />
+                          ) : (
+                            <Square className="h-5 w-5 text-gray-400" />
+                          )}
+                        </button>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-3 mb-2">
+                            <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                              <Music className="h-6 w-6 text-purple-600" />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <h3 className="text-sm font-medium text-gray-900 truncate">{track.title}</h3>
+                              <p className="text-sm text-gray-500 truncate">{track.artist}</p>
+                            </div>
+                          </div>
+                          <div className="flex flex-wrap items-center gap-2 mb-3">
+                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                              {track.genre}
+                            </span>
+                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                              {track.status}
+                            </span>
+                          </div>
+                          <div className="grid grid-cols-2 gap-4 text-sm text-gray-600 mb-3">
+                            <div>
+                              <span className="font-medium">Duration:</span> {track.duration}
+                            </div>
+                            <div>
+                              <span className="font-medium">Plays:</span> {track.plays.toLocaleString()}
+                            </div>
+                            <div className="col-span-2">
+                              <span className="font-medium">Release:</span> {new Date(track.releaseDate).toLocaleDateString()}
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <button className="text-gray-400 hover:text-gray-600 p-1" title="Play">
+                              <Play className="h-4 w-4" />
+                            </button>
+                            <button className="text-gray-400 hover:text-gray-600 p-1" title="Download">
+                              <Download className="h-4 w-4" />
+                            </button>
+                            <button className="text-gray-400 hover:text-gray-600 p-1" title="Share">
+                              <Share2 className="h-4 w-4" />
+                            </button>
+                            <button className="text-gray-400 hover:text-gray-600 p-1" title="Edit">
+                              <Edit3 className="h-4 w-4" />
+                            </button>
+                            <button className="text-gray-400 hover:text-red-600 p-1" title="Delete">
+                              <Trash2 className="h-4 w-4" />
+                            </button>
+                          </div>
+                        </div>
                       </div>
-                      <div>
-                        <p className="text-sm font-medium text-gray-900">{track.title}</p>
-                        <p className="text-sm text-gray-500">{track.artist}</p>
-                      </div>
                     </div>
-                  </td>
-                  <td className="px-4 py-4">
-                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
-                      {track.genre}
-                    </span>
-                  </td>
-                  <td className="px-4 py-4 text-sm text-gray-900">{track.duration}</td>
-                  <td className="px-4 py-4">
-                    <div className="flex items-center gap-1">
-                      <TrendingUp className="h-3 w-3 text-green-500" />
-                      <span className="text-sm text-gray-900">{track.plays.toLocaleString()}</span>
-                    </div>
-                  </td>
-                  <td className="px-4 py-4 text-sm text-gray-900">
-                    {new Date(track.releaseDate).toLocaleDateString()}
-                  </td>
-                  <td className="px-4 py-4">
-                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                      {track.status}
-                    </span>
-                  </td>
-                  <td className="px-4 py-4">
-                    <div className="flex items-center gap-2">
-                      <button className="text-gray-400 hover:text-gray-600" title="Play">
-                        <Play className="h-4 w-4" />
-                      </button>
-                      <button className="text-gray-400 hover:text-gray-600" title="Download">
-                        <Download className="h-4 w-4" />
-                      </button>
-                      <button className="text-gray-400 hover:text-gray-600" title="Share">
-                        <Share2 className="h-4 w-4" />
-                      </button>
-                      <button className="text-gray-400 hover:text-gray-600" title="Edit">
-                        <Edit3 className="h-4 w-4" />
-                      </button>
-                      <button className="text-gray-400 hover:text-red-600" title="Delete">
-                        <Trash2 className="h-4 w-4" />
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-                ))}
-              </tbody>
-            </table>
+                  ))}
+                </div>
+              </div>
+            </>
           )}
         </div>
         {filteredTracks.length === 0 && (

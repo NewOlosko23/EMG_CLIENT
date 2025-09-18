@@ -240,39 +240,41 @@ const Promotion = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Promotion</h1>
           <p className="text-gray-600 mt-1">Promote your music and reach new audiences</p>
         </div>
         <button 
           onClick={() => setActiveTab("create")}
-          className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors flex items-center gap-2"
+          className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors flex items-center gap-2 text-sm sm:text-base"
         >
           <TrendingUp className="h-4 w-4" />
-          Create Campaign
+          <span className="hidden sm:inline">Create Campaign</span>
+          <span className="sm:hidden">Create</span>
         </button>
       </div>
 
       {/* Tabs */}
       <div className="border-b border-gray-200">
-        <nav className="-mb-px flex space-x-8">
+        <nav className="-mb-px flex flex-wrap gap-2 sm:gap-0 sm:space-x-8">
           {[
-            { id: "campaigns", name: "My Campaigns" },
-            { id: "create", name: "Create Campaign" },
-            { id: "options", name: "Promotion Options" },
-            { id: "analytics", name: "Analytics" }
+            { id: "campaigns", name: "My Campaigns", shortName: "Campaigns" },
+            { id: "create", name: "Create Campaign", shortName: "Create" },
+            { id: "options", name: "Promotion Options", shortName: "Options" },
+            { id: "analytics", name: "Analytics", shortName: "Analytics" }
           ].map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`py-2 px-1 border-b-2 font-medium text-sm ${
+              className={`py-2 px-1 border-b-2 font-medium text-sm whitespace-nowrap ${
                 activeTab === tab.id
                   ? "border-purple-500 text-purple-600"
                   : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
               }`}
             >
-              {tab.name}
+              <span className="hidden sm:inline">{tab.name}</span>
+              <span className="sm:hidden">{tab.shortName}</span>
             </button>
           ))}
         </nav>
@@ -282,7 +284,7 @@ const Promotion = () => {
       {activeTab === "campaigns" && (
         <div className="space-y-6">
           {/* Campaign Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <div className="bg-white p-4 rounded-lg border border-gray-200">
               <div className="flex items-center gap-3">
                 <div className="p-2 bg-blue-100 rounded-lg">
@@ -343,41 +345,98 @@ const Promotion = () => {
               <h3 className="text-lg font-semibold text-gray-900">Campaigns</h3>
             </div>
             <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Campaign
-                    </th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Status
-                    </th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Budget
-                    </th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Reach
-                    </th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Conversions
-                    </th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Actions
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-200">
+              {/* Desktop Table View */}
+              <div className="hidden lg:block">
+                <table className="w-full">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Campaign
+                      </th>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Status
+                      </th>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Budget
+                      </th>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Reach
+                      </th>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Conversions
+                      </th>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Actions
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-200">
+                    {campaigns.map((campaign) => (
+                      <tr key={campaign.id} className="hover:bg-gray-50">
+                        <td className="px-4 py-4">
+                          <div>
+                            <p className="text-sm font-medium text-gray-900">{campaign.name}</p>
+                            <p className="text-sm text-gray-500">
+                              {campaign.startDate} - {campaign.endDate}
+                            </p>
+                          </div>
+                        </td>
+                        <td className="px-4 py-4">
+                          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                            campaign.status === "Active" 
+                              ? "bg-green-100 text-green-800"
+                              : campaign.status === "Completed"
+                              ? "bg-blue-100 text-blue-800"
+                              : "bg-yellow-100 text-yellow-800"
+                          }`}>
+                            {campaign.status}
+                          </span>
+                        </td>
+                        <td className="px-4 py-4">
+                          <div>
+                            <p className="text-sm text-gray-900">${campaign.spent} / ${campaign.budget}</p>
+                            <div className="w-full bg-gray-200 rounded-full h-2 mt-1">
+                              <div 
+                                className="bg-purple-600 h-2 rounded-full"
+                                style={{ width: `${(campaign.spent / campaign.budget) * 100}%` }}
+                              ></div>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="px-4 py-4 text-sm text-gray-900">
+                          {campaign.reach.toLocaleString()}
+                        </td>
+                        <td className="px-4 py-4 text-sm text-gray-900">
+                          {campaign.conversions}
+                        </td>
+                        <td className="px-4 py-4">
+                          <div className="flex items-center gap-2">
+                            <button className="text-purple-600 hover:text-purple-700 text-sm font-medium">
+                              View
+                            </button>
+                            <button className="text-gray-400 hover:text-gray-600">
+                              <BarChart3 className="h-4 w-4" />
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              {/* Mobile Card View */}
+              <div className="lg:hidden">
+                <div className="p-4 space-y-4">
                   {campaigns.map((campaign) => (
-                    <tr key={campaign.id} className="hover:bg-gray-50">
-                      <td className="px-4 py-4">
-                        <div>
-                          <p className="text-sm font-medium text-gray-900">{campaign.name}</p>
+                    <div key={campaign.id} className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                      <div className="flex items-start justify-between mb-3">
+                        <div className="flex-1 min-w-0">
+                          <h3 className="text-sm font-medium text-gray-900 truncate">{campaign.name}</h3>
                           <p className="text-sm text-gray-500">
                             {campaign.startDate} - {campaign.endDate}
                           </p>
                         </div>
-                      </td>
-                      <td className="px-4 py-4">
                         <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
                           campaign.status === "Active" 
                             ? "bg-green-100 text-green-800"
@@ -387,26 +446,31 @@ const Promotion = () => {
                         }`}>
                           {campaign.status}
                         </span>
-                      </td>
-                      <td className="px-4 py-4">
+                      </div>
+                      <div className="space-y-3">
                         <div>
-                          <p className="text-sm text-gray-900">${campaign.spent} / ${campaign.budget}</p>
-                          <div className="w-full bg-gray-200 rounded-full h-2 mt-1">
+                          <div className="flex justify-between text-sm text-gray-600 mb-1">
+                            <span>Budget</span>
+                            <span>${campaign.spent} / ${campaign.budget}</span>
+                          </div>
+                          <div className="w-full bg-gray-200 rounded-full h-2">
                             <div 
                               className="bg-purple-600 h-2 rounded-full"
                               style={{ width: `${(campaign.spent / campaign.budget) * 100}%` }}
                             ></div>
                           </div>
                         </div>
-                      </td>
-                      <td className="px-4 py-4 text-sm text-gray-900">
-                        {campaign.reach.toLocaleString()}
-                      </td>
-                      <td className="px-4 py-4 text-sm text-gray-900">
-                        {campaign.conversions}
-                      </td>
-                      <td className="px-4 py-4">
-                        <div className="flex items-center gap-2">
+                        <div className="grid grid-cols-2 gap-4 text-sm">
+                          <div>
+                            <span className="text-gray-600">Reach:</span>
+                            <span className="ml-1 font-medium text-gray-900">{campaign.reach.toLocaleString()}</span>
+                          </div>
+                          <div>
+                            <span className="text-gray-600">Conversions:</span>
+                            <span className="ml-1 font-medium text-gray-900">{campaign.conversions}</span>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2 pt-2">
                           <button className="text-purple-600 hover:text-purple-700 text-sm font-medium">
                             View
                           </button>
@@ -414,11 +478,11 @@ const Promotion = () => {
                             <BarChart3 className="h-4 w-4" />
                           </button>
                         </div>
-                      </td>
-                    </tr>
+                      </div>
+                    </div>
                   ))}
-                </tbody>
-              </table>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -432,7 +496,7 @@ const Promotion = () => {
             
             <form onSubmit={handleCreateCampaign} className="space-y-6">
               {/* Basic Information */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                 <div>
                   <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-2">
                     Campaign Title *
@@ -481,7 +545,7 @@ const Promotion = () => {
               </div>
 
               {/* Date Range */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                 <div>
                   <label htmlFor="startDate" className="block text-sm font-medium text-gray-700 mb-2">
                     Start Date *
@@ -514,7 +578,7 @@ const Promotion = () => {
               {/* Target Audience */}
               <div>
                 <h3 className="text-lg font-medium text-gray-900 mb-4">Target Audience</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                   <div>
                     <label htmlFor="ageRange" className="block text-sm font-medium text-gray-700 mb-2">
                       Age Range
@@ -571,18 +635,18 @@ const Promotion = () => {
               </div>
 
               {/* Submit Button */}
-              <div className="flex justify-end gap-4">
+              <div className="flex flex-col sm:flex-row justify-end gap-3 sm:gap-4">
                 <button
                   type="button"
                   onClick={() => setActiveTab("campaigns")}
-                  className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
+                  className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors order-2 sm:order-1"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={isCreating}
-                  className="px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                  className="px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 order-1 sm:order-2"
                 >
                   {isCreating ? (
                     <>
@@ -605,31 +669,31 @@ const Promotion = () => {
       {/* Promotion Options Tab */}
       {activeTab === "options" && (
         <div className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
             {promotionOptions.map((option) => (
-              <div key={option.id} className="bg-white rounded-lg border border-gray-200 p-6 hover:shadow-lg transition-shadow">
-                <div className="flex items-start gap-4">
-                  <div className="p-3 bg-purple-100 rounded-lg">
-                    <option.icon className="h-6 w-6 text-purple-600" />
+              <div key={option.id} className="bg-white rounded-lg border border-gray-200 p-4 sm:p-6 hover:shadow-lg transition-shadow">
+                <div className="flex items-start gap-3 sm:gap-4">
+                  <div className="p-2 sm:p-3 bg-purple-100 rounded-lg flex-shrink-0">
+                    <option.icon className="h-5 w-5 sm:h-6 sm:w-6 text-purple-600" />
                   </div>
-                  <div className="flex-1">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">{option.name}</h3>
-                    <p className="text-gray-600 mb-4">{option.description}</p>
-                    <div className="space-y-2 mb-4">
+                  <div className="flex-1 min-w-0">
+                    <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-2">{option.name}</h3>
+                    <p className="text-sm sm:text-base text-gray-600 mb-3 sm:mb-4">{option.description}</p>
+                    <div className="space-y-2 mb-3 sm:mb-4">
                       <div className="flex items-center gap-2 text-sm text-gray-600">
-                        <DollarSign className="h-4 w-4" />
+                        <DollarSign className="h-4 w-4 flex-shrink-0" />
                         <span>{option.price}</span>
                       </div>
                       <div className="flex items-center gap-2 text-sm text-gray-600">
-                        <Users className="h-4 w-4" />
+                        <Users className="h-4 w-4 flex-shrink-0" />
                         <span>{option.reach}</span>
                       </div>
                       <div className="flex items-center gap-2 text-sm text-gray-600">
-                        <Calendar className="h-4 w-4" />
+                        <Calendar className="h-4 w-4 flex-shrink-0" />
                         <span>{option.duration}</span>
                       </div>
                     </div>
-                    <button className="w-full bg-purple-600 text-white py-2 px-4 rounded-lg hover:bg-purple-700 transition-colors">
+                    <button className="w-full bg-purple-600 text-white py-2 px-4 rounded-lg hover:bg-purple-700 transition-colors text-sm sm:text-base">
                       Get Started
                     </button>
                   </div>

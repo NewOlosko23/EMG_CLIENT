@@ -27,6 +27,7 @@ import { useToast } from "../../contexts/ToastContext";
 import Modal from "../../components/Modal";
 import NotificationCenter from "../../components/NotificationCenter";
 import BackToTop from "../../components/BackToTop";
+import Logo from "../../assets/logo.png";
 
 const AdminDashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -78,18 +79,14 @@ const AdminDashboard = () => {
           className="fixed inset-0 bg-gray-600 bg-opacity-75"
           onClick={() => setSidebarOpen(false)}
         />
-        <div className="fixed inset-y-0 left-0 flex w-64 flex-col bg-white shadow-xl border-r border-gray-200">
+        <div className="fixed inset-y-0 left-0 flex w-72 sm:w-64 flex-col bg-white shadow-xl border-r border-gray-200">
           <div className="flex h-16 items-center justify-between px-4 border-b border-gray-200 bg-gradient-to-r from-red-50 to-white">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-red-600 to-red-700 rounded-xl flex items-center justify-center shadow-lg">
-                <Shield size={20} className="text-white" />
-              </div>
-              <div>
-                <span className="text-lg font-bold text-gray-900">
-                  EMG Admin
-                </span>
-                <p className="text-xs text-gray-500">Admin Panel</p>
-              </div>
+            <div className="flex items-center justify-center w-full">
+              <img
+                src={Logo}
+                alt="EMG Music"
+                className="h-12 w-auto object-contain"
+              />
             </div>
             <button
               onClick={() => setSidebarOpen(false)}
@@ -140,15 +137,12 @@ const AdminDashboard = () => {
       {/* Desktop sidebar */}
       <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col">
         <div className="flex flex-col flex-grow bg-white border-r border-gray-200">
-          <div className="flex h-16 items-center px-4 border-b border-gray-200">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-red-600 rounded-lg flex items-center justify-center">
-                <Shield size={20} className="text-white" />
-              </div>
-              <span className="text-lg font-semibold text-gray-900">
-                EMG Admin
-              </span>
-            </div>
+          <div className="flex h-16 items-center justify-center px-4 border-b border-gray-200">
+            <img
+              src={Logo}
+              alt="EMG Music"
+              className="h-10 w-auto object-contain"
+            />
           </div>
           <nav className="flex-1 px-4 py-4 space-y-2">
             {navigation.map((item) => (
@@ -192,7 +186,7 @@ const AdminDashboard = () => {
       {/* Main content */}
       <div className="lg:pl-64">
         {/* Enhanced Top bar */}
-        <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white/80 backdrop-blur-sm px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
+        <div className="sticky top-0 z-40 flex h-14 sm:h-16 shrink-0 items-center gap-x-3 sm:gap-x-4 border-b border-gray-200 bg-white/80 backdrop-blur-sm px-3 sm:px-4 shadow-sm lg:px-8">
           <button
             type="button"
             className="-m-2.5 p-2.5 text-gray-700 lg:hidden hover:bg-gray-100 rounded-lg transition-colors"
@@ -227,8 +221,8 @@ const AdminDashboard = () => {
         </div>
 
         {/* Page content */}
-        <main className="py-6">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <main className="py-4 sm:py-6">
+          <div className="mx-auto max-w-7xl px-3 sm:px-4 lg:px-8">
             <Outlet />
           </div>
         </main>

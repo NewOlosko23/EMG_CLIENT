@@ -172,12 +172,12 @@ const AdminAnalytics = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Platform Analytics</h1>
           <p className="text-gray-600 mt-1">Comprehensive insights into platform performance and user behavior</p>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
           <select
             value={timeRange}
             onChange={(e) => setTimeRange(e.target.value)}
@@ -191,7 +191,7 @@ const AdminAnalytics = () => {
           <button
             onClick={refreshData}
             disabled={loading}
-            className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors flex items-center gap-2 disabled:opacity-50"
+            className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
           >
             <RefreshCw className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} />
             Refresh
@@ -267,48 +267,48 @@ const AdminAnalytics = () => {
       </div>
 
       {/* Charts Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
         {/* User Growth Chart */}
-        <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200">
-          <div className="flex items-center justify-between mb-4">
+        <div className="bg-white rounded-lg p-4 sm:p-6 shadow-sm border border-gray-200">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-2">
             <h3 className="text-lg font-medium text-gray-900">User Growth</h3>
             <div className="flex items-center gap-2">
               <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
               <span className="text-sm text-gray-600">Total Users</span>
             </div>
           </div>
-          <div className="h-64 flex items-end justify-between gap-2">
+          <div className="h-48 sm:h-64 flex items-end justify-between gap-1 sm:gap-2 overflow-x-auto">
             {chartData.userGrowth.map((item, index) => (
-              <div key={index} className="flex flex-col items-center flex-1">
+              <div key={index} className="flex flex-col items-center flex-1 min-w-0">
                 <div 
                   className="bg-blue-500 rounded-t w-full mb-2 transition-all duration-300 hover:bg-blue-600"
-                  style={{ height: `${(item.users / 2500) * 200}px` }}
+                  style={{ height: `${(item.users / 2500) * 150}px` }}
                 ></div>
-                <span className="text-xs text-gray-600">{item.month}</span>
-                <span className="text-xs font-medium text-gray-900">{item.users}</span>
+                <span className="text-xs text-gray-600 truncate">{item.month}</span>
+                <span className="text-xs font-medium text-gray-900 truncate">{item.users}</span>
               </div>
             ))}
           </div>
         </div>
 
         {/* Revenue Chart */}
-        <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200">
-          <div className="flex items-center justify-between mb-4">
+        <div className="bg-white rounded-lg p-4 sm:p-6 shadow-sm border border-gray-200">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-2">
             <h3 className="text-lg font-medium text-gray-900">Revenue Growth</h3>
             <div className="flex items-center gap-2">
               <div className="w-3 h-3 bg-emerald-500 rounded-full"></div>
               <span className="text-sm text-gray-600">Monthly Revenue</span>
             </div>
           </div>
-          <div className="h-64 flex items-end justify-between gap-2">
+          <div className="h-48 sm:h-64 flex items-end justify-between gap-1 sm:gap-2 overflow-x-auto">
             {chartData.revenue.map((item, index) => (
-              <div key={index} className="flex flex-col items-center flex-1">
+              <div key={index} className="flex flex-col items-center flex-1 min-w-0">
                 <div 
                   className="bg-emerald-500 rounded-t w-full mb-2 transition-all duration-300 hover:bg-emerald-600"
-                  style={{ height: `${(item.revenue / 15000) * 200}px` }}
+                  style={{ height: `${(item.revenue / 15000) * 150}px` }}
                 ></div>
-                <span className="text-xs text-gray-600">{item.month}</span>
-                <span className="text-xs font-medium text-gray-900">${item.revenue.toLocaleString()}</span>
+                <span className="text-xs text-gray-600 truncate">{item.month}</span>
+                <span className="text-xs font-medium text-gray-900 truncate">${item.revenue.toLocaleString()}</span>
               </div>
             ))}
           </div>
@@ -316,18 +316,18 @@ const AdminAnalytics = () => {
       </div>
 
       {/* Detailed Analytics */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
         {/* Top Genres */}
-        <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200">
+        <div className="bg-white rounded-lg p-4 sm:p-6 shadow-sm border border-gray-200">
           <h3 className="text-lg font-medium text-gray-900 mb-4">Top Genres by Plays</h3>
           <div className="space-y-3">
             {chartData.topGenres.map((genre, index) => (
               <div key={index} className="flex items-center justify-between">
-                <div className="flex items-center">
-                  <div className="w-3 h-3 rounded-full mr-3" style={{ backgroundColor: `hsl(${index * 60}, 70%, 50%)` }}></div>
-                  <span className="text-sm font-medium text-gray-900">{genre.genre}</span>
+                <div className="flex items-center min-w-0 flex-1">
+                  <div className="w-3 h-3 rounded-full mr-3 flex-shrink-0" style={{ backgroundColor: `hsl(${index * 60}, 70%, 50%)` }}></div>
+                  <span className="text-sm font-medium text-gray-900 truncate">{genre.genre}</span>
                 </div>
-                <div className="text-right">
+                <div className="text-right flex-shrink-0 ml-2">
                   <div className="text-sm font-medium text-gray-900">{genre.plays.toLocaleString()}</div>
                   <div className="text-xs text-gray-500">{genre.percentage}%</div>
                 </div>
@@ -337,19 +337,19 @@ const AdminAnalytics = () => {
         </div>
 
         {/* Device Usage */}
-        <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200">
+        <div className="bg-white rounded-lg p-4 sm:p-6 shadow-sm border border-gray-200">
           <h3 className="text-lg font-medium text-gray-900 mb-4">Device Usage</h3>
           <div className="space-y-4">
             {chartData.deviceUsage.map((device, index) => (
               <div key={index}>
                 <div className="flex items-center justify-between mb-1">
-                  <div className="flex items-center">
-                    {device.device === 'Mobile' && <Smartphone className="h-4 w-4 text-gray-400 mr-2" />}
-                    {device.device === 'Desktop' && <Monitor className="h-4 w-4 text-gray-400 mr-2" />}
-                    {device.device === 'Tablet' && <Monitor className="h-4 w-4 text-gray-400 mr-2" />}
-                    <span className="text-sm font-medium text-gray-900">{device.device}</span>
+                  <div className="flex items-center min-w-0 flex-1">
+                    {device.device === 'Mobile' && <Smartphone className="h-4 w-4 text-gray-400 mr-2 flex-shrink-0" />}
+                    {device.device === 'Desktop' && <Monitor className="h-4 w-4 text-gray-400 mr-2 flex-shrink-0" />}
+                    {device.device === 'Tablet' && <Monitor className="h-4 w-4 text-gray-400 mr-2 flex-shrink-0" />}
+                    <span className="text-sm font-medium text-gray-900 truncate">{device.device}</span>
                   </div>
-                  <span className="text-sm text-gray-600">{device.percentage}%</span>
+                  <span className="text-sm text-gray-600 flex-shrink-0 ml-2">{device.percentage}%</span>
                 </div>
                 <div className="w-full bg-gray-200 rounded-full h-2">
                   <div 
@@ -364,16 +364,16 @@ const AdminAnalytics = () => {
         </div>
 
         {/* Top Countries */}
-        <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200">
+        <div className="bg-white rounded-lg p-4 sm:p-6 shadow-sm border border-gray-200 md:col-span-2 xl:col-span-1">
           <h3 className="text-lg font-medium text-gray-900 mb-4">Top Countries</h3>
           <div className="space-y-3">
             {chartData.topCountries.map((country, index) => (
               <div key={index} className="flex items-center justify-between">
-                <div className="flex items-center">
-                  <Globe className="h-4 w-4 text-gray-400 mr-2" />
-                  <span className="text-sm font-medium text-gray-900">{country.country}</span>
+                <div className="flex items-center min-w-0 flex-1">
+                  <Globe className="h-4 w-4 text-gray-400 mr-2 flex-shrink-0" />
+                  <span className="text-sm font-medium text-gray-900 truncate">{country.country}</span>
                 </div>
-                <div className="text-right">
+                <div className="text-right flex-shrink-0 ml-2">
                   <div className="text-sm font-medium text-gray-900">{country.users} users</div>
                   <div className="text-xs text-gray-500">${country.revenue.toLocaleString()}</div>
                 </div>
@@ -384,88 +384,88 @@ const AdminAnalytics = () => {
       </div>
 
       {/* User & Content Stats */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
         {/* User Statistics */}
-        <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200">
+        <div className="bg-white rounded-lg p-4 sm:p-6 shadow-sm border border-gray-200">
           <h3 className="text-lg font-medium text-gray-900 mb-4">User Statistics</h3>
-          <div className="grid grid-cols-2 gap-4">
-            <div className="text-center p-4 bg-blue-50 rounded-lg">
-              <Users className="h-8 w-8 text-blue-600 mx-auto mb-2" />
-              <div className="text-2xl font-bold text-gray-900">{analyticsData.userStats.newUsers}</div>
-              <div className="text-sm text-gray-600">New Users</div>
+          <div className="grid grid-cols-2 gap-3 sm:gap-4">
+            <div className="text-center p-3 sm:p-4 bg-blue-50 rounded-lg">
+              <Users className="h-6 w-6 sm:h-8 sm:w-8 text-blue-600 mx-auto mb-2" />
+              <div className="text-lg sm:text-2xl font-bold text-gray-900">{analyticsData.userStats.newUsers}</div>
+              <div className="text-xs sm:text-sm text-gray-600">New Users</div>
             </div>
-            <div className="text-center p-4 bg-green-50 rounded-lg">
-              <Activity className="h-8 w-8 text-green-600 mx-auto mb-2" />
-              <div className="text-2xl font-bold text-gray-900">{analyticsData.userStats.activeUsers}</div>
-              <div className="text-sm text-gray-600">Active Users</div>
+            <div className="text-center p-3 sm:p-4 bg-green-50 rounded-lg">
+              <Activity className="h-6 w-6 sm:h-8 sm:w-8 text-green-600 mx-auto mb-2" />
+              <div className="text-lg sm:text-2xl font-bold text-gray-900">{analyticsData.userStats.activeUsers}</div>
+              <div className="text-xs sm:text-sm text-gray-600">Active Users</div>
             </div>
-            <div className="text-center p-4 bg-purple-50 rounded-lg">
-              <Star className="h-8 w-8 text-purple-600 mx-auto mb-2" />
-              <div className="text-2xl font-bold text-gray-900">{analyticsData.userStats.premiumUsers}</div>
-              <div className="text-sm text-gray-600">Premium Users</div>
+            <div className="text-center p-3 sm:p-4 bg-purple-50 rounded-lg">
+              <Star className="h-6 w-6 sm:h-8 sm:w-8 text-purple-600 mx-auto mb-2" />
+              <div className="text-lg sm:text-2xl font-bold text-gray-900">{analyticsData.userStats.premiumUsers}</div>
+              <div className="text-xs sm:text-sm text-gray-600">Premium Users</div>
             </div>
-            <div className="text-center p-4 bg-orange-50 rounded-lg">
-              <TrendingUp className="h-8 w-8 text-orange-600 mx-auto mb-2" />
-              <div className="text-2xl font-bold text-gray-900">{analyticsData.userStats.userRetention}%</div>
-              <div className="text-sm text-gray-600">Retention Rate</div>
+            <div className="text-center p-3 sm:p-4 bg-orange-50 rounded-lg">
+              <TrendingUp className="h-6 w-6 sm:h-8 sm:w-8 text-orange-600 mx-auto mb-2" />
+              <div className="text-lg sm:text-2xl font-bold text-gray-900">{analyticsData.userStats.userRetention}%</div>
+              <div className="text-xs sm:text-sm text-gray-600">Retention Rate</div>
             </div>
           </div>
         </div>
 
         {/* Content Statistics */}
-        <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200">
+        <div className="bg-white rounded-lg p-4 sm:p-6 shadow-sm border border-gray-200">
           <h3 className="text-lg font-medium text-gray-900 mb-4">Content Statistics</h3>
-          <div className="grid grid-cols-2 gap-4">
-            <div className="text-center p-4 bg-purple-50 rounded-lg">
-              <Music className="h-8 w-8 text-purple-600 mx-auto mb-2" />
-              <div className="text-2xl font-bold text-gray-900">{analyticsData.contentStats.tracksUploaded}</div>
-              <div className="text-sm text-gray-600">Tracks Uploaded</div>
+          <div className="grid grid-cols-2 gap-3 sm:gap-4">
+            <div className="text-center p-3 sm:p-4 bg-purple-50 rounded-lg">
+              <Music className="h-6 w-6 sm:h-8 sm:w-8 text-purple-600 mx-auto mb-2" />
+              <div className="text-lg sm:text-2xl font-bold text-gray-900">{analyticsData.contentStats.tracksUploaded}</div>
+              <div className="text-xs sm:text-sm text-gray-600">Tracks Uploaded</div>
             </div>
-            <div className="text-center p-4 bg-green-50 rounded-lg">
-              <CheckCircle className="h-8 w-8 text-green-600 mx-auto mb-2" />
-              <div className="text-2xl font-bold text-gray-900">{analyticsData.contentStats.tracksApproved}</div>
-              <div className="text-sm text-gray-600">Tracks Approved</div>
+            <div className="text-center p-3 sm:p-4 bg-green-50 rounded-lg">
+              <CheckCircle className="h-6 w-6 sm:h-8 sm:w-8 text-green-600 mx-auto mb-2" />
+              <div className="text-lg sm:text-2xl font-bold text-gray-900">{analyticsData.contentStats.tracksApproved}</div>
+              <div className="text-xs sm:text-sm text-gray-600">Tracks Approved</div>
             </div>
-            <div className="text-center p-4 bg-red-50 rounded-lg">
-              <X className="h-8 w-8 text-red-600 mx-auto mb-2" />
-              <div className="text-2xl font-bold text-gray-900">{analyticsData.contentStats.tracksRejected}</div>
-              <div className="text-sm text-gray-600">Tracks Rejected</div>
+            <div className="text-center p-3 sm:p-4 bg-red-50 rounded-lg">
+              <X className="h-6 w-6 sm:h-8 sm:w-8 text-red-600 mx-auto mb-2" />
+              <div className="text-lg sm:text-2xl font-bold text-gray-900">{analyticsData.contentStats.tracksRejected}</div>
+              <div className="text-xs sm:text-sm text-gray-600">Tracks Rejected</div>
             </div>
-            <div className="text-center p-4 bg-yellow-50 rounded-lg">
-              <Star className="h-8 w-8 text-yellow-600 mx-auto mb-2" />
-              <div className="text-2xl font-bold text-gray-900">{analyticsData.contentStats.averageRating}</div>
-              <div className="text-sm text-gray-600">Avg Rating</div>
+            <div className="text-center p-3 sm:p-4 bg-yellow-50 rounded-lg">
+              <Star className="h-6 w-6 sm:h-8 sm:w-8 text-yellow-600 mx-auto mb-2" />
+              <div className="text-lg sm:text-2xl font-bold text-gray-900">{analyticsData.contentStats.averageRating}</div>
+              <div className="text-xs sm:text-sm text-gray-600">Avg Rating</div>
             </div>
           </div>
         </div>
       </div>
 
       {/* Revenue Breakdown */}
-      <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200">
+      <div className="bg-white rounded-lg p-4 sm:p-6 shadow-sm border border-gray-200">
         <h3 className="text-lg font-medium text-gray-900 mb-4">Revenue Breakdown</h3>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="text-center p-6 bg-emerald-50 rounded-lg">
-            <DollarSign className="h-12 w-12 text-emerald-600 mx-auto mb-4" />
-            <div className="text-3xl font-bold text-gray-900">${analyticsData.revenueStats.monthlyRevenue.toLocaleString()}</div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+          <div className="text-center p-4 sm:p-6 bg-emerald-50 rounded-lg">
+            <DollarSign className="h-8 w-8 sm:h-12 sm:w-12 text-emerald-600 mx-auto mb-4" />
+            <div className="text-xl sm:text-3xl font-bold text-gray-900">${analyticsData.revenueStats.monthlyRevenue.toLocaleString()}</div>
             <div className="text-sm text-gray-600 mb-2">Monthly Revenue</div>
             <div className="text-xs text-emerald-600">+15.2% from last month</div>
           </div>
-          <div className="text-center p-6 bg-blue-50 rounded-lg">
-            <Users className="h-12 w-12 text-blue-600 mx-auto mb-4" />
-            <div className="text-3xl font-bold text-gray-900">${analyticsData.revenueStats.subscriptionRevenue.toLocaleString()}</div>
+          <div className="text-center p-4 sm:p-6 bg-blue-50 rounded-lg">
+            <Users className="h-8 w-8 sm:h-12 sm:w-12 text-blue-600 mx-auto mb-4" />
+            <div className="text-xl sm:text-3xl font-bold text-gray-900">${analyticsData.revenueStats.subscriptionRevenue.toLocaleString()}</div>
             <div className="text-sm text-gray-600 mb-2">Subscription Revenue</div>
             <div className="text-xs text-blue-600">+12.8% from last month</div>
           </div>
-          <div className="text-center p-6 bg-purple-50 rounded-lg">
-            <Music className="h-12 w-12 text-purple-600 mx-auto mb-4" />
-            <div className="text-3xl font-bold text-gray-900">${analyticsData.revenueStats.commissionRevenue.toLocaleString()}</div>
+          <div className="text-center p-4 sm:p-6 bg-purple-50 rounded-lg sm:col-span-2 lg:col-span-1">
+            <Music className="h-8 w-8 sm:h-12 sm:w-12 text-purple-600 mx-auto mb-4" />
+            <div className="text-xl sm:text-3xl font-bold text-gray-900">${analyticsData.revenueStats.commissionRevenue.toLocaleString()}</div>
             <div className="text-sm text-gray-600 mb-2">Commission Revenue</div>
             <div className="text-xs text-purple-600">+18.5% from last month</div>
           </div>
         </div>
         <div className="mt-6 text-center">
           <div className="text-sm text-gray-600">Average Revenue Per User</div>
-          <div className="text-2xl font-bold text-gray-900">${analyticsData.revenueStats.averageRevenuePerUser}</div>
+          <div className="text-xl sm:text-2xl font-bold text-gray-900">${analyticsData.revenueStats.averageRevenuePerUser}</div>
         </div>
       </div>
     </div>

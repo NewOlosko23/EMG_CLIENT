@@ -437,7 +437,7 @@ const Newsletter = ({ theme }) => {
             <div className={`text-sm ${
               theme === "dark" ? "text-gray-400" : "text-gray-600"
             }`}>
-              © 2024 EMG Music. All rights reserved. Empowering artists worldwide.
+              © {new Date().getFullYear()} EMG Music. All rights reserved. Empowering artists worldwide.
             </div>
             <div className="flex items-center gap-6">
               <div className={`text-sm ${
