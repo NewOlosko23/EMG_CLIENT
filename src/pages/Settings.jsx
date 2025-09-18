@@ -1,102 +1,19 @@
 import React, { useState } from "react";
-import { Settings as SettingsIcon, User, Bell, Shield, CreditCard, Save, Eye, EyeOff } from "lucide-react";
+import { Settings as SettingsIcon, Globe, DollarSign, Languages, Save } from "lucide-react";
 
 const Settings = () => {
-  const [activeTab, setActiveTab] = useState("profile");
-  const [showPassword, setShowPassword] = useState(false);
-  const [showNewPassword, setShowNewPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [activeTab, setActiveTab] = useState("preferences");
 
-  const [profileData, setProfileData] = useState({
-    name: "EMG Artist",
-    email: "artist@emgmusic.com",
-    bio: "Electronic music producer and DJ",
-    location: "Los Angeles, CA",
-    website: "https://emgartist.com",
-    socialLinks: {
-      instagram: "@emgartist",
-      twitter: "@emgartist",
-      facebook: "EMG Artist",
-      youtube: "EMG Artist"
-    }
+  const [userPreferences, setUserPreferences] = useState({
+    timezone: "America/New_York",
+    currency: "USD",
+    language: "en",
+    dateFormat: "MM/DD/YYYY",
+    timeFormat: "12h"
   });
 
-  const [notificationSettings, setNotificationSettings] = useState({
-    email: {
-      newReleases: true,
-      earnings: true,
-      collaborations: true,
-      playlists: false,
-      promotions: true
-    },
-    push: {
-      newReleases: true,
-      earnings: false,
-      collaborations: true,
-      playlists: false,
-      promotions: false
-    },
-    sms: {
-      earnings: true,
-      collaborations: false,
-      promotions: false
-    }
-  });
-
-  const [privacySettings, setPrivacySettings] = useState({
-    profileVisibility: "public",
-    showEarnings: false,
-    showPlayCount: true,
-    allowCollaborations: true,
-    allowMessages: true,
-    dataSharing: false
-  });
-
-  const [paymentSettings, setPaymentSettings] = useState({
-    payoutMethod: "bank",
-    bankAccount: "****1234",
-    paypalEmail: "",
-    payoutThreshold: 50,
-    currency: "USD"
-  });
-
-  const handleInputChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setProfileData(prev => ({
-      ...prev,
-      [name]: type === 'checkbox' ? checked : value
-    }));
-  };
-
-  const handleSocialLinkChange = (platform, value) => {
-    setProfileData(prev => ({
-      ...prev,
-      socialLinks: {
-        ...prev.socialLinks,
-        [platform]: value
-      }
-    }));
-  };
-
-  const handleNotificationChange = (type, category, value) => {
-    setNotificationSettings(prev => ({
-      ...prev,
-      [type]: {
-        ...prev[type],
-        [category]: value
-      }
-    }));
-  };
-
-  const handlePrivacyChange = (setting, value) => {
-    setPrivacySettings(prev => ({
-      ...prev,
-      [setting]: value
-    }));
-  };
-
-  const handlePaymentChange = (setting, value) => {
-    setPaymentSettings(prev => ({
+  const handlePreferenceChange = (setting, value) => {
+    setUserPreferences(prev => ({
       ...prev,
       [setting]: value
     }));
@@ -104,26 +21,71 @@ const Settings = () => {
 
   const handleSave = () => {
     // Handle save logic
-    console.log("Settings saved");
+    console.log("Preferences saved:", userPreferences);
+    // Here you would typically save to your backend/database
   };
+
+  // Timezone options
+  const timezones = [
+    { value: "America/New_York", label: "Eastern Time (ET)" },
+    { value: "America/Chicago", label: "Central Time (CT)" },
+    { value: "America/Denver", label: "Mountain Time (MT)" },
+    { value: "America/Los_Angeles", label: "Pacific Time (PT)" },
+    { value: "Europe/London", label: "Greenwich Mean Time (GMT)" },
+    { value: "Europe/Paris", label: "Central European Time (CET)" },
+    { value: "Europe/Berlin", label: "Central European Time (CET)" },
+    { value: "Asia/Tokyo", label: "Japan Standard Time (JST)" },
+    { value: "Asia/Shanghai", label: "China Standard Time (CST)" },
+    { value: "Asia/Kolkata", label: "India Standard Time (IST)" },
+    { value: "Australia/Sydney", label: "Australian Eastern Time (AET)" },
+    { value: "Pacific/Auckland", label: "New Zealand Standard Time (NZST)" }
+  ];
+
+  // Currency options
+  const currencies = [
+    { value: "USD", label: "US Dollar ($)", symbol: "$" },
+    { value: "EUR", label: "Euro (€)", symbol: "€" },
+    { value: "GBP", label: "British Pound (£)", symbol: "£" },
+    { value: "JPY", label: "Japanese Yen (¥)", symbol: "¥" },
+    { value: "CAD", label: "Canadian Dollar (C$)", symbol: "C$" },
+    { value: "AUD", label: "Australian Dollar (A$)", symbol: "A$" },
+    { value: "CHF", label: "Swiss Franc (CHF)", symbol: "CHF" },
+    { value: "CNY", label: "Chinese Yuan (¥)", symbol: "¥" },
+    { value: "INR", label: "Indian Rupee (₹)", symbol: "₹" },
+    { value: "BRL", label: "Brazilian Real (R$)", symbol: "R$" }
+  ];
+
+  // Language options
+  const languages = [
+    { value: "en", label: "English" },
+    { value: "es", label: "Español" },
+    { value: "fr", label: "Français" },
+    { value: "de", label: "Deutsch" },
+    { value: "it", label: "Italiano" },
+    { value: "pt", label: "Português" },
+    { value: "ru", label: "Русский" },
+    { value: "ja", label: "日本語" },
+    { value: "ko", label: "한국어" },
+    { value: "zh", label: "中文" },
+    { value: "ar", label: "العربية" },
+    { value: "hi", label: "हिन्दी" }
+  ];
 
   return (
     <div className="space-y-6">
       {/* Header */}
       <div>
         <h1 className="text-2xl font-bold text-gray-900">Settings</h1>
-        <p className="text-gray-600 mt-1">Manage your account settings and preferences</p>
+        <p className="text-gray-600 mt-1">Configure your preferences for timezone, currency, and language</p>
       </div>
 
       {/* Tabs */}
       <div className="border-b border-gray-200">
         <nav className="-mb-px flex space-x-8">
           {[
-            { id: "profile", name: "Profile", icon: User },
-            { id: "notifications", name: "Notifications", icon: Bell },
-            { id: "privacy", name: "Privacy", icon: Shield },
-            { id: "payment", name: "Payment", icon: CreditCard },
-            { id: "account", name: "Account", icon: SettingsIcon }
+            { id: "preferences", name: "Preferences", icon: SettingsIcon },
+            { id: "localization", name: "Localization", icon: Globe },
+            { id: "display", name: "Display", icon: Languages }
           ].map((tab) => (
             <button
               key={tab.id}
@@ -141,352 +103,178 @@ const Settings = () => {
         </nav>
       </div>
 
-      {/* Profile Tab */}
-      {activeTab === "profile" && (
+      {/* Preferences Tab */}
+      {activeTab === "preferences" && (
         <div className="space-y-6">
           <div className="bg-white rounded-lg border border-gray-200 p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Profile Information</h3>
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">General Preferences</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Display Name *
+                  Timezone
                 </label>
-                <input
-                  type="text"
-                  name="name"
-                  value={profileData.name}
-                  onChange={handleInputChange}
+                <select
+                  value={userPreferences.timezone}
+                  onChange={(e) => handlePreferenceChange('timezone', e.target.value)}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                />
+                >
+                  {timezones.map((tz) => (
+                    <option key={tz.value} value={tz.value}>
+                      {tz.label}
+                    </option>
+                  ))}
+                </select>
+                <p className="text-sm text-gray-500 mt-1">
+                  This affects how dates and times are displayed throughout the platform
+                </p>
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Email *
+                  Currency
                 </label>
-                <input
-                  type="email"
-                  name="email"
-                  value={profileData.email}
-                  onChange={handleInputChange}
+                <select
+                  value={userPreferences.currency}
+                  onChange={(e) => handlePreferenceChange('currency', e.target.value)}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                />
-              </div>
-              <div className="md:col-span-2">
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Bio
-                </label>
-                <textarea
-                  name="bio"
-                  value={profileData.bio}
-                  onChange={handleInputChange}
-                  rows={3}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Location
-                </label>
-                <input
-                  type="text"
-                  name="location"
-                  value={profileData.location}
-                  onChange={handleInputChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Website
-                </label>
-                <input
-                  type="url"
-                  name="website"
-                  value={profileData.website}
-                  onChange={handleInputChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                />
+                >
+                  {currencies.map((currency) => (
+                    <option key={currency.value} value={currency.value}>
+                      {currency.label}
+                    </option>
+                  ))}
+                </select>
+                <p className="text-sm text-gray-500 mt-1">
+                  Used for displaying earnings, pricing, and financial information
+                </p>
               </div>
             </div>
           </div>
+        </div>
+      )}
 
+      {/* Localization Tab */}
+      {activeTab === "localization" && (
+        <div className="space-y-6">
           <div className="bg-white rounded-lg border border-gray-200 p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Social Links</h3>
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Language & Region</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {Object.entries(profileData.socialLinks).map(([platform, value]) => (
-                <div key={platform}>
-                  <label className="block text-sm font-medium text-gray-700 mb-2 capitalize">
-                    {platform}
-                  </label>
-                  <input
-                    type="text"
-                    value={value}
-                    onChange={(e) => handleSocialLinkChange(platform, e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                    placeholder={`Your ${platform} handle`}
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Notifications Tab */}
-      {activeTab === "notifications" && (
-        <div className="space-y-6">
-          {Object.entries(notificationSettings).map(([type, settings]) => (
-            <div key={type} className="bg-white rounded-lg border border-gray-200 p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4 capitalize">
-                {type} Notifications
-              </h3>
-              <div className="space-y-4">
-                {Object.entries(settings).map(([category, enabled]) => (
-                  <div key={category} className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm font-medium text-gray-900 capitalize">
-                        {category.replace(/([A-Z])/g, ' $1').trim()}
-                      </p>
-                      <p className="text-sm text-gray-500">
-                        {type === 'email' && 'Receive email notifications for this event'}
-                        {type === 'push' && 'Receive push notifications for this event'}
-                        {type === 'sms' && 'Receive SMS notifications for this event'}
-                      </p>
-                    </div>
-                    <label className="relative inline-flex items-center cursor-pointer">
-                      <input
-                        type="checkbox"
-                        checked={enabled}
-                        onChange={(e) => handleNotificationChange(type, category, e.target.checked)}
-                        className="sr-only peer"
-                      />
-                      <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-purple-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
-                    </label>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
-
-      {/* Privacy Tab */}
-      {activeTab === "privacy" && (
-        <div className="space-y-6">
-          <div className="bg-white rounded-lg border border-gray-200 p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Privacy Settings</h3>
-            <div className="space-y-6">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Profile Visibility
+                  Language
                 </label>
                 <select
-                  value={privacySettings.profileVisibility}
-                  onChange={(e) => handlePrivacyChange('profileVisibility', e.target.value)}
+                  value={userPreferences.language}
+                  onChange={(e) => handlePreferenceChange('language', e.target.value)}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                 >
-                  <option value="public">Public</option>
-                  <option value="private">Private</option>
-                  <option value="followers">Followers Only</option>
+                  {languages.map((lang) => (
+                    <option key={lang.value} value={lang.value}>
+                      {lang.label}
+                    </option>
+                  ))}
                 </select>
+                <p className="text-sm text-gray-500 mt-1">
+                  Choose your preferred language for the interface
+                </p>
               </div>
-
-              <div className="space-y-4">
-                {[
-                  { key: 'showEarnings', label: 'Show Earnings', description: 'Display your earnings publicly' },
-                  { key: 'showPlayCount', label: 'Show Play Count', description: 'Display your total play count' },
-                  { key: 'allowCollaborations', label: 'Allow Collaboration Requests', description: 'Let other artists request collaborations' },
-                  { key: 'allowMessages', label: 'Allow Direct Messages', description: 'Let fans and other artists message you' },
-                  { key: 'dataSharing', label: 'Data Sharing', description: 'Share anonymized data for analytics' }
-                ].map((setting) => (
-                  <div key={setting.key} className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm font-medium text-gray-900">{setting.label}</p>
-                      <p className="text-sm text-gray-500">{setting.description}</p>
-                    </div>
-                    <label className="relative inline-flex items-center cursor-pointer">
-                      <input
-                        type="checkbox"
-                        checked={privacySettings[setting.key]}
-                        onChange={(e) => handlePrivacyChange(setting.key, e.target.checked)}
-                        className="sr-only peer"
-                      />
-                      <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-purple-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
-                    </label>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Payment Tab */}
-      {activeTab === "payment" && (
-        <div className="space-y-6">
-          <div className="bg-white rounded-lg border border-gray-200 p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Payment Settings</h3>
-            <div className="space-y-6">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Payout Method
+                  Date Format
                 </label>
                 <select
-                  value={paymentSettings.payoutMethod}
-                  onChange={(e) => handlePaymentChange('payoutMethod', e.target.value)}
+                  value={userPreferences.dateFormat}
+                  onChange={(e) => handlePreferenceChange('dateFormat', e.target.value)}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                 >
-                  <option value="bank">Bank Transfer</option>
-                  <option value="paypal">PayPal</option>
-                  <option value="stripe">Stripe</option>
+                  <option value="MM/DD/YYYY">MM/DD/YYYY (US)</option>
+                  <option value="DD/MM/YYYY">DD/MM/YYYY (EU)</option>
+                  <option value="YYYY-MM-DD">YYYY-MM-DD (ISO)</option>
+                  <option value="DD MMM YYYY">DD MMM YYYY (Text)</option>
                 </select>
-              </div>
-
-              {paymentSettings.payoutMethod === 'bank' && (
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Bank Account
-                  </label>
-                  <input
-                    type="text"
-                    value={paymentSettings.bankAccount}
-                    onChange={(e) => handlePaymentChange('bankAccount', e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                    placeholder="Enter bank account details"
-                  />
-                </div>
-              )}
-
-              {paymentSettings.payoutMethod === 'paypal' && (
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    PayPal Email
-                  </label>
-                  <input
-                    type="email"
-                    value={paymentSettings.paypalEmail}
-                    onChange={(e) => handlePaymentChange('paypalEmail', e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                    placeholder="Enter PayPal email"
-                  />
-                </div>
-              )}
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Payout Threshold
-                  </label>
-                  <select
-                    value={paymentSettings.payoutThreshold}
-                    onChange={(e) => handlePaymentChange('payoutThreshold', parseInt(e.target.value))}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                  >
-                    <option value={25}>$25</option>
-                    <option value={50}>$50</option>
-                    <option value={100}>$100</option>
-                    <option value={250}>$250</option>
-                    <option value={500}>$500</option>
-                  </select>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Currency
-                  </label>
-                  <select
-                    value={paymentSettings.currency}
-                    onChange={(e) => handlePaymentChange('currency', e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                  >
-                    <option value="USD">USD</option>
-                    <option value="EUR">EUR</option>
-                    <option value="GBP">GBP</option>
-                    <option value="CAD">CAD</option>
-                  </select>
-                </div>
+                <p className="text-sm text-gray-500 mt-1">
+                  How dates are displayed throughout the platform
+                </p>
               </div>
             </div>
           </div>
         </div>
       )}
 
-      {/* Account Tab */}
-      {activeTab === "account" && (
+      {/* Display Tab */}
+      {activeTab === "display" && (
         <div className="space-y-6">
           <div className="bg-white rounded-lg border border-gray-200 p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Change Password</h3>
-            <div className="space-y-4">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Display Preferences</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Current Password
+                  Time Format
                 </label>
-                <div className="relative">
-                  <input
-                    type={showPassword ? "text" : "password"}
-                    className="w-full px-3 py-2 pr-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                    placeholder="Enter current password"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute inset-y-0 right-0 pr-3 flex items-center"
-                  >
-                    {showPassword ? <EyeOff className="h-4 w-4 text-gray-400" /> : <Eye className="h-4 w-4 text-gray-400" />}
-                  </button>
-                </div>
+                <select
+                  value={userPreferences.timeFormat}
+                  onChange={(e) => handlePreferenceChange('timeFormat', e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                >
+                  <option value="12h">12-hour (AM/PM)</option>
+                  <option value="24h">24-hour</option>
+                </select>
+                <p className="text-sm text-gray-500 mt-1">
+                  Choose between 12-hour and 24-hour time format
+                </p>
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  New Password
+                  Number Format
                 </label>
-                <div className="relative">
-                  <input
-                    type={showNewPassword ? "text" : "password"}
-                    className="w-full px-3 py-2 pr-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                    placeholder="Enter new password"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowNewPassword(!showNewPassword)}
-                    className="absolute inset-y-0 right-0 pr-3 flex items-center"
-                  >
-                    {showNewPassword ? <EyeOff className="h-4 w-4 text-gray-400" /> : <Eye className="h-4 w-4 text-gray-400" />}
-                  </button>
-                </div>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Confirm New Password
-                </label>
-                <div className="relative">
-                  <input
-                    type={showConfirmPassword ? "text" : "password"}
-                    className="w-full px-3 py-2 pr-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                    placeholder="Confirm new password"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                    className="absolute inset-y-0 right-0 pr-3 flex items-center"
-                  >
-                    {showConfirmPassword ? <EyeOff className="h-4 w-4 text-gray-400" /> : <Eye className="h-4 w-4 text-gray-400" />}
-                  </button>
-                </div>
+                <select
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  disabled
+                >
+                  <option value="auto">Auto-detect from locale</option>
+                </select>
+                <p className="text-sm text-gray-500 mt-1">
+                  Number formatting is automatically determined by your language setting
+                </p>
               </div>
             </div>
           </div>
 
           <div className="bg-white rounded-lg border border-gray-200 p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Danger Zone</h3>
-            <div className="space-y-4">
-              <div className="flex items-center justify-between p-4 bg-red-50 rounded-lg">
-                <div>
-                  <p className="text-sm font-medium text-red-900">Delete Account</p>
-                  <p className="text-sm text-red-700">Permanently delete your account and all data</p>
-                </div>
-                <button className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors">
-                  Delete Account
-                </button>
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Preview</h3>
+            <div className="bg-gray-50 rounded-lg p-4 space-y-3">
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-gray-600">Current time:</span>
+                <span className="text-sm font-medium">
+                  {new Date().toLocaleString(userPreferences.language, {
+                    timeZone: userPreferences.timezone,
+                    hour12: userPreferences.timeFormat === '12h',
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                  })}
+                </span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-gray-600">Sample price:</span>
+                <span className="text-sm font-medium">
+                  {new Intl.NumberFormat(userPreferences.language, {
+                    style: 'currency',
+                    currency: userPreferences.currency
+                  }).format(99.99)}
+                </span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-gray-600">Sample date:</span>
+                <span className="text-sm font-medium">
+                  {new Date().toLocaleDateString(userPreferences.language, {
+                    timeZone: userPreferences.timezone,
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit'
+                  })}
+                </span>
               </div>
             </div>
           </div>
@@ -500,7 +288,7 @@ const Settings = () => {
           className="bg-purple-600 text-white px-6 py-2 rounded-lg hover:bg-purple-700 transition-colors flex items-center gap-2"
         >
           <Save className="h-4 w-4" />
-          Save Changes
+          Save Preferences
         </button>
       </div>
     </div>

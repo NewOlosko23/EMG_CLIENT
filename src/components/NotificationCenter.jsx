@@ -13,7 +13,7 @@ const NotificationCenter = () => {
       message: "Your track 'Summer Vibes' has been uploaded and is now live on all platforms.",
       time: "2 hours ago",
       icon: Upload,
-      unread: true,
+      unread: false,
       details: {
         trackName: "Summer Vibes",
         platforms: ["Spotify", "Apple Music", "YouTube Music", "Amazon Music", "Deezer"],
@@ -30,7 +30,7 @@ const NotificationCenter = () => {
       message: "Your track 'Midnight Dreams' has reached 100K plays!",
       time: "5 hours ago",
       icon: TrendingUp,
-      unread: true,
+      unread: false,
       details: {
         trackName: "Midnight Dreams",
         milestone: "100,000 plays",
@@ -86,7 +86,7 @@ const NotificationCenter = () => {
       message: "Artist 'Luna Star' wants to collaborate on a new track.",
       time: "3 days ago",
       icon: Users,
-      unread: true,
+      unread: false,
       details: {
         collaboratorName: "Luna Star",
         collaboratorGenre: "Pop",
@@ -94,7 +94,9 @@ const NotificationCenter = () => {
         projectType: "Single",
         proposedGenre: "Electronic Pop",
         message: "Hi! I love your electronic style and would love to collaborate on a track that combines our sounds. I think we could create something amazing together!",
-        responseDeadline: "7 days"
+        responseDeadline: "7 days",
+        responseStatus: "Accepted",
+        responseMessage: "Thank you for reaching out! I'd love to explore this collaboration. Let's schedule a creative session to discuss the direction."
       }
     },
     {

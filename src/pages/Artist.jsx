@@ -131,7 +131,7 @@ const artists = [
   },
 ];
 
-const genres = ["All", "Pop", "R&B", "Afrobeat", "Hip-Hop", "Jazz", "Soul", "Highlife", "Afro Fusion"];
+const genres = ["All", "Pop", "R&B", "Afrobeat", "Hip-Hop", "Jazz", "Soul", "Highlife", "Afro Fusion", "Gospel"];
 const countries = ["All", "Kenya", "Uganda", "South Africa", "Ghana", "Nigeria", "Tanzania"];
 
 // Modern Artist Card Component

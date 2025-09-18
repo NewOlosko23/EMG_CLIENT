@@ -11,11 +11,10 @@ import DashboardHome from "../pages/DashboardHome";
 import MyMusic from "../pages/MyMusic";
 import UploadMusic from "../pages/UploadMusic";
 import Analytics from "../pages/Analytics";
-import Earnings from "../pages/Earnings";
-import Playlists from "../pages/Playlists";
 import Promotion from "../pages/Promotion";
 import Calendar from "../pages/Calendar";
 import Settings from "../pages/Settings";
+import ArtistProfile from "../pages/ArtistProfile";
 import Help from "../pages/Help";
 import Login from "../pages/Login";
 import Signup from "../pages/Signup";
@@ -23,6 +22,12 @@ import ForgotPassword from "../pages/ForgotPassword";
 import ResetPassword from "../pages/ResetPassword";
 import AdminDashboard from "../pages/admin/AdminDashboard";
 import AdminHome from "../pages/admin/AdminHome";
+import AdminUserManagement from "../pages/admin/AdminUserManagement";
+import AdminContentModeration from "../pages/admin/AdminContentModeration";
+import AdminAnalytics from "../pages/admin/AdminAnalytics";
+import AdminSupport from "../pages/admin/AdminSupport";
+import AdminAnnouncements from "../pages/admin/AdminAnnouncements";
+import AdminSettings from "../pages/admin/AdminSettings";
 import { ProtectedRoute } from "../components/ProtectedRoute";
 import { AdminRoute } from "../components/RoleBasedRoute";
 import { AutoRedirect } from "../components/AutoRedirect";
@@ -94,12 +99,10 @@ const Routers = () => {
         <Route path="music" element={<MyMusic />} />
         <Route path="upload" element={<UploadMusic />} />
         <Route path="analytics" element={<Analytics />} />
-        <Route path="earnings" element={<Earnings />} />
-        <Route path="playlists" element={<Playlists />} />
-        <Route path="collaborations" element={<DashboardHome />} />
         <Route path="promotion" element={<Promotion />} />
         <Route path="calendar" element={<Calendar />} />
         <Route path="settings" element={<Settings />} />
+        <Route path="profile" element={<ArtistProfile />} />
         <Route path="help" element={<Help />} />
       </Route>
       <Route
@@ -137,6 +140,12 @@ const Routers = () => {
       >
         <Route index element={<AdminHome />} />
         <Route path="dashboard" element={<AdminHome />} />
+        <Route path="users" element={<AdminUserManagement />} />
+        <Route path="content" element={<AdminContentModeration />} />
+        <Route path="analytics" element={<AdminAnalytics />} />
+        <Route path="support" element={<AdminSupport />} />
+        <Route path="announcements" element={<AdminAnnouncements />} />
+        <Route path="settings" element={<AdminSettings />} />
       </Route>
       </Routes>
     </AutoRedirect>

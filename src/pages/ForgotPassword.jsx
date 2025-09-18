@@ -2,22 +2,39 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Mail, ArrowLeft, Music, ArrowRight } from "lucide-react";
 import Bg from "../assets/emg2.jpg";
+import { supabase } from "../lib/supabaseClient";
+import { useToast } from "../contexts/ToastContext";
 
 const ForgotPassword = () => {
+  const { showToast } = useToast();
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
+    setError("");
     
-    // Simulate sending reset email
-    setTimeout(() => {
-      setIsLoading(false);
+    try {
+      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${window.location.origin}/reset-password`,
+      });
+      
+      if (error) {
+        throw error;
+      }
+      
       setIsSubmitted(true);
-      console.log("Reset email sent to:", email);
-    }, 2000);
+      showToast("Password reset email sent successfully!", "success");
+    } catch (error) {
+      console.error('Password reset error:', error);
+      setError(error.message);
+      showToast(`Failed to send reset email: ${error.message}`, "error");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -86,6 +103,13 @@ const ForgotPassword = () => {
                   />
                 </div>
               </div>
+
+              {/* Error Message */}
+              {error && (
+                <div className="bg-red-500/20 border border-red-500/30 rounded-xl p-3">
+                  <p className="text-red-200 text-sm">{error}</p>
+                </div>
+              )}
 
               {/* Submit Button */}
               <button

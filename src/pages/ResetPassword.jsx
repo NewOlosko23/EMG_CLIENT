@@ -1,9 +1,13 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Eye, EyeOff, Lock, ArrowLeft, Music, CheckCircle } from "lucide-react";
 import Bg from "../assets/emg2.jpg";
+import { supabase } from "../lib/supabaseClient";
+import { useToast } from "../contexts/ToastContext";
 
 const ResetPassword = () => {
+  const { showToast } = useToast();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     password: "",
     confirmPassword: "",
@@ -12,6 +16,19 @@ const ResetPassword = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [error, setError] = useState("");
+
+  // Check if user has a valid session for password reset
+  useEffect(() => {
+    const checkSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        showToast("Invalid or expired reset link", "error");
+        navigate("/forgot-password");
+      }
+    };
+    checkSession();
+  }, [navigate, showToast]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -19,18 +36,53 @@ const ResetPassword = () => {
       ...prev,
       [name]: value
     }));
+    // Clear error when user starts typing
+    if (error) setError("");
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
+    setError("");
     
-    // Simulate password reset
-    setTimeout(() => {
+    // Validate passwords match
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match");
       setIsLoading(false);
+      return;
+    }
+    
+    // Validate password strength
+    if (formData.password.length < 8) {
+      setError("Password must be at least 8 characters long");
+      setIsLoading(false);
+      return;
+    }
+    
+    try {
+      const { error } = await supabase.auth.updateUser({
+        password: formData.password
+      });
+      
+      if (error) {
+        throw error;
+      }
+      
       setIsSuccess(true);
-      console.log("Password reset successful");
-    }, 2000);
+      showToast("Password reset successfully!", "success");
+      
+      // Redirect to login after 3 seconds
+      setTimeout(() => {
+        navigate("/login");
+      }, 3000);
+      
+    } catch (error) {
+      console.error('Password reset error:', error);
+      setError(error.message);
+      showToast(`Failed to reset password: ${error.message}`, "error");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -133,6 +185,13 @@ const ResetPassword = () => {
                   </button>
                 </div>
               </div>
+
+              {/* Error Message */}
+              {error && (
+                <div className="bg-red-500/20 border border-red-500/30 rounded-xl p-3">
+                  <p className="text-red-200 text-sm">{error}</p>
+                </div>
+              )}
 
               {/* Password Requirements */}
               <div className="bg-white/5 rounded-lg p-3 border border-white/10">

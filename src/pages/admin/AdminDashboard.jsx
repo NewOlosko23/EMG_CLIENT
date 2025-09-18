@@ -48,8 +48,8 @@ const AdminDashboard = () => {
 
   // Admin navigation items
   const navigation = [
-    { name: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard },
-    { name: "User Management", href: "/admin/users", icon: Users },
+    { name: "Dashboard", href: "/admin", icon: LayoutDashboard },
+    { name: "Artist Management", href: "/admin/users", icon: Users },
     { name: "Content Moderation", href: "/admin/content", icon: Music },
     { name: "Platform Analytics", href: "/admin/analytics", icon: BarChart3 },
     { name: "Support Tickets", href: "/admin/support", icon: MessageSquare },

@@ -99,7 +99,7 @@ const latestInfo = [
   },
 ];
 
-const genres = ["All", "Electronic", "Afrobeat", "Hip-Hop", "Pop", "Rock", "Jazz", "Classical"];
+const genres = ["All", "Electronic", "Afrobeat", "Hip-Hop", "Pop", "Rock", "Jazz", "Classical", "Gospel"];
 
 // Modern News Card Component
 const NewsCard = ({ news }) => (

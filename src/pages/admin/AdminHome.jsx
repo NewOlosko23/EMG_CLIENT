@@ -11,18 +11,24 @@ import {
   BarChart3,
   Activity,
   Eye,
-  Download
+  Download,
+  Award,
+  Star,
+  Play
 } from "lucide-react";
 import { dbHelpers } from "../../lib/supabaseClient";
 
 const AdminHome = () => {
   const [stats, setStats] = useState({
-    totalUsers: 0,
+    totalArtists: 0,
+    activeArtists: 0,
+    verifiedArtists: 0,
     totalTracks: 0,
     pendingTracks: 0,
     totalRevenue: 0,
-    activeUsers: 0,
-    newUsersToday: 0
+    newArtistsToday: 0,
+    premiumArtists: 0,
+    proArtists: 0
   });
   const [recentActivity, setRecentActivity] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -35,36 +41,39 @@ const AdminHome = () => {
     try {
       setLoading(true);
       
-      // Load platform stats
-      const { data: platformStats } = await dbHelpers.getPlatformStats();
+      // Load artist analytics
+      const { data: artistAnalytics } = await dbHelpers.getArtistAnalyticsSummary();
       
       // Load pending tracks
       const { data: pendingTracks } = await dbHelpers.getPendingTracks();
       
-      // Load all users
-      const { data: allUsers } = await dbHelpers.getAllUsers();
+      // Load all tracks for total count
+      const { data: allTracks } = await dbHelpers.getAllTracks();
+      
+      // Load total revenue from earnings
+      const { data: totalEarnings } = await dbHelpers.getTotalEarnings();
       
       // Calculate stats
-      const today = new Date().toISOString().split('T')[0];
-      const newUsersToday = allUsers?.filter(user => 
-        user.created_at.startsWith(today)
-      ).length || 0;
+      const newArtistsToday = artistAnalytics?.newThisMonth || 0; // Using monthly for now
       
       setStats({
-        totalUsers: allUsers?.length || 0,
-        totalTracks: 0, // Will be calculated from tracks
+        totalArtists: artistAnalytics?.totalArtists || 0,
+        activeArtists: artistAnalytics?.activeArtists || 0,
+        verifiedArtists: artistAnalytics?.verifiedArtists || 0,
+        totalTracks: allTracks?.length || 0,
         pendingTracks: pendingTracks?.length || 0,
-        totalRevenue: 0, // Will be calculated from earnings
-        activeUsers: allUsers?.filter(user => user.is_active).length || 0,
-        newUsersToday
+        totalRevenue: totalEarnings?.total || 0,
+        newArtistsToday,
+        premiumArtists: artistAnalytics?.premiumArtists || 0,
+        proArtists: artistAnalytics?.proArtists || 0
       });
 
       // Mock recent activity
       setRecentActivity([
         {
           id: 1,
-          type: 'user_signup',
-          message: 'New user registered: john_doe',
+          type: 'artist_signup',
+          message: 'New artist registered: john_doe',
           timestamp: new Date(Date.now() - 1000 * 60 * 30), // 30 minutes ago
           icon: Users
         },
@@ -84,10 +93,10 @@ const AdminHome = () => {
         },
         {
           id: 4,
-          type: 'support_ticket',
-          message: 'New support ticket: Payment issue',
+          type: 'artist_verified',
+          message: 'Artist verified: musicpro_artist',
           timestamp: new Date(Date.now() - 1000 * 60 * 60 * 3), // 3 hours ago
-          icon: MessageSquare
+          icon: Award
         }
       ]);
       
@@ -112,9 +121,10 @@ const AdminHome = () => {
 
   const getActivityIconColor = (type) => {
     switch (type) {
-      case 'user_signup': return 'text-blue-500';
+      case 'artist_signup': return 'text-blue-500';
       case 'track_upload': return 'text-green-500';
       case 'track_approved': return 'text-emerald-500';
+      case 'artist_verified': return 'text-purple-500';
       case 'support_ticket': return 'text-orange-500';
       default: return 'text-gray-500';
     }
@@ -133,19 +143,19 @@ const AdminHome = () => {
       {/* Header */}
       <div>
         <h1 className="text-2xl font-bold text-gray-900">Admin Dashboard</h1>
-        <p className="text-gray-600 mt-1">Welcome back! Here's what's happening on your platform.</p>
+        <p className="text-gray-600 mt-1">Welcome back! Here's what's happening with your artists and platform.</p>
       </div>
 
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6">
         <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
           <div className="flex items-center">
-            <div className="p-2 bg-blue-100 rounded-lg">
-              <Users className="h-6 w-6 text-blue-600" />
+            <div className="p-2 bg-purple-100 rounded-lg">
+              <Music className="h-6 w-6 text-purple-600" />
             </div>
             <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">Total Users</p>
-              <p className="text-2xl font-bold text-gray-900">{stats.totalUsers.toLocaleString()}</p>
+              <p className="text-sm font-medium text-gray-600">Total Artists</p>
+              <p className="text-2xl font-bold text-gray-900">{stats.totalArtists.toLocaleString()}</p>
             </div>
           </div>
         </div>
@@ -153,11 +163,23 @@ const AdminHome = () => {
         <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
           <div className="flex items-center">
             <div className="p-2 bg-green-100 rounded-lg">
-              <Music className="h-6 w-6 text-green-600" />
+              <Activity className="h-6 w-6 text-green-600" />
             </div>
             <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">Total Tracks</p>
-              <p className="text-2xl font-bold text-gray-900">{stats.totalTracks.toLocaleString()}</p>
+              <p className="text-sm font-medium text-gray-600">Active Artists</p>
+              <p className="text-2xl font-bold text-gray-900">{stats.activeArtists.toLocaleString()}</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+          <div className="flex items-center">
+            <div className="p-2 bg-blue-100 rounded-lg">
+              <Award className="h-6 w-6 text-blue-600" />
+            </div>
+            <div className="ml-4">
+              <p className="text-sm font-medium text-gray-600">Verified Artists</p>
+              <p className="text-2xl font-bold text-gray-900">{stats.verifiedArtists.toLocaleString()}</p>
             </div>
           </div>
         </div>
@@ -188,24 +210,51 @@ const AdminHome = () => {
 
         <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
           <div className="flex items-center">
-            <div className="p-2 bg-purple-100 rounded-lg">
-              <Activity className="h-6 w-6 text-purple-600" />
+            <div className="p-2 bg-cyan-100 rounded-lg">
+              <TrendingUp className="h-6 w-6 text-cyan-600" />
             </div>
             <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">Active Users</p>
-              <p className="text-2xl font-bold text-gray-900">{stats.activeUsers.toLocaleString()}</p>
+              <p className="text-sm font-medium text-gray-600">New This Month</p>
+              <p className="text-2xl font-bold text-gray-900">{stats.newArtistsToday}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Additional Artist Stats */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+          <div className="flex items-center">
+            <div className="p-2 bg-blue-100 rounded-lg">
+              <Star className="h-6 w-6 text-blue-600" />
+            </div>
+            <div className="ml-4">
+              <p className="text-sm font-medium text-gray-600">Premium Artists</p>
+              <p className="text-2xl font-bold text-gray-900">{stats.premiumArtists.toLocaleString()}</p>
             </div>
           </div>
         </div>
 
         <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
           <div className="flex items-center">
-            <div className="p-2 bg-cyan-100 rounded-lg">
-              <TrendingUp className="h-6 w-6 text-cyan-600" />
+            <div className="p-2 bg-purple-100 rounded-lg">
+              <Award className="h-6 w-6 text-purple-600" />
             </div>
             <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">New Today</p>
-              <p className="text-2xl font-bold text-gray-900">{stats.newUsersToday}</p>
+              <p className="text-sm font-medium text-gray-600">Pro Artists</p>
+              <p className="text-2xl font-bold text-gray-900">{stats.proArtists.toLocaleString()}</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+          <div className="flex items-center">
+            <div className="p-2 bg-green-100 rounded-lg">
+              <Play className="h-6 w-6 text-green-600" />
+            </div>
+            <div className="ml-4">
+              <p className="text-sm font-medium text-gray-600">Total Tracks</p>
+              <p className="text-2xl font-bold text-gray-900">{stats.totalTracks.toLocaleString()}</p>
             </div>
           </div>
         </div>
@@ -256,12 +305,12 @@ const AdminHome = () => {
 
               <button className="p-4 text-left border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
                 <div className="flex items-center space-x-3">
-                  <div className="p-2 bg-blue-100 rounded-lg">
-                    <Users className="h-5 w-5 text-blue-600" />
+                  <div className="p-2 bg-purple-100 rounded-lg">
+                    <Users className="h-5 w-5 text-purple-600" />
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-gray-900">Manage Users</p>
-                    <p className="text-xs text-gray-500">{stats.totalUsers} total</p>
+                    <p className="text-sm font-medium text-gray-900">Manage Artists</p>
+                    <p className="text-xs text-gray-500">{stats.totalArtists} total</p>
                   </div>
                 </div>
               </button>

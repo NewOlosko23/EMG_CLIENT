@@ -307,6 +307,24 @@ CREATE TABLE campaign_tracks_emg (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
+-- Calendar events
+CREATE TABLE events_emg (
+    id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+    user_id UUID REFERENCES profiles_emg(id) ON DELETE CASCADE,
+    title VARCHAR(200) NOT NULL,
+    description TEXT,
+    event_type VARCHAR(50) NOT NULL CHECK (event_type IN ('release', 'meeting', 'deadline', 'performance', 'promotion', 'other')),
+    event_date DATE NOT NULL,
+    event_time TIME,
+    location VARCHAR(200),
+    status VARCHAR(20) DEFAULT 'upcoming' CHECK (status IN ('upcoming', 'completed', 'cancelled', 'postponed')),
+    notes TEXT,
+    is_all_day BOOLEAN DEFAULT FALSE,
+    reminder_minutes INTEGER DEFAULT 15, -- minutes before event to remind
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
 -- =============================================
 -- NOTIFICATIONS & MESSAGING TABLES
 -- =============================================
@@ -396,6 +414,18 @@ CREATE INDEX idx_tracks_emg_approval_status ON tracks_emg(approval_status);
 CREATE INDEX idx_tracks_emg_created_at ON tracks_emg(created_at);
 CREATE INDEX idx_tracks_emg_genre ON tracks_emg(genre);
 
+-- Campaign indexes
+CREATE INDEX idx_campaigns_emg_artist_id ON campaigns_emg(artist_id);
+CREATE INDEX idx_campaigns_emg_status ON campaigns_emg(status);
+CREATE INDEX idx_campaigns_emg_start_date ON campaigns_emg(start_date);
+CREATE INDEX idx_campaigns_emg_end_date ON campaigns_emg(end_date);
+
+-- Events indexes
+CREATE INDEX idx_events_emg_user_id ON events_emg(user_id);
+CREATE INDEX idx_events_emg_event_type ON events_emg(event_type);
+CREATE INDEX idx_events_emg_event_date ON events_emg(event_date);
+CREATE INDEX idx_events_emg_status ON events_emg(status);
+
 -- Analytics indexes
 CREATE INDEX idx_track_plays_emg_track_id ON track_plays_emg(track_id);
 CREATE INDEX idx_track_plays_emg_played_at ON track_plays_emg(played_at);
@@ -424,6 +454,7 @@ ALTER TABLE earnings_emg ENABLE ROW LEVEL SECURITY;
 ALTER TABLE payouts_emg ENABLE ROW LEVEL SECURITY;
 ALTER TABLE campaigns_emg ENABLE ROW LEVEL SECURITY;
 ALTER TABLE campaign_tracks_emg ENABLE ROW LEVEL SECURITY;
+ALTER TABLE events_emg ENABLE ROW LEVEL SECURITY;
 ALTER TABLE notifications_emg ENABLE ROW LEVEL SECURITY;
 ALTER TABLE messages_emg ENABLE ROW LEVEL SECURITY;
 ALTER TABLE announcements_emg ENABLE ROW LEVEL SECURITY;
@@ -516,6 +547,45 @@ CREATE POLICY "Admins can view all earnings" ON earnings_emg
         )
     );
 
+-- Campaigns policies
+CREATE POLICY "Users can view their own campaigns" ON campaigns_emg
+    FOR SELECT USING (artist_id = auth.uid());
+
+CREATE POLICY "Users can insert their own campaigns" ON campaigns_emg
+    FOR INSERT WITH CHECK (artist_id = auth.uid());
+
+CREATE POLICY "Users can update their own campaigns" ON campaigns_emg
+    FOR UPDATE USING (artist_id = auth.uid());
+
+CREATE POLICY "Admins can manage all campaigns" ON campaigns_emg
+    FOR ALL USING (
+        EXISTS (
+            SELECT 1 FROM profiles_emg 
+            WHERE id = auth.uid() AND role = 'admin'
+        )
+    );
+
+-- Events policies
+CREATE POLICY "Users can view their own events" ON events_emg
+    FOR SELECT USING (user_id = auth.uid());
+
+CREATE POLICY "Users can insert their own events" ON events_emg
+    FOR INSERT WITH CHECK (user_id = auth.uid());
+
+CREATE POLICY "Users can update their own events" ON events_emg
+    FOR UPDATE USING (user_id = auth.uid());
+
+CREATE POLICY "Users can delete their own events" ON events_emg
+    FOR DELETE USING (user_id = auth.uid());
+
+CREATE POLICY "Admins can manage all events" ON events_emg
+    FOR ALL USING (
+        EXISTS (
+            SELECT 1 FROM profiles_emg 
+            WHERE id = auth.uid() AND role = 'admin'
+        )
+    );
+
 -- =============================================
 -- FUNCTIONS AND TRIGGERS
 -- =============================================
@@ -549,6 +619,9 @@ CREATE TRIGGER update_earnings_emg_updated_at BEFORE UPDATE ON earnings_emg
     FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
 CREATE TRIGGER update_campaigns_emg_updated_at BEFORE UPDATE ON campaigns_emg
+    FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+CREATE TRIGGER update_events_emg_updated_at BEFORE UPDATE ON events_emg
     FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
 CREATE TRIGGER update_messages_emg_updated_at BEFORE UPDATE ON messages_emg
