@@ -140,121 +140,156 @@ const AdminHome = () => {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <div>
-        <h1 className="text-2xl font-bold text-gray-900">Admin Dashboard</h1>
-        <p className="text-gray-600 mt-1">Welcome back! Here's what's happening with your artists and platform.</p>
+      {/* Minimal Header */}
+      <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl font-semibold text-gray-900 mb-1">Admin Dashboard</h1>
+            <p className="text-gray-500">Welcome back! Here's what's happening with your artists and platform.</p>
+          </div>
+          <div className="hidden md:flex items-center space-x-2">
+            <div className="w-2 h-2 bg-gray-400 rounded-full"></div>
+            <span className="text-sm text-gray-400">Live</span>
+          </div>
+        </div>
       </div>
 
-      {/* Stats Grid */}
+      {/* Minimal Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6">
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-          <div className="flex items-center">
-            <div className="p-2 bg-purple-100 rounded-lg">
-              <Music className="h-6 w-6 text-purple-600" />
+        {/* Total Artists Card */}
+        <div className="group bg-white p-6 rounded-lg shadow-sm border border-gray-200 hover:shadow-md hover:border-gray-300 transition-all duration-200 cursor-pointer">
+          <div className="flex flex-col items-center text-center space-y-3">
+            <div className="p-3 bg-gray-100 rounded-lg group-hover:bg-gray-200 transition-colors duration-200">
+              <Music className="h-6 w-6 text-gray-600" />
             </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">Total Artists</p>
-              <p className="text-2xl font-bold text-gray-900">{stats.totalArtists.toLocaleString()}</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-          <div className="flex items-center">
-            <div className="p-2 bg-green-100 rounded-lg">
-              <Activity className="h-6 w-6 text-green-600" />
-            </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">Active Artists</p>
-              <p className="text-2xl font-bold text-gray-900">{stats.activeArtists.toLocaleString()}</p>
+            <div className="space-y-1">
+              <p className="text-sm font-medium text-gray-500">Total Artists</p>
+              <p className="text-2xl font-bold text-gray-900">
+                {stats.totalArtists.toLocaleString()}
+              </p>
             </div>
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-          <div className="flex items-center">
-            <div className="p-2 bg-blue-100 rounded-lg">
-              <Award className="h-6 w-6 text-blue-600" />
+        {/* Active Artists Card */}
+        <div className="group bg-white p-6 rounded-lg shadow-sm border border-gray-200 hover:shadow-md hover:border-gray-300 transition-all duration-200 cursor-pointer">
+          <div className="flex flex-col items-center text-center space-y-3">
+            <div className="p-3 bg-gray-100 rounded-lg group-hover:bg-gray-200 transition-colors duration-200">
+              <Activity className="h-6 w-6 text-gray-600" />
             </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">Verified Artists</p>
-              <p className="text-2xl font-bold text-gray-900">{stats.verifiedArtists.toLocaleString()}</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-          <div className="flex items-center">
-            <div className="p-2 bg-orange-100 rounded-lg">
-              <Clock className="h-6 w-6 text-orange-600" />
-            </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">Pending Tracks</p>
-              <p className="text-2xl font-bold text-gray-900">{stats.pendingTracks}</p>
+            <div className="space-y-1">
+              <p className="text-sm font-medium text-gray-500">Active Artists</p>
+              <p className="text-2xl font-bold text-gray-900">
+                {stats.activeArtists.toLocaleString()}
+              </p>
             </div>
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-          <div className="flex items-center">
-            <div className="p-2 bg-emerald-100 rounded-lg">
-              <DollarSign className="h-6 w-6 text-emerald-600" />
+        {/* Verified Artists Card */}
+        <div className="group bg-white p-6 rounded-lg shadow-sm border border-gray-200 hover:shadow-md hover:border-gray-300 transition-all duration-200 cursor-pointer">
+          <div className="flex flex-col items-center text-center space-y-3">
+            <div className="p-3 bg-gray-100 rounded-lg group-hover:bg-gray-200 transition-colors duration-200">
+              <Award className="h-6 w-6 text-gray-600" />
             </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">Total Revenue</p>
-              <p className="text-2xl font-bold text-gray-900">${stats.totalRevenue.toLocaleString()}</p>
+            <div className="space-y-1">
+              <p className="text-sm font-medium text-gray-500">Verified Artists</p>
+              <p className="text-2xl font-bold text-gray-900">
+                {stats.verifiedArtists.toLocaleString()}
+              </p>
             </div>
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-          <div className="flex items-center">
-            <div className="p-2 bg-cyan-100 rounded-lg">
-              <TrendingUp className="h-6 w-6 text-cyan-600" />
+        {/* Pending Tracks Card */}
+        <div className="group bg-white p-6 rounded-lg shadow-sm border border-gray-200 hover:shadow-md hover:border-gray-300 transition-all duration-200 cursor-pointer">
+          <div className="flex flex-col items-center text-center space-y-3">
+            <div className="p-3 bg-gray-100 rounded-lg group-hover:bg-gray-200 transition-colors duration-200">
+              <Clock className="h-6 w-6 text-gray-600" />
             </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">New This Month</p>
-              <p className="text-2xl font-bold text-gray-900">{stats.newArtistsToday}</p>
+            <div className="space-y-1">
+              <p className="text-sm font-medium text-gray-500">Pending Tracks</p>
+              <p className="text-2xl font-bold text-gray-900">
+                {stats.pendingTracks}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Total Revenue Card */}
+        <div className="group bg-white p-6 rounded-lg shadow-sm border border-gray-200 hover:shadow-md hover:border-gray-300 transition-all duration-200 cursor-pointer">
+          <div className="flex flex-col items-center text-center space-y-3">
+            <div className="p-3 bg-gray-100 rounded-lg group-hover:bg-gray-200 transition-colors duration-200">
+              <DollarSign className="h-6 w-6 text-gray-600" />
+            </div>
+            <div className="space-y-1">
+              <p className="text-sm font-medium text-gray-500">Total Revenue</p>
+              <p className="text-2xl font-bold text-gray-900">
+                ${stats.totalRevenue.toLocaleString()}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* New This Month Card */}
+        <div className="group bg-white p-6 rounded-lg shadow-sm border border-gray-200 hover:shadow-md hover:border-gray-300 transition-all duration-200 cursor-pointer">
+          <div className="flex flex-col items-center text-center space-y-3">
+            <div className="p-3 bg-gray-100 rounded-lg group-hover:bg-gray-200 transition-colors duration-200">
+              <TrendingUp className="h-6 w-6 text-gray-600" />
+            </div>
+            <div className="space-y-1">
+              <p className="text-sm font-medium text-gray-500">New This Month</p>
+              <p className="text-2xl font-bold text-gray-900">
+                {stats.newArtistsToday}
+              </p>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Additional Artist Stats */}
+      {/* Minimal Additional Artist Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-          <div className="flex items-center">
-            <div className="p-2 bg-blue-100 rounded-lg">
-              <Star className="h-6 w-6 text-blue-600" />
+        {/* Premium Artists Card */}
+        <div className="group bg-white p-6 rounded-lg shadow-sm border border-gray-200 hover:shadow-md hover:border-gray-300 transition-all duration-200 cursor-pointer">
+          <div className="flex flex-col items-center text-center space-y-3">
+            <div className="p-3 bg-gray-100 rounded-lg group-hover:bg-gray-200 transition-colors duration-200">
+              <Star className="h-6 w-6 text-gray-600" />
             </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">Premium Artists</p>
-              <p className="text-2xl font-bold text-gray-900">{stats.premiumArtists.toLocaleString()}</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-          <div className="flex items-center">
-            <div className="p-2 bg-purple-100 rounded-lg">
-              <Award className="h-6 w-6 text-purple-600" />
-            </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">Pro Artists</p>
-              <p className="text-2xl font-bold text-gray-900">{stats.proArtists.toLocaleString()}</p>
+            <div className="space-y-1">
+              <p className="text-sm font-medium text-gray-500">Premium Artists</p>
+              <p className="text-2xl font-bold text-gray-900">
+                {stats.premiumArtists.toLocaleString()}
+              </p>
             </div>
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-          <div className="flex items-center">
-            <div className="p-2 bg-green-100 rounded-lg">
-              <Play className="h-6 w-6 text-green-600" />
+        {/* Pro Artists Card */}
+        <div className="group bg-white p-6 rounded-lg shadow-sm border border-gray-200 hover:shadow-md hover:border-gray-300 transition-all duration-200 cursor-pointer">
+          <div className="flex flex-col items-center text-center space-y-3">
+            <div className="p-3 bg-gray-100 rounded-lg group-hover:bg-gray-200 transition-colors duration-200">
+              <Award className="h-6 w-6 text-gray-600" />
             </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">Total Tracks</p>
-              <p className="text-2xl font-bold text-gray-900">{stats.totalTracks.toLocaleString()}</p>
+            <div className="space-y-1">
+              <p className="text-sm font-medium text-gray-500">Pro Artists</p>
+              <p className="text-2xl font-bold text-gray-900">
+                {stats.proArtists.toLocaleString()}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Total Tracks Card */}
+        <div className="group bg-white p-6 rounded-lg shadow-sm border border-gray-200 hover:shadow-md hover:border-gray-300 transition-all duration-200 cursor-pointer">
+          <div className="flex flex-col items-center text-center space-y-3">
+            <div className="p-3 bg-gray-100 rounded-lg group-hover:bg-gray-200 transition-colors duration-200">
+              <Play className="h-6 w-6 text-gray-600" />
+            </div>
+            <div className="space-y-1">
+              <p className="text-sm font-medium text-gray-500">Total Tracks</p>
+              <p className="text-2xl font-bold text-gray-900">
+                {stats.totalTracks.toLocaleString()}
+              </p>
             </div>
           </div>
         </div>
@@ -262,21 +297,24 @@ const AdminHome = () => {
 
       {/* Quick Actions */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Recent Activity */}
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200">
-          <div className="p-6 border-b border-gray-200">
-            <h3 className="text-lg font-medium text-gray-900">Recent Activity</h3>
+        {/* Enhanced Recent Activity */}
+        <div className="bg-gradient-to-br from-white to-gray-50 rounded-xl shadow-lg border border-gray-200 hover:shadow-xl transition-all duration-300">
+          <div className="p-6 border-b border-gray-200 bg-gradient-to-r from-gray-50 to-white">
+            <div className="flex items-center justify-between">
+              <h3 className="text-lg font-semibold text-gray-900">Recent Activity</h3>
+              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+            </div>
           </div>
           <div className="p-6">
             <div className="space-y-4">
               {recentActivity.map((activity) => (
-                <div key={activity.id} className="flex items-start space-x-3">
-                  <div className={`p-2 rounded-lg ${getActivityIconColor(activity.type)}`}>
+                <div key={activity.id} className="group flex items-start space-x-3 p-3 rounded-lg hover:bg-white hover:shadow-sm transition-all duration-200">
+                  <div className={`p-2 rounded-xl shadow-sm group-hover:shadow-md transition-all duration-200 ${getActivityIconColor(activity.type)}`}>
                     <activity.icon className="h-4 w-4" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm text-gray-900">{activity.message}</p>
-                    <p className="text-xs text-gray-500">{formatTimeAgo(activity.timestamp)}</p>
+                    <p className="text-sm font-medium text-gray-900 group-hover:text-gray-700 transition-colors">{activity.message}</p>
+                    <p className="text-xs text-gray-500 mt-1">{formatTimeAgo(activity.timestamp)}</p>
                   </div>
                 </div>
               ))}
@@ -284,56 +322,59 @@ const AdminHome = () => {
           </div>
         </div>
 
-        {/* Quick Actions */}
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200">
-          <div className="p-6 border-b border-gray-200">
-            <h3 className="text-lg font-medium text-gray-900">Quick Actions</h3>
+        {/* Enhanced Quick Actions */}
+        <div className="bg-gradient-to-br from-white to-gray-50 rounded-xl shadow-lg border border-gray-200 hover:shadow-xl transition-all duration-300">
+          <div className="p-6 border-b border-gray-200 bg-gradient-to-r from-gray-50 to-white">
+            <div className="flex items-center justify-between">
+              <h3 className="text-lg font-semibold text-gray-900">Quick Actions</h3>
+              <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
+            </div>
           </div>
           <div className="p-6">
             <div className="grid grid-cols-2 gap-4">
-              <button className="p-4 text-left border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+              <button className="group p-4 text-left border border-gray-200 rounded-xl hover:bg-white hover:shadow-lg hover:border-orange-200 transition-all duration-300 hover:scale-105">
                 <div className="flex items-center space-x-3">
-                  <div className="p-2 bg-orange-100 rounded-lg">
+                  <div className="p-2 bg-gradient-to-br from-orange-100 to-orange-200 rounded-xl shadow-sm group-hover:shadow-md transition-all duration-300">
                     <Clock className="h-5 w-5 text-orange-600" />
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-gray-900">Review Tracks</p>
+                    <p className="text-sm font-medium text-gray-900 group-hover:text-orange-700 transition-colors">Review Tracks</p>
                     <p className="text-xs text-gray-500">{stats.pendingTracks} pending</p>
                   </div>
                 </div>
               </button>
 
-              <button className="p-4 text-left border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+              <button className="group p-4 text-left border border-gray-200 rounded-xl hover:bg-white hover:shadow-lg hover:border-purple-200 transition-all duration-300 hover:scale-105">
                 <div className="flex items-center space-x-3">
-                  <div className="p-2 bg-purple-100 rounded-lg">
+                  <div className="p-2 bg-gradient-to-br from-purple-100 to-purple-200 rounded-xl shadow-sm group-hover:shadow-md transition-all duration-300">
                     <Users className="h-5 w-5 text-purple-600" />
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-gray-900">Manage Artists</p>
+                    <p className="text-sm font-medium text-gray-900 group-hover:text-purple-700 transition-colors">Manage Artists</p>
                     <p className="text-xs text-gray-500">{stats.totalArtists} total</p>
                   </div>
                 </div>
               </button>
 
-              <button className="p-4 text-left border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+              <button className="group p-4 text-left border border-gray-200 rounded-xl hover:bg-white hover:shadow-lg hover:border-green-200 transition-all duration-300 hover:scale-105">
                 <div className="flex items-center space-x-3">
-                  <div className="p-2 bg-green-100 rounded-lg">
+                  <div className="p-2 bg-gradient-to-br from-green-100 to-green-200 rounded-xl shadow-sm group-hover:shadow-md transition-all duration-300">
                     <BarChart3 className="h-5 w-5 text-green-600" />
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-gray-900">View Analytics</p>
+                    <p className="text-sm font-medium text-gray-900 group-hover:text-green-700 transition-colors">View Analytics</p>
                     <p className="text-xs text-gray-500">Platform insights</p>
                   </div>
                 </div>
               </button>
 
-              <button className="p-4 text-left border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+              <button className="group p-4 text-left border border-gray-200 rounded-xl hover:bg-white hover:shadow-lg hover:border-blue-200 transition-all duration-300 hover:scale-105">
                 <div className="flex items-center space-x-3">
-                  <div className="p-2 bg-purple-100 rounded-lg">
-                    <MessageSquare className="h-5 w-5 text-purple-600" />
+                  <div className="p-2 bg-gradient-to-br from-blue-100 to-blue-200 rounded-xl shadow-sm group-hover:shadow-md transition-all duration-300">
+                    <MessageSquare className="h-5 w-5 text-blue-600" />
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-gray-900">Support Tickets</p>
+                    <p className="text-sm font-medium text-gray-900 group-hover:text-blue-700 transition-colors">Support Tickets</p>
                     <p className="text-xs text-gray-500">Help users</p>
                   </div>
                 </div>

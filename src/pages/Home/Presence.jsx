@@ -8,65 +8,7 @@ import {
   Target,
   Music
 } from "lucide-react";
-
-const countries = [
-  { 
-    name: "Kenya", 
-    flag: "🇰🇪", 
-    artists: "2,500+", 
-    streams: "50M+",
-    established: "2019"
-  },
-  { 
-    name: "Uganda", 
-    flag: "🇺🇬", 
-    artists: "1,800+", 
-    streams: "35M+",
-    established: "2020"
-  },
-  { 
-    name: "Tanzania", 
-    flag: "🇹🇿", 
-    artists: "2,200+", 
-    streams: "42M+",
-    established: "2019"
-  },
-  { 
-    name: "Rwanda", 
-    flag: "🇷🇼", 
-    artists: "1,200+", 
-    streams: "25M+",
-    established: "2021"
-  },
-  { 
-    name: "Burundi", 
-    flag: "🇧🇮", 
-    artists: "800+", 
-    streams: "15M+",
-    established: "2021"
-  },
-  { 
-    name: "Zambia", 
-    flag: "🇿🇲", 
-    artists: "1,500+", 
-    streams: "30M+",
-    established: "2020"
-  },
-  { 
-    name: "Sierra Leone", 
-    flag: "🇸🇱", 
-    artists: "900+", 
-    streams: "18M+",
-    established: "2022"
-  },
-  { 
-    name: "Eswatini", 
-    flag: "🇸🇿", 
-    artists: "600+", 
-    streams: "12M+",
-    established: "2022"
-  },
-];
+import { PRESENCE_COUNTRIES } from "../../constants/presenceData";
 
 const globalStats = [
   { icon: Globe, value: "150+", label: "Countries Reached" },
@@ -194,7 +136,7 @@ const Presence = ({ theme }) => {
           </h3>
           
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 max-w-6xl mx-auto">
-            {countries.map((country, index) => (
+            {PRESENCE_COUNTRIES.map((country, index) => (
               <div
                 key={index}
                 className={`group relative flex flex-col items-center p-6 rounded-2xl backdrop-blur-sm border transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl cursor-pointer ${

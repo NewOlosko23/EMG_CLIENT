@@ -98,7 +98,7 @@ const Analytics = () => {
         .map(track => ({
           name: track.title,
           plays: track.plays,
-          growth: Math.random() * 20 - 10 // Mock growth data
+          growth: Number((Math.random() * 20 - 10).toFixed(1)) // Mock growth data - 1 decimal place
         }));
 
       // Calculate top countries
@@ -142,10 +142,10 @@ const Analytics = () => {
         totalListeners: uniqueListeners,
         totalFollowers: Math.floor(uniqueListeners * 0.3), // Mock followers data
         totalRevenue,
-        playGrowth: Math.random() * 20 - 5, // Mock growth
-        listenerGrowth: Math.random() * 15 - 5,
-        followerGrowth: Math.random() * 25 - 5,
-        revenueGrowth: Math.random() * 30 - 5
+        playGrowth: Number((Math.random() * 20 - 5).toFixed(1)), // Mock growth - 1 decimal place
+        listenerGrowth: Number((Math.random() * 15 - 5).toFixed(1)),
+        followerGrowth: Number((Math.random() * 25 - 5).toFixed(1)),
+        revenueGrowth: Number((Math.random() * 30 - 5).toFixed(1))
       });
 
       setTopTracks(topTracksData);

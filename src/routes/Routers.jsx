@@ -8,6 +8,7 @@ import Merch from "../pages/Merch";
 import Team from "../pages/Team";
 import Dashboard from "../pages/Dashboard";
 import DashboardHome from "../pages/DashboardHome";
+import DashboardHomeOptimized from "../pages/DashboardHomeOptimized";
 import MyMusic from "../pages/MyMusic";
 import UploadMusic from "../pages/UploadMusic";
 import Analytics from "../pages/Analytics";

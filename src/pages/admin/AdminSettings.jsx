@@ -23,6 +23,7 @@ import {
   Plus,
   X
 } from "lucide-react";
+import { PRESENCE_CURRENCIES } from "../../constants/presenceData";
 
 const AdminSettings = () => {
   const [activeTab, setActiveTab] = useState("general");
@@ -61,7 +62,7 @@ const AdminSettings = () => {
       commissionRate: 10,
       minimumPayout: 25,
       payoutSchedule: "monthly",
-      currency: "USD"
+      currency: "KES"
     },
     storage: {
       maxFileSize: 100,
@@ -443,11 +444,11 @@ const AdminSettings = () => {
             onChange={(e) => updateSetting("payment", "currency", e.target.value)}
             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
           >
-            <option value="USD">USD</option>
-            <option value="EUR">EUR</option>
-            <option value="GBP">GBP</option>
-            <option value="CAD">CAD</option>
-            <option value="AUD">AUD</option>
+            {PRESENCE_CURRENCIES.map((currency) => (
+              <option key={currency.value} value={currency.value}>
+                {currency.label}
+              </option>
+            ))}
           </select>
         </div>
       </div>

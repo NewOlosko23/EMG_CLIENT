@@ -3,6 +3,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../contexts/ToastContext';
 import { supabase, dbHelpers, fileHelpers } from '../lib/supabaseClient';
 import { ensureStorageSetup } from '../lib/storageSetup';
+import { getCountryOptions } from '../constants/presenceData';
 import { 
   User, 
   MapPin, 
@@ -13,7 +14,6 @@ import {
   Facebook, 
   Youtube, 
   Music, 
-  Calendar, 
   Save,
   Upload,
   X,
@@ -51,7 +51,6 @@ const ArtistProfile = () => {
     tiktok_handle: '',
     
     // Personal Details
-    date_of_birth: '',
     gender: '',
     language: 'en',
     timezone: 'UTC',
@@ -134,7 +133,6 @@ const ArtistProfile = () => {
           tiktok_handle: data.tiktok_handle || '',
           
           // Personal Details
-          date_of_birth: data.date_of_birth ? data.date_of_birth.split('T')[0] : '',
           gender: data.gender || '',
           language: data.language || 'en',
           timezone: data.timezone || 'UTC',
@@ -315,7 +313,7 @@ const ArtistProfile = () => {
 
       // Fix fields that should be null instead of empty strings
       const fieldsToNullify = [
-        'date_of_birth', 'country', 'country_name', 'state_province', 
+        'country', 'country_name', 'state_province', 
         'city', 'postal_code', 'phone_number', 'website_url', 
         'instagram_handle', 'twitter_handle', 'facebook_url', 
         'youtube_channel', 'tiktok_handle', 'gender', 'artist_name', 
@@ -489,7 +487,7 @@ const ArtistProfile = () => {
                 name="record_label"
                 value={profileData.record_label}
                 onChange={handleInputChange}
-                placeholder="Associated record label"
+                placeholder="EMG"
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
               />
             </div>
@@ -522,14 +520,19 @@ const ArtistProfile = () => {
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Country
               </label>
-              <input
-                type="text"
+              <select
                 name="country_name"
                 value={profileData.country_name}
                 onChange={handleInputChange}
-                placeholder="e.g., United States"
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-              />
+              >
+                <option value="">Select your country</option>
+                {getCountryOptions().map((country) => (
+                  <option key={country.value} value={country.value}>
+                    {country.label}
+                  </option>
+                ))}
+              </select>
             </div>
 
             <div>
@@ -662,6 +665,32 @@ const ArtistProfile = () => {
                 placeholder="Channel name or URL"
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
               />
+            </div>
+          </div>
+        </div>
+
+        {/* Personal Details */}
+        <div className="bg-white rounded-lg border border-gray-200 p-6">
+          <div className="flex items-center mb-6">
+            <User className="h-5 w-5 text-purple-600 mr-2" />
+            <h2 className="text-xl font-semibold text-gray-900">Personal Details</h2>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Gender
+              </label>
+              <select
+                name="gender"
+                value={profileData.gender}
+                onChange={handleInputChange}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              >
+                <option value="">Select gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </select>
             </div>
           </div>
         </div>

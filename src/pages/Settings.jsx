@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { Settings as SettingsIcon, Globe, DollarSign, Languages, Save } from "lucide-react";
+import { PRESENCE_CURRENCIES } from "../constants/presenceData";
 
 const Settings = () => {
   const [activeTab, setActiveTab] = useState("preferences");
 
   const [userPreferences, setUserPreferences] = useState({
-    timezone: "America/New_York",
-    currency: "USD",
+    timezone: "Africa/Nairobi",
+    currency: "KES",
     language: "en",
     dateFormat: "MM/DD/YYYY",
     timeFormat: "12h"
@@ -25,35 +26,21 @@ const Settings = () => {
     // Here you would typically save to your backend/database
   };
 
-  // Timezone options
+  // Timezone options - focused on presence countries
   const timezones = [
-    { value: "America/New_York", label: "Eastern Time (ET)" },
-    { value: "America/Chicago", label: "Central Time (CT)" },
-    { value: "America/Denver", label: "Mountain Time (MT)" },
-    { value: "America/Los_Angeles", label: "Pacific Time (PT)" },
+    { value: "Africa/Nairobi", label: "East Africa Time (EAT) - Kenya, Uganda, Tanzania" },
+    { value: "Africa/Kigali", label: "Central Africa Time (CAT) - Rwanda, Burundi" },
+    { value: "Africa/Lusaka", label: "Central Africa Time (CAT) - Zambia" },
+    { value: "Africa/Freetown", label: "Greenwich Mean Time (GMT) - Sierra Leone" },
+    { value: "Africa/Mbabane", label: "South Africa Standard Time (SAST) - Eswatini" },
+    { value: "UTC", label: "Coordinated Universal Time (UTC)" },
     { value: "Europe/London", label: "Greenwich Mean Time (GMT)" },
-    { value: "Europe/Paris", label: "Central European Time (CET)" },
-    { value: "Europe/Berlin", label: "Central European Time (CET)" },
-    { value: "Asia/Tokyo", label: "Japan Standard Time (JST)" },
-    { value: "Asia/Shanghai", label: "China Standard Time (CST)" },
-    { value: "Asia/Kolkata", label: "India Standard Time (IST)" },
-    { value: "Australia/Sydney", label: "Australian Eastern Time (AET)" },
-    { value: "Pacific/Auckland", label: "New Zealand Standard Time (NZST)" }
+    { value: "America/New_York", label: "Eastern Time (ET)" },
+    { value: "Asia/Tokyo", label: "Japan Standard Time (JST)" }
   ];
 
-  // Currency options
-  const currencies = [
-    { value: "USD", label: "US Dollar ($)", symbol: "$" },
-    { value: "EUR", label: "Euro (€)", symbol: "€" },
-    { value: "GBP", label: "British Pound (£)", symbol: "£" },
-    { value: "JPY", label: "Japanese Yen (¥)", symbol: "¥" },
-    { value: "CAD", label: "Canadian Dollar (C$)", symbol: "C$" },
-    { value: "AUD", label: "Australian Dollar (A$)", symbol: "A$" },
-    { value: "CHF", label: "Swiss Franc (CHF)", symbol: "CHF" },
-    { value: "CNY", label: "Chinese Yuan (¥)", symbol: "¥" },
-    { value: "INR", label: "Indian Rupee (₹)", symbol: "₹" },
-    { value: "BRL", label: "Brazilian Real (R$)", symbol: "R$" }
-  ];
+  // Currency options - using presence countries currencies
+  const currencies = PRESENCE_CURRENCIES;
 
   // Language options
   const languages = [

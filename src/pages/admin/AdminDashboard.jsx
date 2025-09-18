@@ -36,6 +36,7 @@ const AdminDashboard = () => {
   const { signOut, profile, getUserName } = useAuth();
   const { showSuccess, showError } = useToast();
 
+
   const handleLogout = async () => {
     const result = await signOut();
     if (result.success) {
@@ -77,37 +78,45 @@ const AdminDashboard = () => {
           className="fixed inset-0 bg-gray-600 bg-opacity-75"
           onClick={() => setSidebarOpen(false)}
         />
-        <div className="fixed inset-y-0 left-0 flex w-64 flex-col bg-white shadow-xl">
-          <div className="flex h-16 items-center justify-between px-4 border-b border-gray-200">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-red-600 rounded-lg flex items-center justify-center">
+        <div className="fixed inset-y-0 left-0 flex w-64 flex-col bg-white shadow-xl border-r border-gray-200">
+          <div className="flex h-16 items-center justify-between px-4 border-b border-gray-200 bg-gradient-to-r from-red-50 to-white">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-gradient-to-br from-red-600 to-red-700 rounded-xl flex items-center justify-center shadow-lg">
                 <Shield size={20} className="text-white" />
               </div>
-              <span className="text-lg font-semibold text-gray-900">
-                EMG Admin
-              </span>
+              <div>
+                <span className="text-lg font-bold text-gray-900">
+                  EMG Admin
+                </span>
+                <p className="text-xs text-gray-500">Admin Panel</p>
+              </div>
             </div>
             <button
               onClick={() => setSidebarOpen(false)}
-              className="text-gray-400 hover:text-gray-600"
+              className="text-gray-400 hover:text-gray-600 p-1 rounded-lg hover:bg-gray-100 transition-colors"
             >
-              <X className="h-6 w-6" />
+              <X className="h-5 w-5" />
             </button>
           </div>
-          <nav className="flex-1 px-4 py-4 space-y-2">
+          <nav className="flex-1 px-4 py-6 space-y-1">
             {navigation.map((item) => (
               <Link
                 key={item.name}
                 to={item.href}
                 onClick={() => setSidebarOpen(false)}
-                className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
+                className={`group flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 ${
                   location.pathname === item.href
-                    ? "bg-red-100 text-red-700"
-                    : "text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                    ? "bg-gradient-to-r from-red-100 to-red-50 text-red-700 shadow-sm border border-red-200"
+                    : "text-gray-700 hover:bg-gray-50 hover:text-gray-900 hover:shadow-sm"
                 }`}
               >
-                <item.icon className="h-5 w-5" />
-                {item.name}
+                <item.icon className={`h-5 w-5 transition-colors ${
+                  location.pathname === item.href ? "text-red-600" : "text-gray-500 group-hover:text-gray-700"
+                }`} />
+                <span className="flex-1">{item.name}</span>
+                {location.pathname === item.href && (
+                  <div className="w-2 h-2 bg-red-600 rounded-full"></div>
+                )}
               </Link>
             ))}
           </nav>
@@ -119,10 +128,10 @@ const AdminDashboard = () => {
                 handleLogout();
                 setSidebarOpen(false);
               }}
-              className="flex items-center gap-2 w-full px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg"
+              className="flex items-center justify-center gap-2 w-full px-4 py-3 text-sm font-medium text-white bg-red-600 hover:bg-red-700 rounded-lg transition-all duration-200 hover:shadow-md"
             >
               <LogOut className="h-4 w-4" />
-              <span>Sign Out</span>
+              <span>Logout</span>
             </button>
           </div>
         </div>
@@ -157,13 +166,13 @@ const AdminDashboard = () => {
               </Link>
             ))}
           </nav>
-          <div className="p-4 border-t border-gray-200">
-            <div className="flex items-center gap-3 mb-3">
-              <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
-                <Shield className="h-4 w-4 text-red-600" />
+          <div className="p-4 border-t border-gray-200 bg-gradient-to-r from-gray-50 to-white">
+            <div className="flex items-center gap-3 mb-4 p-3 rounded-xl bg-white border border-gray-100 shadow-sm">
+              <div className="w-10 h-10 bg-gradient-to-br from-red-100 to-red-200 rounded-full flex items-center justify-center cursor-pointer hover:from-red-200 hover:to-red-300 transition-all duration-200 hover:scale-105">
+                <Shield className="h-5 w-5 text-red-600" />
               </div>
-              <div>
-                <p className="text-sm font-medium text-gray-900">
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-semibold text-gray-900 truncate">
                   {getUserName()}
                 </p>
                 <p className="text-xs text-gray-500">Administrator</p>
@@ -171,10 +180,10 @@ const AdminDashboard = () => {
             </div>
             <button
               onClick={handleLogout}
-              className="flex items-center gap-2 w-full px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg"
+              className="flex items-center justify-center gap-2 w-full px-4 py-3 text-sm font-medium text-white bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 rounded-xl transition-all duration-200 hover:shadow-lg hover:scale-[1.02]"
             >
               <LogOut className="h-4 w-4" />
-              <span>Sign Out</span>
+              <span>Logout</span>
             </button>
           </div>
         </div>
@@ -182,11 +191,11 @@ const AdminDashboard = () => {
 
       {/* Main content */}
       <div className="lg:pl-64">
-        {/* Top bar */}
-        <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
+        {/* Enhanced Top bar */}
+        <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white/80 backdrop-blur-sm px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
           <button
             type="button"
-            className="-m-2.5 p-2.5 text-gray-700 lg:hidden"
+            className="-m-2.5 p-2.5 text-gray-700 lg:hidden hover:bg-gray-100 rounded-lg transition-colors"
             onClick={() => setSidebarOpen(true)}
           >
             <Menu className="h-6 w-6" />
@@ -197,17 +206,22 @@ const AdminDashboard = () => {
             <div className="flex items-center gap-x-4 lg:gap-x-6">
               <NotificationCenter />
               <div className="hidden lg:block lg:h-6 lg:w-px lg:bg-gray-200" />
-              <button
-                onClick={() => setIsProfileModalOpen(true)}
-                className="flex items-center gap-x-2 hover:bg-gray-50 rounded-lg p-2 transition-colors"
-              >
-                <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
-                  <Shield className="h-4 w-4 text-red-600" />
+              
+              {/* Enhanced Admin Avatar and Username */}
+              <div className="flex items-center gap-x-3">
+                <div className="flex items-center gap-x-2">
+                  <div 
+                    className="w-8 h-8 bg-gradient-to-br from-red-100 to-red-200 rounded-full flex items-center justify-center cursor-pointer hover:from-red-200 hover:to-red-300 transition-all duration-200 hover:scale-105"
+                    onClick={() => setIsProfileModalOpen(true)}
+                  >
+                    <Shield className="h-4 w-4 text-red-600" />
+                  </div>
+                  <span className="hidden lg:block text-sm font-semibold text-gray-900">
+                    {getUserName()}
+                  </span>
                 </div>
-                <span className="hidden lg:block text-sm font-medium text-gray-900">
-                  {getUserName()}
-                </span>
-              </button>
+              </div>
+              
             </div>
           </div>
         </div>
@@ -220,7 +234,7 @@ const AdminDashboard = () => {
         </main>
       </div>
 
-      {/* Profile Modal */}
+      {/* Enhanced Profile Modal */}
       <Modal
         isOpen={isProfileModalOpen}
         onClose={() => setIsProfileModalOpen(false)}
@@ -229,31 +243,31 @@ const AdminDashboard = () => {
       >
         <div className="space-y-6">
           <div className="text-center">
-            <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Shield className="h-8 w-8 text-red-600" />
+            <div className="w-20 h-20 bg-gradient-to-br from-red-100 to-red-200 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+              <Shield className="h-10 w-10 text-red-600" />
             </div>
-            <h3 className="text-lg font-medium text-gray-900">{getUserName()}</h3>
-            <p className="text-sm text-gray-500">Administrator</p>
+            <h3 className="text-xl font-semibold text-gray-900">{getUserName()}</h3>
+            <p className="text-sm text-gray-500 bg-red-50 px-3 py-1 rounded-full inline-block">Administrator</p>
           </div>
           
           <div className="space-y-4">
-            <div>
+            <div className="bg-gray-50 p-4 rounded-lg">
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Email
+                Email Address
               </label>
-              <p className="text-sm text-gray-900">{profile?.email || 'N/A'}</p>
+              <p className="text-sm text-gray-900 font-medium">{profile?.email || 'N/A'}</p>
             </div>
-            <div>
+            <div className="bg-gray-50 p-4 rounded-lg">
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Role
               </label>
-              <p className="text-sm text-gray-900 capitalize">{profile?.role || 'admin'}</p>
+              <p className="text-sm text-gray-900 font-medium capitalize">{profile?.role || 'admin'}</p>
             </div>
-            <div>
+            <div className="bg-gray-50 p-4 rounded-lg">
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Member Since
               </label>
-              <p className="text-sm text-gray-900">
+              <p className="text-sm text-gray-900 font-medium">
                 {profile?.created_at ? new Date(profile.created_at).toLocaleDateString() : 'N/A'}
               </p>
             </div>

@@ -28,6 +28,7 @@ import {
   Play,
   X
 } from "lucide-react";
+import { getCountryOptions } from "../../constants/presenceData";
 import { dbHelpers } from "../../lib/supabaseClient";
 import { useToast } from "../../contexts/ToastContext";
 import Modal from "../../components/Modal";
@@ -652,13 +653,19 @@ const CreateArtistForm = ({ onSubmit, onCancel }) => {
           <label className="block text-sm font-medium text-gray-700 mb-1">
             Country
           </label>
-          <input
-            type="text"
+          <select
             name="country"
             value={formData.country}
             onChange={handleChange}
             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-          />
+          >
+            <option value="">Select country</option>
+            {getCountryOptions().map((country) => (
+              <option key={country.value} value={country.value}>
+                {country.label}
+              </option>
+            ))}
+          </select>
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -900,13 +907,19 @@ const EditArtistForm = ({ artist, onSubmit, onCancel }) => {
           <label className="block text-sm font-medium text-gray-700 mb-1">
             Country
           </label>
-          <input
-            type="text"
+          <select
             name="country"
             value={formData.country}
             onChange={handleChange}
             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-          />
+          >
+            <option value="">Select country</option>
+            {getCountryOptions().map((country) => (
+              <option key={country.value} value={country.value}>
+                {country.label}
+              </option>
+            ))}
+          </select>
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -1133,6 +1146,10 @@ const ViewArtistDetails = ({ artist, stats }) => {
             <div>
               <span className="text-sm font-medium text-gray-600">Phone:</span>
               <span className="ml-2 text-sm text-gray-900">{artist.phone_number || 'N/A'}</span>
+            </div>
+            <div>
+              <span className="text-sm font-medium text-gray-600">Gender:</span>
+              <span className="ml-2 text-sm text-gray-900">{artist.gender || 'N/A'}</span>
             </div>
           </div>
         </div>

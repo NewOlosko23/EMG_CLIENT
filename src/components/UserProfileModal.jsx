@@ -10,7 +10,6 @@ import {
   Facebook, 
   Youtube, 
   Music, 
-  Calendar, 
   Edit,
   Mail,
   Award,
@@ -27,11 +26,6 @@ const UserProfileModal = ({ isOpen, onClose, userProfile, user }) => {
   };
 
   if (!userProfile) return null;
-
-  const formatDate = (dateString) => {
-    if (!dateString) return 'Not specified';
-    return new Date(dateString).toLocaleDateString();
-  };
 
   const formatGenres = (genres) => {
     if (!genres || !Array.isArray(genres) || genres.length === 0) {
@@ -130,14 +124,6 @@ const UserProfileModal = ({ isOpen, onClose, userProfile, user }) => {
                 <div>
                   <p className="text-sm font-medium text-gray-900">Username</p>
                   <p className="text-sm text-gray-600">{userProfile.username || 'Not set'}</p>
-                </div>
-              </div>
-              
-              <div className="flex items-center gap-3">
-                <Calendar className="h-4 w-4 text-gray-400" />
-                <div>
-                  <p className="text-sm font-medium text-gray-900">Date of Birth</p>
-                  <p className="text-sm text-gray-600">{formatDate(userProfile.date_of_birth)}</p>
                 </div>
               </div>
               

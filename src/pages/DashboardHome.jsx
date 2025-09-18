@@ -13,6 +13,7 @@ const DashboardHome = () => {
   const [loading, setLoading] = useState(true);
   const [userProfile, setUserProfile] = useState(null);
   const [bannerDismissed, setBannerDismissed] = useState(false);
+  const [dataFromCache, setDataFromCache] = useState(false);
   const [dashboardData, setDashboardData] = useState({
     totalTracks: 0,
     totalPlays: 0,
@@ -45,6 +46,25 @@ const DashboardHome = () => {
     try {
       setLoading(true);
       
+      // Check cache first
+      const cacheKey = `dashboard_data_${user.id}`;
+      const cachedData = localStorage.getItem(cacheKey);
+      const cacheTimestamp = localStorage.getItem(`${cacheKey}_timestamp`);
+      const now = Date.now();
+      const cacheExpiry = 2 * 60 * 1000; // 2 minutes cache
+      
+      // Use cached data if it's still valid
+      if (cachedData && cacheTimestamp && (now - parseInt(cacheTimestamp)) < cacheExpiry) {
+        const parsedData = JSON.parse(cachedData);
+        setUserProfile(parsedData.profile);
+        setDashboardData(parsedData.dashboardData);
+        setDataFromCache(true);
+        setLoading(false);
+        return;
+      }
+      
+      setDataFromCache(false);
+      
       // Load user profile
       const { data: profile, error: profileError } = await authHelpers.getUserProfile(user.id);
       if (profileError) console.error('Error fetching user profile:', profileError);
@@ -76,13 +96,23 @@ const DashboardHome = () => {
       // Generate recent activity
       const recentActivity = generateRecentActivity(tracks, earnings, analytics);
 
-      setDashboardData({
+      const newDashboardData = {
         totalTracks,
         totalPlays,
         totalCountries,
         totalEarnings,
         recentActivity
-      });
+      };
+
+      setDashboardData(newDashboardData);
+
+      // Cache the data
+      const dataToCache = {
+        profile,
+        dashboardData: newDashboardData
+      };
+      localStorage.setItem(cacheKey, JSON.stringify(dataToCache));
+      localStorage.setItem(`${cacheKey}_timestamp`, now.toString());
 
     } catch (error) {
       console.error('Error loading dashboard data:', error);
@@ -257,11 +287,21 @@ const DashboardHome = () => {
         <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/5 rounded-full translate-y-24 -translate-x-24"></div>
         
         <div className="relative z-10">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
-              <Sparkles className="h-6 w-6" />
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
+                <Sparkles className="h-6 w-6" />
+              </div>
+              <span className="text-purple-100 text-sm font-medium">Dashboard</span>
             </div>
-            <span className="text-purple-100 text-sm font-medium">Dashboard</span>
+            
+            {/* Cache Status Indicator */}
+            {dataFromCache && (
+              <div className="flex items-center gap-2 px-3 py-1 bg-white/20 rounded-lg backdrop-blur-sm">
+                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                <span className="text-purple-100 text-xs font-medium">Cached</span>
+              </div>
+            )}
           </div>
           
           <h1 className="text-4xl font-bold mb-3 bg-gradient-to-r from-white to-purple-100 bg-clip-text text-transparent">
