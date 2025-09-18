@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { DollarSign, TrendingUp, Download, Calendar, PieChart, BarChart3 } from "lucide-react";
+import { DollarSign, TrendingUp, Download, Calendar, BarChart3 } from "lucide-react";
 
 const Earnings = () => {
   const [selectedPeriod, setSelectedPeriod] = useState("30d");

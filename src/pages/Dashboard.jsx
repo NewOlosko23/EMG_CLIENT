@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Link, useLocation, useNavigate, Outlet } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
+import { useToast } from "../contexts/ToastContext";
 import {
   LayoutDashboard,
   Music,
@@ -8,18 +10,14 @@ import {
   Settings,
   Menu,
   X,
-  User,
-  FileText,
   DollarSign,
-  Headphones,
-  Globe,
   BarChart3,
   Calendar,
-  Bell,
   HelpCircle,
   Upload,
   Play,
-  Mic
+  Mic,
+  LogOut
 } from "lucide-react";
 import Modal from "../components/Modal";
 import NotificationCenter from "../components/NotificationCenter";
@@ -30,22 +28,23 @@ const Dashboard = () => {
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+  const { signOut, getUserName, getUserEmail } = useAuth();
+  const { showSuccess, showError } = useToast();
 
-  const handleLogout = () => {
-    // For now, just navigate to home since we don't have auth
-    navigate("/", { replace: true });
-  };
-
-  // Mock user data
-  const user = {
-    name: 'EMG Artist',
-    email: 'artist@emgmusic.com'
+  const handleLogout = async () => {
+    const result = await signOut();
+    if (result.success) {
+      showSuccess("Signed out successfully", "You have been logged out of your account");
+      navigate("/", { replace: true });
+    } else {
+      showError("Logout failed", "There was an error signing you out. Please try again.");
+    }
   };
 
   // Profile modal state
   const [profileData, setProfileData] = useState({
-    name: user?.name || 'EMG Artist',
-    email: 'artist@emgmusic.com',
+    name: getUserName() || 'EMG Artist',
+    email: getUserEmail() || 'artist@emgmusic.com',
     currentPassword: '',
     newPassword: '',
     confirmPassword: '',
@@ -165,9 +164,10 @@ const Dashboard = () => {
                 handleLogout();
                 setSidebarOpen(false);
               }}
-              className="flex items-center gap-2 w-full px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg"
+              className="flex items-center justify-center gap-2 w-full px-4 py-3 text-sm font-medium text-white bg-red-600 hover:bg-red-700 rounded-lg transition-all duration-200 hover:shadow-md"
             >
-              <span>Back to Home</span>
+              <LogOut className="h-4 w-4" />
+              <span>Logout</span>
             </button>
           </div>
         </div>
@@ -209,16 +209,17 @@ const Dashboard = () => {
               </div>
               <div>
                 <p className="text-sm font-medium text-gray-900">
-                  {user?.name}
+                  {getUserName()}
                 </p>
                 <p className="text-xs text-gray-500">Artist</p>
               </div>
             </div>
             <button
               onClick={handleLogout}
-              className="flex items-center gap-2 w-full px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg"
+              className="flex items-center justify-center gap-2 w-full px-4 py-3 text-sm font-medium text-white bg-red-600 hover:bg-red-700 rounded-lg transition-all duration-200 hover:shadow-md"
             >
-              <span>Back to Home</span>
+              <LogOut className="h-4 w-4" />
+              <span>Logout</span>
             </button>
           </div>
         </div>
@@ -249,7 +250,7 @@ const Dashboard = () => {
                   <Mic className="h-4 w-4 text-purple-600" />
                 </div>
                 <span className="hidden lg:block text-sm font-medium text-gray-900">
-                  {user?.name}
+                  {getUserName()}
                 </span>
               </button>
             </div>

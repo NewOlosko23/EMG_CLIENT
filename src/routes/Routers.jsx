@@ -21,6 +21,9 @@ import Login from "../pages/Login";
 import Signup from "../pages/Signup";
 import ForgotPassword from "../pages/ForgotPassword";
 import ResetPassword from "../pages/ResetPassword";
+import AdminDashboard from "../pages/admin/AdminDashboard";
+import AdminHome from "../pages/admin/AdminHome";
+import { ProtectedRoute } from "../components/ProtectedRoute";
 
 const Routers = () => {
   return (
@@ -73,9 +76,14 @@ const Routers = () => {
           </Layout>
         }
       />
+      {/* Simple Dashboard - Protected */}
       <Route
-        path="/Dashboard"
-        element={<Dashboard />}
+        path="/dashboard"
+        element={
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        }
       >
         <Route index element={<DashboardHome />} />
         <Route path="music" element={<MyMusic />} />
@@ -91,11 +99,19 @@ const Routers = () => {
       </Route>
       <Route
         path="/login"
-        element={<Login />}
+        element={
+          <ProtectedRoute requireAuth={false}>
+            <Login />
+          </ProtectedRoute>
+        }
       />
       <Route
         path="/signup"
-        element={<Signup />}
+        element={
+          <ProtectedRoute requireAuth={false}>
+            <Signup />
+          </ProtectedRoute>
+        }
       />
       <Route
         path="/forgot-password"
@@ -105,6 +121,18 @@ const Routers = () => {
         path="/reset-password"
         element={<ResetPassword />}
       />
+      {/* Admin Dashboard - Protected */}
+      <Route
+        path="/admin"
+        element={
+          <ProtectedRoute>
+            <AdminDashboard />
+          </ProtectedRoute>
+        }
+      >
+        <Route index element={<AdminHome />} />
+        <Route path="dashboard" element={<AdminHome />} />
+      </Route>
     </Routes>
   );
 };

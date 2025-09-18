@@ -1,6 +1,8 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Eye, EyeOff, Mail, Lock, ArrowLeft, Music } from "lucide-react";
+import { useAuth } from "../contexts/AuthContext";
+import { useToast } from "../contexts/ToastContext";
 import Bg from "../assets/emg2.jpg";
 
 const Login = () => {
@@ -10,6 +12,13 @@ const Login = () => {
   });
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  
+  const { signIn, isAuthenticated, isAdmin, isUser, loading: authLoading } = useAuth();
+  const { showSuccess, showError, showLoading, dismiss } = useToast();
+  const navigate = useNavigate();
+  const location = useLocation();
+  
+  const from = location.state?.from?.pathname || "/dashboard";
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -19,16 +28,42 @@ const Login = () => {
     }));
   };
 
+  // Redirect if already authenticated
+  useEffect(() => {
+    if (isAuthenticated() && !authLoading) {
+      if (isAdmin()) {
+        navigate("/admin", { replace: true });
+      } else if (isUser()) {
+        navigate("/dashboard", { replace: true });
+      } else {
+        navigate("/dashboard", { replace: true });
+      }
+    }
+  }, [isAuthenticated, isAdmin, isUser, navigate, authLoading]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     
-    // Simulate login process
-    setTimeout(() => {
+    const loadingToast = showLoading("Signing you in...");
+    
+    try {
+      const result = await signIn(formData.email, formData.password);
+      
+      dismiss(loadingToast);
+      
+      if (result.success) {
+        showSuccess("Welcome back!", "You have been successfully signed in");
+        // The useEffect will handle the redirect when auth state updates
+      } else {
+        showError("Login failed", result.error || "Please check your credentials and try again");
+      }
+    } catch (err) {
+      dismiss(loadingToast);
+      showError("Unexpected error", "An unexpected error occurred. Please try again.");
+    } finally {
       setIsLoading(false);
-      // Handle login logic here
-      console.log("Login attempt:", formData);
-    }, 2000);
+    }
   };
 
   return (
@@ -69,6 +104,7 @@ const Login = () => {
             <h1 className="text-2xl font-bold text-white mb-1">Welcome Back</h1>
             <p className="text-white/70 text-sm">Sign in to your EMG account</p>
           </div>
+
 
           {/* Login Form */}
           <form onSubmit={handleSubmit} className="space-y-4">

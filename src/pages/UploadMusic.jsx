@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Upload, Music, FileAudio, Image, Calendar, Globe, Tag, AlertCircle, CheckCircle } from "lucide-react";
+import { Upload, FileAudio, Image, CheckCircle } from "lucide-react";
 
 const UploadMusic = () => {
   const [uploadStep, setUploadStep] = useState(1);

@@ -1,6 +1,8 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Eye, EyeOff, Mail, Lock, User, ArrowLeft, Music } from "lucide-react";
+import { useAuth } from "../contexts/AuthContext";
+import { useToast } from "../contexts/ToastContext";
 import Bg from "../assets/emg2.jpg";
 
 const Signup = () => {
@@ -13,6 +15,10 @@ const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  
+  const { signUp, isAuthenticated, isAdmin, isUser } = useAuth();
+  const { showSuccess, showError, showLoading, dismiss } = useToast();
+  const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -22,16 +28,67 @@ const Signup = () => {
     }));
   };
 
+  // Redirect if already authenticated
+  useEffect(() => {
+    if (isAuthenticated()) {
+      if (isAdmin()) {
+        navigate("/admin", { replace: true });
+      } else if (isUser()) {
+        navigate("/dashboard", { replace: true });
+      }
+    }
+  }, [isAuthenticated, isAdmin, isUser, navigate]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     
-    // Simulate signup process
-    setTimeout(() => {
+    // Validate passwords match
+    if (formData.password !== formData.confirmPassword) {
+      showError("Passwords do not match", "Please make sure both password fields are identical");
       setIsLoading(false);
-      // Handle signup logic here
-      console.log("Signup attempt:", formData);
-    }, 2000);
+      return;
+    }
+    
+    // Validate password length
+    if (formData.password.length < 6) {
+      showError("Password too short", "Password must be at least 6 characters long");
+      setIsLoading(false);
+      return;
+    }
+    
+    const loadingToast = showLoading("Creating your account...");
+    
+    try {
+      const result = await signUp(formData.email, formData.password, {
+        username: formData.username
+      });
+      
+      dismiss(loadingToast);
+      
+      if (result.success) {
+        showSuccess(
+          "Welcome to EMG! 🎵", 
+          "Account created successfully! Check your email for verification link.",
+          { duration: 6000 }
+        );
+        
+        // Clear form data after successful signup
+        setFormData({
+          username: "",
+          email: "",
+          password: "",
+          confirmPassword: "",
+        });
+      } else {
+        showError("Signup failed", result.error || "Please try again");
+      }
+    } catch (err) {
+      dismiss(loadingToast);
+      showError("Unexpected error", "An unexpected error occurred. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -73,6 +130,7 @@ const Signup = () => {
             <p className="text-white/70 text-xs">Join EMG and start your music journey</p>
           </div>
 
+
           {/* Signup Form */}
           <form onSubmit={handleSubmit} className="space-y-3">
             {/* Username Field */}
@@ -89,11 +147,13 @@ const Signup = () => {
                   value={formData.username}
                   onChange={handleInputChange}
                   required
-                  className="w-full pl-10 pr-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300 text-sm"
+                  disabled={isLoading}
+                  className="w-full pl-10 pr-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
                   placeholder="Choose a username"
                 />
               </div>
             </div>
+
 
             {/* Email Field */}
             <div className="space-y-1">
@@ -109,7 +169,8 @@ const Signup = () => {
                   value={formData.email}
                   onChange={handleInputChange}
                   required
-                  className="w-full pl-10 pr-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300 text-sm"
+                  disabled={isLoading}
+                  className="w-full pl-10 pr-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
                   placeholder="Enter your email"
                 />
               </div>
@@ -129,7 +190,8 @@ const Signup = () => {
                   value={formData.password}
                   onChange={handleInputChange}
                   required
-                  className="w-full pl-10 pr-10 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300 text-sm"
+                  disabled={isLoading}
+                  className="w-full pl-10 pr-10 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
                   placeholder="Create a password"
                 />
                 <button
@@ -156,7 +218,8 @@ const Signup = () => {
                   value={formData.confirmPassword}
                   onChange={handleInputChange}
                   required
-                  className="w-full pl-10 pr-10 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300 text-sm"
+                  disabled={isLoading}
+                  className="w-full pl-10 pr-10 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
                   placeholder="Confirm your password"
                 />
                 <button
@@ -175,7 +238,8 @@ const Signup = () => {
                 type="checkbox"
                 id="terms"
                 required
-                className="w-3 h-3 text-purple-600 bg-white/10 border-white/20 rounded focus:ring-purple-500 focus:ring-2 mt-0.5"
+                disabled={isLoading}
+                className="w-3 h-3 text-purple-600 bg-white/10 border-white/20 rounded focus:ring-purple-500 focus:ring-2 mt-0.5 disabled:opacity-50 disabled:cursor-not-allowed"
               />
               <label htmlFor="terms" className="ml-2 text-xs text-white/70">
                 I agree to the{" "}
@@ -196,9 +260,9 @@ const Signup = () => {
               className="w-full py-2 px-6 bg-gradient-to-r from-purple-600 via-purple-700 to-pink-600 text-white font-semibold rounded-lg hover:from-purple-700 hover:via-purple-800 hover:to-pink-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-transparent transition-all duration-300 transform hover:-translate-y-0.5 hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none text-sm"
             >
               {isLoading ? (
-                <div className="flex items-center justify-center">
-                  <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin mr-2"></div>
-                  Creating Account...
+                <div className="flex items-center justify-center gap-2">
+                  <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                  <span>Creating Account...</span>
                 </div>
               ) : (
                 "Create Account"

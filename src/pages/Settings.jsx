@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Settings as SettingsIcon, User, Bell, Shield, CreditCard, Globe, Save, Eye, EyeOff } from "lucide-react";
+import { Settings as SettingsIcon, User, Bell, Shield, CreditCard, Save, Eye, EyeOff } from "lucide-react";
 
 const Settings = () => {
   const [activeTab, setActiveTab] = useState("profile");

@@ -3,14 +3,8 @@ import { FaCheck, FaCrown, FaShieldAlt, FaRocket, FaGlobe, FaChartLine, FaHeadph
 import { useNavigate } from "react-router-dom";
 import { 
   ArrowRight, 
-  CheckCircle, 
-  Star, 
-  TrendingUp, 
-  Users, 
   Award,
   Zap,
-  Target,
-  Clock,
   DollarSign,
   Gift,
   Shield

@@ -5,13 +5,8 @@ import {
   Globe, 
   Users, 
   TrendingUp, 
-  Award,
-  Zap,
   Target,
-  Music,
-  ArrowRight,
-  CheckCircle,
-  Star
+  Music
 } from "lucide-react";
 
 const countries = [

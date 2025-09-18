@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { Menu, X, LogIn } from "lucide-react";
 import Logo from "../assets/logo.png";
 import Container from "./Container";
 
@@ -74,13 +74,14 @@ const Header = ({ theme }) => {
               })}
             </ul>
 
-            {/* Contact Button */}
+            {/* Login Button */}
             <div className="hidden md:block">
               <Link
-                to="/Team"
-                className="px-6 py-2.5 bg-purple-600 text-white rounded-lg font-medium text-sm transition-all duration-300 hover:bg-purple-700 hover:shadow-lg"
+                to="/login"
+                className="flex items-center gap-2 px-6 py-2.5 bg-purple-600 text-white rounded-lg font-medium text-sm transition-all duration-300 hover:bg-purple-700 hover:shadow-lg hover:scale-105"
               >
-                Contact Us
+                <LogIn size={18} />
+                Login
               </Link>
             </div>
 
@@ -121,11 +122,12 @@ const Header = ({ theme }) => {
             })}
             <div className="pt-4">
               <Link
-                to="/Team"
-                className="block w-full text-center px-6 py-3 bg-purple-600 text-white rounded-lg font-medium text-sm transition-all duration-300 hover:bg-purple-700"
+                to="/login"
+                className="flex items-center justify-center gap-2 w-full text-center px-6 py-3 bg-purple-600 text-white rounded-lg font-medium text-sm transition-all duration-300 hover:bg-purple-700"
                 onClick={() => setIsOpen(false)}
               >
-                Contact Us
+                <LogIn size={18} />
+                Login
               </Link>
             </div>
           </div>

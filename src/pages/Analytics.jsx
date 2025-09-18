@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import { BarChart3, TrendingUp, TrendingDown, Users, Play, Globe, Calendar, Filter } from "lucide-react";
+import { BarChart3, TrendingUp, TrendingDown, Users, Play, Globe, Filter } from "lucide-react";
 
 const Analytics = () => {
   const [selectedPeriod, setSelectedPeriod] = useState("30d");
-  const [selectedMetric, setSelectedMetric] = useState("plays");
 
   // Mock analytics data
   const analyticsData = {

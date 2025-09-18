@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Bell, X, Music, TrendingUp, DollarSign, Upload, Calendar, Users, Globe } from "lucide-react";
+import { Bell, X, Music, TrendingUp, DollarSign, Upload, Users } from "lucide-react";
 import Modal from "./Modal";
 
 const NotificationCenter = () => {
