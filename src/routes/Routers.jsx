@@ -24,16 +24,21 @@ import ResetPassword from "../pages/ResetPassword";
 import AdminDashboard from "../pages/admin/AdminDashboard";
 import AdminHome from "../pages/admin/AdminHome";
 import { ProtectedRoute } from "../components/ProtectedRoute";
+import { AdminRoute } from "../components/RoleBasedRoute";
+import { AutoRedirect } from "../components/AutoRedirect";
 
 const Routers = () => {
   return (
-    <Routes>
+    <AutoRedirect>
+      <Routes>
       <Route
         path="/"
         element={
-          <Layout>
-            <Home />
-          </Layout>
+          <ProtectedRoute requireAuth={false}>
+            <Layout>
+              <Home />
+            </Layout>
+          </ProtectedRoute>
         }
       />
       <Route
@@ -121,19 +126,20 @@ const Routers = () => {
         path="/reset-password"
         element={<ResetPassword />}
       />
-      {/* Admin Dashboard - Protected */}
+      {/* Admin Dashboard - Role Protected (Admin Only) */}
       <Route
         path="/admin"
         element={
-          <ProtectedRoute>
+          <AdminRoute>
             <AdminDashboard />
-          </ProtectedRoute>
+          </AdminRoute>
         }
       >
         <Route index element={<AdminHome />} />
         <Route path="dashboard" element={<AdminHome />} />
       </Route>
-    </Routes>
+      </Routes>
+    </AutoRedirect>
   );
 };
 

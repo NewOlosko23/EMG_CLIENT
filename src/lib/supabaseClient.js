@@ -71,13 +71,32 @@ export const authHelpers = {
     return { user, error }
   },
 
-  // Get user profile with role
+  // Get user profile with role (optimized for speed)
   async getUserProfile(userId) {
     const { data, error } = await supabase
       .from('profiles_emg')
       .select('*')
       .eq('id', userId)
       .single()
+    return { data, error }
+  },
+
+  // Fast role-only fetch (minimal data for quick UX)
+  async getUserRole(userId) {
+    const { data, error } = await supabase
+      .from('profiles_emg')
+      .select('role, is_active')
+      .eq('id', userId)
+      .single()
+    return { data, error }
+  },
+
+  // Batch role fetch for multiple users (admin use)
+  async getUsersRoles(userIds) {
+    const { data, error } = await supabase
+      .from('profiles_emg')
+      .select('id, role, username, full_name, is_active')
+      .in('id', userIds)
     return { data, error }
   },
 
@@ -189,6 +208,62 @@ export const dbHelpers = {
       .eq('artist_id', userId)
       .order('period_start', { ascending: false })
     return { data, error }
+  }
+}
+
+// Role Management Helpers (optimized for fast UX)
+export const roleHelpers = {
+  // Fast role check with caching
+  async getCurrentUserRole() {
+    try {
+      const { data: { user }, error: authError } = await supabase.auth.getUser()
+      if (authError || !user) {
+        return { role: null, error: authError }
+      }
+
+      const { data, error } = await supabase
+        .from('profiles_emg')
+        .select('role, is_active')
+        .eq('id', user.id)
+        .single()
+
+      if (error) {
+        console.warn('Role fetch failed, defaulting to user:', error)
+        return { role: 'user', error: null } // Safe fallback
+      }
+
+      return { 
+        role: data?.role || 'user', 
+        isActive: data?.is_active !== false,
+        error: null 
+      }
+    } catch (err) {
+      console.warn('Role check error, defaulting to user:', err)
+      return { role: 'user', error: null } // Safe fallback
+    }
+  },
+
+  // Check if current user is admin (with caching)
+  async isCurrentUserAdmin() {
+    const { role, isActive } = await roleHelpers.getCurrentUserRole()
+    return role === 'admin' && isActive
+  },
+
+  // Check if current user is regular user
+  async isCurrentUserRegular() {
+    const { role, isActive } = await roleHelpers.getCurrentUserRole()
+    return role === 'user' && isActive
+  },
+
+  // Get appropriate dashboard path for current user
+  async getDashboardPath() {
+    const { role, isActive } = await roleHelpers.getCurrentUserRole()
+    
+    if (!isActive) {
+      return '/login' // Inactive users go to login
+    }
+    
+    return role === 'admin' ? '/admin/dashboard' : '/dashboard'
   }
 }
 
